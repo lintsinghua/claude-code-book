@@ -1,6 +1,6 @@
 <div align="center">
 
-# 解码 Agent Harness ———— Claude Code 架构深度剖析
+# 《解码 Agent Harness —— Claude Code 架构深度剖析》
 
 <br/>
 
