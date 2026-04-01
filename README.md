@@ -1,18 +1,136 @@
-# Claude Code Book Web Reader
+<div align="center">
 
-基于 Vite 构建的《解码 Agent Harness》网页版阅读站。
+# 解码 Agent Harness
 
-## 声明
+### Claude Code 架构深度剖析
+
+**不做使用教程，不列 Prompt 技巧——拆解 Agent 的骨架与神经。**
+
+[![Stars](https://img.shields.io/github/stars/lintsinghua/claude-code-book?style=social)](https://github.com/lintsinghua/claude-code-book/stargazers)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Flintsinghua.github.io&label=在线阅读)](https://lintsinghua.github.io/)
+[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
+[![Chapters](https://img.shields.io/badge/章节-15-blue)]()
+[![Language](https://img.shields.io/badge/语言-中文-informational)]()
+
+### [在线阅读 →](https://lintsinghua.github.io/)
+
+</div>
+
+<img width="2880" height="1558" alt="image" src="https://github.com/user-attachments/assets/39efa7d4-4521-444e-a222-fd0acb756e51" />
+
+
+## 这本书讲什么
+
+当所有人都在教你怎么**用** AI Agent，这本书带你**拆开**它。
+
+对话循环如何驱动？工具权限为何是四阶段管线？上下文压缩怎样在 token 预算内运转？子智能体如何通过 Fork 继承父级上下文？
+
+读懂 Claude Code 的设计决策，你就拥有了一套可迁移到任何 Agent 框架的心智模型。
+
+> **⚠️ 声明**
+> 本书基于对 Claude Code 公开文档和产品行为的架构分析编写，**未引用、未使用任何未公开或未授权的源码**。Claude Code 为 Anthropic PBC 产品，本书不隶属于、未获授权于、也不代表 Anthropic。
 
 本项目基于原仓库 [lintsinghua/claude-code-book](https://github.com/lintsinghua/claude-code-book) 进行二次开发，目标是提供更友好的网页阅读体验。
 
-## 项目目标
+## 为什么值得读
 
-- 在不改动原书稿目录结构的前提下，提供在线阅读能力
-- 提供章节导航、上下篇跳转与阅读进度记忆
-- 以轻量、可维护的前端工程方式持续演进
+<table>
+<tr>
+<td width="33%" align="center"><strong>架构代表性</strong></td>
+<td width="33%" align="center"><strong>工程决策可追溯</strong></td>
+<td width="33%" align="center"><strong>认知可迁移</strong></td>
+</tr>
+<tr>
+<td>涵盖 Agent Harness 全部核心子系统——工具类型、权限管线、上下文压缩、MCP 集成、子智能体调度</td>
+<td>为什么用异步生成器而非回调？为什么权限是四阶段管线而非黑白名单？每个决策背后都是真实生产场景的洞察</td>
+<td>每章提炼通用设计模式，无论你用 LangChain、AutoGen 还是从零构建</td>
+</tr>
+</table>
 
-## 功能特性
+---
+
+## 目录
+
+### 第一部分：基础篇 — 建立心智模型
+
+| # | 章节 | 一句话 |
+|:-:|------|-------|
+| 01 | [智能体编程的新范式](第一部分-基础篇/01-智能体编程的新范式.md) | 从聊天到工具调用，范式如何转移 |
+| 02 | [对话循环 — Agent 的心跳](第一部分-基础篇/02-对话循环-Agent的心跳.md) | 异步生成器驱动的永动主循环 |
+| 03 | [工具系统 — Agent 的双手](第一部分-基础篇/03-工具系统-Agent的双手.md) | 45+ 工具的注册、过滤与并发调度 |
+| 04 | [权限管线 — Agent 的护栏](第一部分-基础篇/04-权限管线-Agent的护栏.md) | 四阶段安全管线与权限模式谱系 |
+
+### 第二部分：核心系统篇 — 深入子系统
+
+| # | 章节 | 一句话 |
+|:-:|------|-------|
+| 05 | [设置与配置 — Agent 的基因](第二部分-核心系统篇/05-设置与配置-Agent的基因.md) | 六层配置优先级与供应链攻击防御 |
+| 06 | [记忆系统 — Agent 的长期记忆](第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md) | 持久化、索引、自动提取与跨会话保持 |
+| 07 | [上下文管理 — Agent 的工作记忆](第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md) | 四级渐进压缩与 token 预算管理 |
+| 08 | [钩子系统 — Agent 的生命周期扩展点](第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md) | 26 个生命周期事件与安全边界 |
+
+### 第三部分：高级模式篇 — Agent 的组合与扩展
+
+| # | 章节 | 一句话 |
+|:-:|------|-------|
+| 09 | [子智能体与 Fork 模式](第三部分-高级模式篇/09-子智能体与Fork模式.md) | 字节级上下文继承与并行子任务 |
+| 10 | [协调器模式 — 多智能体编排](第三部分-高级模式篇/10-协调器模式-多智能体编排.md) | Coordinator-Worker 架构与 Team 机制 |
+| 11 | [技能系统与插件架构](第三部分-高级模式篇/11-技能系统与插件架构.md) | 零配置可用、可配置强大的技能协议 |
+| 12 | [MCP 集成与外部协议](第三部分-高级模式篇/12-MCP集成与外部协议.md) | Model Context Protocol 与协议桥接 |
+
+### 第四部分：工程实践篇 — 从原理到构建
+
+| # | 章节 | 一句话 |
+|:-:|------|-------|
+| 13 | [流式架构与性能优化](第四部分-工程实践篇/13-流式架构与性能优化.md) | 并行预取、惰性加载、缓存共享 |
+| 14 | [Plan 模式与结构化工作流](第四部分-工程实践篇/14-Plan模式与结构化工作流.md) | 计划与执行分离、定时触发 |
+| 15 | [构建你自己的 Agent Harness](第四部分-工程实践篇/15-构建你自己的Agent-Harness.md) | 六步从零实现，融会贯通全书 |
+
+### 附录
+
+| 附录 | 内容 |
+|:----:|------|
+| [A](附录/A-源码导航地图.md) | 架构导航地图 — 模块依赖与数据流 |
+| [B](附录/B-工具完整清单.md) | 工具完整清单 — 50+ 工具速查 |
+| [C](附录/C-功能标志速查表.md) | 功能标志速查表 — 89 个 Feature Flag |
+| [D](附录/D-术语表.md) | 术语表 — 100 条中英对照 |
+
+---
+
+## 阅读路径
+
+```
+                        ┌──────────────────────────────────────────────┐
+  ⏱ 时间紧张？          │  Ch1 → Ch2 → Ch4 → Ch15                      │
+                        │  心智模型 + 核心机制 + 动手构建                 │
+                        └──────────────────────────────────────────────┘
+                        ┌──────────────────────────────────────────────┐
+  🏗 有经验的架构师？    │  第二部分(核心系统) → 第三部分(高级模式)         │
+                        │  遇到概念缺口回溯第一部分                       │
+                        └──────────────────────────────────────────────┘
+                        ┌──────────────────────────────────────────────┐
+  📖 系统学习？          │  顺序阅读 → 完成每章实战练习 → Ch15 动手构建    │
+                        │  预计需要 2-3 周深度阅读                        │
+                        └──────────────────────────────────────────────┘
+```
+
+---
+
+## 适合谁
+
+| 读者 | 你将收获 |
+|------|---------|
+| 想构建 Agent 的 **架构师** | 完整的设计空间地图与工程权衡分析 |
+| 不满足于调 API 的 **高级工程师** | 工具调用、流式处理、权限管控的底层机制 |
+| 对 Agent 工程感兴趣的 **研究者** | 从实现角度理解 Agent 系统的运作方式 |
+| 希望最大化利用 Claude Code 的 **实践者** | 理解设计意图，用得更准、调得更深 |
+
+
+## 约定
+
+- 中文写作，技术术语保留英文原文（如 *StreamingToolExecutor*、*Feature Flag*）
+- 每章结构：**学习目标 → 核心概念 → 架构图 → 实战练习 → 关键要点**
+- 示例代码为说明设计模式的示意代码，非产品源码
 
 - 章节树导航：按书籍结构展示全部章节
 - Markdown 渲染：实时加载并渲染各章节内容
@@ -22,7 +140,7 @@
 
 ## 项目结构
 
-```
+```text
 .
 ├─ src/
 │  ├─ main.js
@@ -40,25 +158,25 @@
 
 ## 快速开始
 
-### 1) 安装依赖
+### 1. 安装依赖
 
 ```bash
 npm install
 ```
 
-### 2) 本地开发
+### 2. 本地开发
 
 ```bash
 npm run dev
 ```
 
-### 3) 生产构建
+### 3. 生产构建
 
 ```bash
 npm run build
 ```
 
-### 4) 本地预览构建产物
+### 4. 本地预览构建产物
 
 ```bash
 npm run preview
@@ -67,6 +185,22 @@ npm run preview
 ## 内容维护说明
 
 - 书籍内容来源于仓库内各 Markdown 章节文件
+- 章节目录由 `src/bookManifest.js` 统一维护
+- 新增章节时，请同步更新 `src/bookManifest.js`
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request：修正技术错误、补充实战案例、改进章节结构。
+
+## 致谢
+
+[Linux.Do](https://linux.do/) 社区
+
+[![CC BY-NC-SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+## 许可证
+
+书籍内容与相关版权遵循原项目及其许可证约定；如需转载或二次发布，请先阅读并遵守原仓库许可条款。
 - 章节目录由 src/bookManifest.js 统一维护
 - 新增章节时，请同步更新 src/bookManifest.js
 
