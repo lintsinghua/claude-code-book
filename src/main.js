@@ -192,7 +192,7 @@ function renderToc() {
           if (!heading.id) {
             heading.id = slugify(heading.textContent || 'section');
           }
-          return `<li class="lv-${heading.tagName.toLowerCase()}"><a href="#${heading.id}">${heading.textContent}</a></li>`;
+          return `<li class="lv-${heading.tagName.toLowerCase()}"><a href="javascript:void(0)" data-target="${heading.id}">${heading.textContent}</a></li>`;
         })
         .join('')}
     </ul>
@@ -313,6 +313,24 @@ function bindEvents() {
     }
   });
 
+  elements.article.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!link) return;
+    
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1);
+      let targetEl = document.getElementById(targetId);
+      if (!targetEl) {
+        try { targetEl = document.getElementById(decodeURIComponent(targetId)); } catch(e) {}
+      }
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+
   elements.searchInput.addEventListener('input', () => {
     renderNav(elements.searchInput.value);
   });
@@ -351,14 +369,19 @@ function bindEvents() {
 
   if (elements.toc) {
     elements.toc.addEventListener('click', (event) => {
-      const link = event.target.closest('a');
+      const link = event.target.closest('a[data-target]');
       if (!link) return;
       
-      const href = link.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        event.preventDefault();
-        const targetId = href.substring(1);
-        const targetEl = document.getElementById(targetId);
+      event.preventDefault();
+      const targetId = link.getAttribute('data-target');
+      if (targetId) {
+        let targetEl = document.getElementById(targetId);
+        if (!targetEl) {
+          try {
+            targetEl = document.getElementById(decodeURIComponent(targetId));
+          } catch(e) {}
+        }
+        
         if (targetEl) {
           targetEl.scrollIntoView({ behavior: 'smooth' });
         }
