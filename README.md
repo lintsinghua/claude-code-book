@@ -2,17 +2,8 @@
 
 # 解码 Agent Harness
 
-### Claude Code 架构深度剖析
 
-**不做使用教程，不列 Prompt 技巧——拆解 Agent 的骨架与神经。**
-
-[![Stars](https://img.shields.io/github/stars/lintsinghua/claude-code-book?style=social)](https://github.com/lintsinghua/claude-code-book/stargazers)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Flintsinghua.github.io&label=在线阅读)](https://lintsinghua.github.io/)
-[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
-[![Chapters](https://img.shields.io/badge/章节-15-blue)]()
-[![Language](https://img.shields.io/badge/语言-中文-informational)]()
-
-### [在线阅读 →](https://lintsinghua.github.io/)
+### [在线阅读 →](https://gugugugun.github.io)
 
 </div>
 
@@ -195,14 +186,9 @@ npm run preview
 ## 致谢
 
 [Linux.Do](https://linux.do/) 社区
-
+[lintsinghua/claude-code-book](https://github.com/lintsinghua/claude-code-book)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-## 许可证
-
-书籍内容与相关版权遵循原项目及其许可证约定；如需转载或二次发布，请先阅读并遵守原仓库许可条款。
-- 章节目录由 src/bookManifest.js 统一维护
-- 新增章节时，请同步更新 src/bookManifest.js
 
 ## 友链
 - 灌注L站喵，https://linux.do/
