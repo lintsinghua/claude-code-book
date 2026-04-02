@@ -1,12 +1,8 @@
 <div align="center">
-
-# 《解码 Agent Harness —— Claude Code 架构深度剖析》
-
-<br/>
-
+  
+# 解码 Agent Harness —— Claude Code 架构深度剖析
+  
 当所有人都在教你怎么 **用** AI Agent —— 这本书带你 **拆开** 它
-
-<br/>
 
 [![GitHub Stars](https://img.shields.io/github/stars/lintsinghua/claude-code-book?style=social)](https://github.com/lintsinghua/claude-code-book/stargazers)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)](LICENSE)
