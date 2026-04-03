@@ -14,50 +14,7 @@ Looking back over the past few years, AI-assisted programming has gone through t
 
 These three waves can be summarized in a concise evolution diagram:
 
-```mermaid
-flowchart LR
-    subgraph wave1["2021-2022"]
-        A["Code Completion\nInline Complete"]
-    end
-    subgraph wave2["2023-2024"]
-        B["Chat Assistant\nChat Assisted"]
-    end
-    subgraph wave3["2025 to present"]
-        C["Autonomous Agent\nAgent Autonomy"]
-    end
-
-    wave1 --> wave2 --> wave3
-
-    classDef era fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    class A,B,C era
-```
-
-```mermaid
-flowchart LR
-    subgraph w1["First Wave"]
-        direction TB
-        A1["Tab to accept suggestions"]
-        A2["Single-file local completion"]
-        A3["Passively waiting for triggers"]
-        A4["No execution capability"]
-    end
-    subgraph w2["Second Wave"]
-        direction TB
-        B1["Ctrl+L conversational queries"]
-        B2["Multi-file cross-file generation"]
-        B3["Proactive intent understanding"]
-        B4["No execution capability"]
-    end
-    subgraph w3["Third Wave"]
-        direction TB
-        C1["Direct task delegation"]
-        C2["Cross-tool autonomous orchestration"]
-        C3["Proactive execution path planning"]
-        C4["Read/Write/Execute/Verify"]
-    end
-
-    w1 --> w2 --> w3
-```
+![AI 编程范式演进](asserts/render_evolution_graph.png)
 
 ### Agent Harness: The Birth of a New Architectural Concept
 
@@ -135,32 +92,7 @@ This book is suitable for the following readers, each of whom can gain unique va
 
 This book is divided into four parts, organized from macro to micro, from concept to implementation:
 
-```mermaid
-flowchart TD
-    subgraph part1["Part 1: Foundations (Chapters 1-4)"]
-        direction LR
-        ch1["Chapter 1\nNew Paradigm\nPanoramic Overview"] --> ch2["Chapter 2\nDialog Loop\nAgent Heartbeat"] --> ch3["Chapter 3\nTool System\nAgent Hands"] --> ch4["Chapter 4\nPermission Pipeline\nAgent Guardrails"]
-    end
-
-    subgraph part2["Part 2: Core (Chapters 5-8)"]
-        core["Context Management · Cache Strategy · Streaming Architecture · Error Recovery"]
-    end
-
-    subgraph part3["Part 3: Extensions (Chapters 9-12)"]
-        ext["MCP Protocol · Sub-Agents · Plugin System · Hook Mechanism"]
-    end
-
-    subgraph part4["Part 4: Practice (Chapters 13-15)"]
-        practice["Mini Agent Harness Build · Debugging Tips · Production Deployment"]
-    end
-
-    part1 --> part2 --> part3 --> part4
-
-    classDef section fill:#f3f9ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-    classDef chapter fill:#eff6ff,stroke:#60a5fa,stroke-width:1px,color:#2563eb
-    class part1,part2,part3,part4 section
-    class ch1,ch2,ch3,ch4 chapter
-```
+![Book Structure Overview](asserts/book_structure_overview.png)
 
 **If you are short on time (Fast Path):** Read at least Chapter 1 (to establish a mental model) and Chapter 2 (to understand the core loop), then spend 15 minutes browsing the key takeaways sections of Chapters 3-4. These two chapters are the foundation for understanding everything that follows.
 
