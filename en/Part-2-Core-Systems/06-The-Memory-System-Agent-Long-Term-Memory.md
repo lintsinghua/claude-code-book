@@ -128,9 +128,9 @@ how_to_use:  When the user references external systems or needs to look up exter
 
 **Practical Application Scenarios:**
 
-Scenario 1: Monitoring dashboards. The user says "the production Grafana dashboard is at https://grafana.company.com/d/abc123," and the Agent saves this as a reference memory. When the user asks "any anomalies recently," the Agent can remind the user to check this dashboard.
+Scenario 1: Monitoring dashboards. The user says: "the production Grafana dashboard is at [https://grafana.company.com/d/abc123](https://grafana.company.com/d/abc123)." The Agent saves this as a reference memory. When the user asks, "any anomalies recently," the Agent can remind the user to check this dashboard.
 
-Scenario 2: Documentation links. The user says "the API docs are on Confluence at https://confluence.company.com/pages/api-docs," and the Agent saves this as a reference memory.
+Scenario 2: Documentation links. The user says: "the API docs are on Confluence at [https://confluence.company.com/pages/api-docs](https://confluence.company.com/pages/api-docs)." The Agent saves this as a reference memory.
 
 Scenario 3: Communication channels. The user says "backend team discussions are in the #backend-dev Slack channel," and the Agent saves this as a reference memory, reminding the user when cross-team coordination is needed.
 

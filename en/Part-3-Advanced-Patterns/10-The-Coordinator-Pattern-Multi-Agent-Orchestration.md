@@ -396,15 +396,20 @@ The Coordinator system prompt defines a clear concurrency strategy:
 | Verification | Sometimes parallel with implementation | Safe when operating on different file regions |
 
 ```mermaid
+---
+config:
+  gantt:
+    leftPadding: 180
+---
 gantt
     title Concurrency Strategy Example (OAuth2 Integration Task)
     dateFormat X
     axisFormat %s
 
     section Research (All Parallel)
-    Worker A: API Analysis     :a1, 0, 3
-    Worker B: Database Analysis :a2, 0, 3
-    Worker C: Auth Analysis    :a3, 0, 3
+    Worker A: API Analysis     :a1, 0, 4
+    Worker B: Database Analysis :a2, 0, 4
+    Worker C: Auth Analysis    :a3, 0, 4
 
     section Implementation (Exclusive Files)
     Worker D: route/auth.ts :b1, 3, 6

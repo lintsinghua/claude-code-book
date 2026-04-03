@@ -128,9 +128,9 @@ how_to_use:  当用户引用外部系统或需要查找外部信息时
 
 **实际应用场景：**
 
-场景一：监控仪表盘。用户说"生产环境的 Grafana 仪表盘在 https://grafana.company.com/d/abc123"，Agent 保存为 reference 记忆。当用户问"最近有什么异常"时，Agent 能提醒用户查看这个仪表盘。
+场景一：监控仪表盘。用户说：“生产环境的 Grafana 仪表盘在 [https://grafana.company.com/d/abc123](https://grafana.company.com/d/abc123)”，Agent 保存为 reference 记忆。当用户问：“最近有什么异常”时，Agent 能提醒用户查看这个仪表盘。
 
-场景二：文档链接。用户说"API 文档在 Confluence 的 https://confluence.company.com/pages/api-docs"，Agent 保存为 reference 记忆。
+场景二：文档链接。用户说：“API 文档在 Confluence 的 [https://confluence.company.com/pages/api-docs](https://confluence.company.com/pages/api-docs)”，Agent 保存为 reference 记忆。
 
 场景三：通信渠道。用户说"后端团队的讨论在 #backend-dev Slack 频道"，Agent 保存为 reference 记忆，在需要跨团队协调时提醒用户。
 
