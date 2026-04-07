@@ -14,7 +14,7 @@ Looking back over the past few years, AI-assisted programming has gone through t
 
 These three waves can be summarized in a concise evolution diagram:
 
-![AI 编程范式演进](asserts/render_evolution_graph.png)
+![Evolution of the AI Programming Paradigm](assets/render_evolution_graph.png)
 
 ### Agent Harness: The Birth of a New Architectural Concept
 
@@ -92,7 +92,7 @@ This book is suitable for the following readers, each of whom can gain unique va
 
 This book is divided into four parts, organized from macro to micro, from concept to implementation:
 
-![Book Structure Overview](asserts/book_structure_overview.png)
+![Book Structure Overview](assets/book_structure_overview.png)
 
 **If you are short on time (Fast Path):** Read at least Chapter 1 (to establish a mental model) and Chapter 2 (to understand the core loop), then spend 15 minutes browsing the key takeaways sections of Chapters 3-4. These two chapters are the foundation for understanding everything that follows.
 

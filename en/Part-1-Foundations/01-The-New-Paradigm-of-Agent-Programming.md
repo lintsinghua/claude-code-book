@@ -22,16 +22,8 @@ In 2023, most developers interacted with LLMs like this: open a web page, enter 
 
 This mode can be described with a simple model:
 
-```mermaid
-sequenceDiagram
-    participant Human Send
-    participant LLM
-    participant Human Receive
-    Human Send->>LLM: Prompt
-    LLM->>Human Receive: Response (Text)
-    Note over Human Receive,Human Send: Human copies, pastes, executes manually
-    Human Receive->>Human Send: Manually transport results
-```
+![llm_human_interaction](../assets/fundamentals/llm_human_interaction.png)
+
 
 The core limitation of this mode is that the LLM can only "speak," not "act." It cannot read your file system, execute test commands, create Git branches, or autonomously adjust its strategy when encountering errors. Every interaction with the outside world requires a human intermediary to manually complete -- copying code to the editor, switching to the terminal to run commands, and then copying the output back to the dialog box. This "human glue" pattern is not only inefficient but also error-prone.
 
@@ -58,31 +50,7 @@ But tool calling also introduces new engineering challenges. These challenges ar
 
 These questions gave birth to a new architectural concept: **Agent Harness**.
 
-```mermaid
-flowchart TD
-    subgraph challenges["Six Engineering Challenges from Tool Calling"]
-        c1["Tool Registration & Discovery"]
-        c2["Parameter Validation"]
-        c3["Permission Control"]
-        c4["Error Recovery"]
-        c5["State Consistency"]
-        c6["Concurrency & Scheduling"]
-    end
-
-    harness["Agent Harness<br/>Unified Runtime Framework"]
-
-    c1 --> harness
-    c2 --> harness
-    c3 --> harness
-    c4 --> harness
-    c5 --> harness
-    c6 --> harness
-
-    classDef challenge fill:#fef9f0,stroke:#f59e0b,stroke-width:1px,color:#92400e
-    classDef center fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    class c1,c2,c3,c4,c5,c6 challenge
-    class harness center
-```
+![Six Engineering Challenges](../assets/fundamentals/six_engineering_challenges.png)
 
 ### Why Agent Harness Instead of Simple Wrappers
 
@@ -126,28 +94,7 @@ Before diving into design philosophy, let's first examine Claude Code's codebase
 
 Before analyzing Claude Code's architecture, let's widen our perspective and look at the evolution of AI programming tools. Understanding this timeline helps us see where Claude Code sits in the technological lineage:
 
-```mermaid
-flowchart TD
-    A["2021.06 GitHub Copilot Technical Preview<br/>First LLM integration into editor"] -->
-    B["2022.12 ChatGPT Launch<br/>Proves LLM's general conversational ability"] -->
-    C["2023.03 GPT-4 + Function Calling<br/>LLM transforms from text generator to instruction orchestrator"] -->
-    D["2023.06 OpenAI Code Interpreter<br/>LLM gains code execution capability for the first time"] -->
-    E["2023.11 Claude 2.1 + Tool Use<br/>200K context window"] -->
-    F["2024.01 Devin Launch<br/>First AI software engineer"] -->
-    G["2024.08 Cursor Agent Mode<br/>Editor-integrated Agent"] -->
-    H["2024.10 Anthropic Computer Use<br/>LLM can operate GUI"] -->
-    I["2025.02 Claude Code Launch<br/>Terminal-native Agent"] -->
-    J["2025.11 Anthropic Publishes MCP<br/>Standardized Agent communication protocol"] -->
-    K["2026.03 Source Code Accidentally Exposed<br/>Community deeply examines Agent Harness"] -->
-    L["Now ← You are here"]
-
-    classDef event fill:#f0f7ff,stroke:#3b82f6,stroke-width:1px,color:#1e3a5f
-    classDef milestone fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e40af
-    classDef current fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    class A,B,C,D,E,F,G,H event
-    class I,J,K milestone
-    class L current
-```
+![AI Programming Tools Evolution Timeline](../assets/fundamentals/ai_programming_tools_evolution_timeline.png)
 
 This timeline reveals an important pattern: the direction of AI programming tool evolution has always been "giving LLMs more agency." From only being able to see the current file, to seeing the entire project; from only being able to generate suggestions, to being able to execute commands; from single-step operations to multi-step autonomous planning. Agent Harness is the inevitable architectural product of this evolutionary direction.
 
@@ -161,35 +108,7 @@ But this does not mean the code is bloated. On the contrary, Claude Code's code 
 
 Let's use an architectural overview diagram to visually illustrate Claude Code's module organization:
 
-```mermaid
-flowchart TD
-    entry["Entry Module<br/>CLI Parsing · Startup Optimization · React/Ink Initialization"]
-    query["Query Engine<br/>Session State Management · Message History · File Cache · Usage Statistics"]
-    loop["Dialog Main Loop (AsyncGenerator)<br/>Preprocessing Pipeline → API Call → Tool Detection → State Construction"]
-
-    subgraph loop_inner[" "]
-        direction LR
-        p1["Preprocessing Pipeline<br/>Compression/Trimming"] --> p2["API Call<br/>Streaming Reception"] --> p3["Tool Detection<br/>Permission Check"] --> p4["State Construction<br/>Message Backfill"]
-    end
-
-    tools["Tool System<br/>45+ Tools · Orchestration Engine · Concurrency Partitioning"]
-    perm["Permission Pipeline<br/>Four-Stage Check · Five Modes · Rule Persistence"]
-    ext["Extension Layer<br/>MCP Protocol · Sub-Agent Dispatch · Plugin System · Hook Mechanism"]
-
-    entry --> query --> loop
-    loop --- loop_inner
-    loop --> tools
-    loop --> perm
-    perm -.->|Permission Constraints| tools
-    tools --> ext
-
-    classDef module fill:#f0f7ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a5f
-    classDef inner fill:#f8fafc,stroke:#93c5fd,stroke-width:1px,color:#475569
-    classDef extmod fill:#fef9f0,stroke:#f59e0b,stroke-width:2px,color:#78350f
-    class entry,query,loop,module module
-    class p1,p2,p3,p4 inner
-    class tools,perm,ext extmod
-```
+![Claude Code Architecture Overview](../assets/fundamentals/claude_code_architecture_overview.png)
 
 This diagram reveals the layered nature of Claude Code's architecture: from the user entry point at the top to the extension layer at the bottom, each layer has clear responsibilities and interface boundaries. The dialog main loop is the "heart" of the entire system, driving data flow between the various subsystems.
 
