@@ -263,50 +263,7 @@ This algorithm can be compared to an assembly line: imagine a factory with multi
 
 For example, if the model requests four tool calls: `[Read(a.ts), Read(b.ts), Bash(ls), Read(c.ts)]`, the partitioning result is:
 
-```mermaid
-flowchart LR
-    subgraph input["Input Sequence"]
-        direction LR
-        t1["Read(a.ts)<br/>Safe=Yes"] ~~~ t2["Read(b.ts)<br/>Safe=Yes"] ~~~ t3["Bash(ls)<br/>Safe=No"] ~~~ t4["Read(c.ts)<br/>Safe=Yes"]
-    end
-
-    subgraph b1["Batch 1: Concurrency Safe = true -- Parallel Execution"]
-        direction LR
-        b1a["Read(a.ts)"] ~~~ b1b["Read(b.ts)"]
-    end
-
-    subgraph b2["Batch 2: Concurrency Safe = false -- Serial Execution"]
-        b2a["Bash(ls)"]
-    end
-
-    subgraph b3["Batch 3: Concurrency Safe = true -- Parallel Execution"]
-        b3a["Read(c.ts)"]
-    end
-
-    input --> b1 --> b2 --> b3
-
-    classDef safe fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534
-    classDef unsafe fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#991b1b
-    class t1,t2,t4,b1,b1a,b1b,b3,b3a safe
-    class t3,b2,b2a unsafe
-```
-
-```mermaid
-flowchart LR
-    subgraph timeline["Execution Timeline"]
-        direction LR
-        batch1["Batch 1: Read(a.ts) ‖ Read(b.ts)"]
-        batch2["Batch 2: Bash(ls)"]
-        batch3["Batch 3: Read(c.ts)"]
-    end
-
-    batch1 --> batch2 --> batch3
-
-    note["Note: Batch 3 must wait for Batch 2 to complete<br/>because Bash may have side effects"]
-
-    classDef batch fill:#f0f7ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a5f
-    class batch1,batch2,batch3 batch
-```
+![Concurrency partitioning example showing tool call batching: Read operations grouped together for parallel execution, followed by Bash command in separate batch, then remaining read and edit operations](../assets/fundamentals/tool-partitioning-example.png)
 
 The concurrency limit for parallel execution is controlled by an environment variable, defaulting to 10.
 
@@ -320,19 +277,7 @@ The impact of this design is significant. Suppose the model requests five tool c
 
 Each tracked tool has a four-stage state machine:
 
-```mermaid
-stateDiagram-v2
-    [*] --> queued : Tool enqueued
-    queued --> executing : Execution conditions met
-    executing --> completed : Execution complete
-    completed --> yielded : Sequential turn to output
-    yielded --> [*] : Lifecycle ends
-
-    note_right of queued : Waiting for execution conditions
-    note_right of executing : Check concurrency conditions<br/>Start when no tools executing or all are concurrency-safe
-    note_right of completed : Waiting for sequential turn to output
-    note_right of yielded : Result has been yielded
-```
+![Four-stage state machine of StreamingToolExecutor: queued → executing → completed → yielded](../assets/fundamentals/streaming-tool-executor-state-machine.png)
 
 - **queued**: The tool has been enqueued, waiting for execution conditions to be met.
 - **executing**: Currently executing. Before execution, concurrency conditions are checked: execution is allowed to start only when no tools are executing, or all executing tools are concurrency-safe.

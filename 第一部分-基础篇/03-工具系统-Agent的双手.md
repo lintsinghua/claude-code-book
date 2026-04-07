@@ -263,50 +263,7 @@ AgentTool 在工具系统中有几个特殊属性：
 
 举例来说，如果模型请求了四个工具调用：`[Read(a.ts), Read(b.ts), Bash(ls), Read(c.ts)]`，分区结果为：
 
-```mermaid
-flowchart LR
-    subgraph input["输入序列"]
-        direction LR
-        t1["Read(a.ts)<br/>安全=是"] ~~~ t2["Read(b.ts)<br/>安全=是"] ~~~ t3["Bash(ls)<br/>安全=否"] ~~~ t4["Read(c.ts)<br/>安全=是"]
-    end
-
-    subgraph b1["Batch 1: 并发安全 = true — 并行执行"]
-        direction LR
-        b1a["Read(a.ts)"] ~~~ b1b["Read(b.ts)"]
-    end
-
-    subgraph b2["Batch 2: 并发安全 = false — 串行执行"]
-        b2a["Bash(ls)"]
-    end
-
-    subgraph b3["Batch 3: 并发安全 = true — 并行执行"]
-        b3a["Read(c.ts)"]
-    end
-
-    input --> b1 --> b2 --> b3
-
-    classDef safe fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534
-    classDef unsafe fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#991b1b
-    class t1,t2,t4,b1,b1a,b1b,b3,b3a safe
-    class t3,b2,b2a unsafe
-```
-
-```mermaid
-flowchart LR
-    subgraph timeline["执行时间线"]
-        direction LR
-        batch1["Batch 1: Read(a.ts) ‖ Read(b.ts)"]
-        batch2["Batch 2: Bash(ls)"]
-        batch3["Batch 3: Read(c.ts)"]
-    end
-
-    batch1 --> batch2 --> batch3
-
-    note["注意：Batch 3 必须等 Batch 2 完成<br/>因为 Bash 可能有副作用"]
-
-    classDef batch fill:#f0f7ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a5f
-    class batch1,batch2,batch3 batch
-```
+![工具调用并发分区示例：Read和Read可并行，Bash中断其他操作，后续Read需串行](../assets/fundamentals/tools_partition_example.png)
 
 并发执行的并发度上限由环境变量控制，默认为 10。
 
@@ -320,19 +277,7 @@ flowchart LR
 
 每个被追踪的工具拥有四阶段状态机：
 
-```mermaid
-stateDiagram-v2
-    [*] --> queued : 工具入队
-    queued --> executing : 执行条件满足
-    executing --> completed : 执行完成
-    completed --> yielded : 顺序轮到输出
-    yielded --> [*] : 生命周期结束
-
-    note_right of queued : 等待执行条件满足
-    note_right of executing : 检查并发条件<br/>无工具在执行或全部并发安全时启动
-    note_right of completed : 等待顺序轮到输出
-    note_right of yielded : 结果已产出
-```
+![工具状态机示例：queued → executing → completed → yielded](../assets/fundamentals/tools_state_machine.png)
 
 - **queued**：工具已入队，等待执行条件满足。
 - **executing**：正在执行。执行前会检查并发条件：只有当没有工具在执行，或所有执行中的工具都是并发安全时，才允许开始执行。

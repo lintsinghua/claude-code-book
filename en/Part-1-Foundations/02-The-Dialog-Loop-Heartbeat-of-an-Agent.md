@@ -21,36 +21,7 @@ This design choice deserves more space to fully understand. In traditional progr
 
 Faced with these requirements, the traditional function call model falls short. Async generators provide the perfect answer: they act like a "coroutine" that can be paused and resumed at any time, establishing a real-time event pipeline between the "producer" (the dialog loop) and the "consumer" (the UI rendering layer).
 
-```mermaid
-flowchart TD
-    subgraph layer1["Layer 1: Streaming Output"]
-        direction LR
-        e1["Event 1"] -->|"yield"| e2["Event 2"] -->|"yield"| e3["Event 3"]
-    end
-
-    note1["UI renders each event immediately; user does not need to wait for completion"]
-
-    subgraph layer2["Layer 2: Cancellability"]
-        cancel["Caller can invoke generator.return() at any time to terminate"]
-        clean["Triggers finally block for resource cleanup"]
-        scene2["Corresponding scenario: user presses Ctrl+C to interrupt"]
-        cancel --> clean --> scene2
-    end
-
-    subgraph layer3["Layer 3: Backpressure Control"]
-        bp["When consumer processing speed < producer speed, generator auto-pauses"]
-        mem["Prevents event accumulation leading to memory overflow"]
-        scene3["Corresponding scenario: tool execution produces large amounts of output"]
-        bp --> mem --> scene3
-    end
-
-    layer1 --- note1
-
-    classDef layer fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    classDef note fill:#f0fdf4,stroke:#22c55e,stroke-width:1px,color:#166534
-    class layer1,layer2,layer3 layer
-    class note1 note
-```
+![Async Generator Diagram](../assets/fundamentals/async_generator_diagram.png)
 
 ### Function Signature and the AsyncGenerator Pattern
 
@@ -86,45 +57,7 @@ The events flowing through the dialog loop can be categorized as follows. Togeth
 
 Claude Code's messaging system defines clear role divisions. The core message types include:
 
-```mermaid
-classDiagram
-    class UserMessage {
-        +User input
-        +Carries tool execution results (tool_result)
-    }
-    class AssistantMessage {
-        +Text blocks
-        +Tool call blocks (tool_use)
-    }
-    class SystemMessage {
-        +System-level notifications
-        +Permission changes
-        +Model fallback prompts
-    }
-    class AttachmentMessage {
-        +File change notifications
-        +Memory file contents
-        +Task notifications
-    }
-    class ProgressMessage {
-        +Tool execution progress
-        +Bash output stream
-        +File read progress
-    }
-    class TombstoneMessage {
-        +Marks message as deprecated
-        +Triggered by streaming fallback
-    }
-    class ToolUseSummaryMessage {
-        +Tool call summary
-        +UI collapsed display
-    }
-
-    UserMessage : API role is user
-    AssistantMessage : Can contain both text and tool calls
-    SystemMessage : Does not participate in API communication
-    TombstoneMessage : Marks message as "invalidated"
-```
+![Message Type Diagram](../assets/fundamentals/message_type_diagram.png)
 
 - **UserMessage**: The user's input message, which also carries tool execution results (tool_result). From the API's perspective, tool results are always sent with the user role. This design may seem counterintuitive -- why are tool results in the "user" role? The reason is that at the API protocol level there are only three roles (system/user/assistant), and tool results need to be "seen" by the model, so they must be sent in the user role. This is a classic case of an engineering constraint driving a design decision.
 - **AssistantMessage**: The message returned by the model, which may contain text blocks and tool_use blocks. When the model detects that a tool needs to be called, the response will include a content block with `type: 'tool_use'`. A key characteristic of AssistantMessage is that it may simultaneously contain text and tool calls -- the model might first output an explanation ("Let me check your package.json file"), then append a tool call. This "talking while doing" pattern makes the Agent's behavior more transparent.
@@ -142,36 +75,7 @@ Now let's follow a complete Turn -- from the user pressing the Enter key to the 
 
 Using a medical analogy, a Turn is like a complete diagnostic process: the doctor (model) first reviews the medical record (context preprocessing), then communicates with the patient (API call), may need to order tests (tool calls), and after receiving the test results (tool execution), makes a diagnosis (final response). If the test results are insufficient for a diagnosis, the doctor orders more tests (next loop iteration).
 
-```mermaid
-flowchart TD
-    input["User Input: Help me fix this bug"]
-
-    phase1["Phase 1: State Initialization<br/>Destructure variables needed for current iteration from state object<br/>Build new mutable state container"]
-
-    phase2["Phase 2: Context Preprocessing (Seven-Step Pipeline)<br/>1. Tool result budget -> 2. Snip compression -> 3. Microcompact<br/>4. Context Collapse -> 5. System prompt assembly<br/>6. Autocompact -> 7. Token block check"]
-
-    phase3["Phase 3: API Call (Streaming Reception)<br/>Send system prompt + message history + tool definitions<br/>Receive streaming response events<br/>Collect assistant messages and tool call blocks"]
-
-    decision{"Tool calls?"}
-
-    phase4["Phase 4: Tool Call Execution<br/>Permission check · Concurrency partition scheduling<br/>Streaming/batch execution · Instant progress output"]
-
-    terminal["Termination Path<br/>Check stop hooks · Check token budget<br/>Return Terminal state"]
-
-    phase5["Phase 5: Tool Result Backfill & Next Round<br/>Attachment injection · Package new state object<br/>continue back to Phase 1"]
-
-    input --> phase1 --> phase2 --> phase3 --> decision
-    decision -->|Yes| phase4 --> phase5
-    decision -->|No| terminal
-    phase5 -.->|Next iteration| phase1
-
-    classDef phase fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    classDef term fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#991b1b
-    classDef dec fill:#fef9f0,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    class input,phase1,phase2,phase3,phase4,phase5 phase
-    class terminal term
-    class decision dec
-```
+![Dialog Loop Flow Diagram](../assets/fundamentals/dialog_loop_flow_diagram.png)
 
 ### Phase 1: State Initialization
 
@@ -252,34 +156,7 @@ The dialog loop's termination occurs at multiple points, with each termination r
 
 These termination reasons can also be categorized into three groups:
 
-```mermaid
-flowchart TD
-    subgraph normal["Normal Termination"]
-        completed["completed<br/>Agent completed the task"]
-    end
-
-    subgraph user_stop["User-Initiated Termination"]
-        aborted_s["aborted_streaming<br/>User Ctrl+C interrupt"]
-        aborted_t["aborted_tools<br/>Interrupt during tool execution"]
-    end
-
-    subgraph error["Abnormal Termination"]
-        max_turns["max_turns<br/>Maximum loop count reached"]
-        blocking["blocking_limit<br/>Token exceeds hard limit"]
-        too_long["prompt_too_long<br/>Context too long and recovery failed"]
-        model_err["model_error<br/>API call exception"]
-        stop_hook["stop_hook_prevented<br/>Stop hook prevented"]
-        hook_stop["hook_stopped<br/>Tool Hook prevented"]
-        img_err["image_error<br/>Image size/format error"]
-    end
-
-    classDef ok fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534
-    classDef user fill:#fef9f0,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    classDef err fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#991b1b
-    class completed ok
-    class aborted_s,aborted_t user
-    class max_turns,blocking,too_long,model_err,stop_hook,hook_stop,img_err err
-```
+![Termination Reason Categories](../assets/fundamentals/termination_reason_categories.png)
 
 - **Normal Termination**: `completed` -- the Agent completed the task
 - **User-Initiated Termination**: `aborted_streaming`, `aborted_tools` -- the user decided to stop
@@ -341,35 +218,7 @@ The elegance of this three-element model (State + Continue + Terminal) lies in h
 
 The entire loop's state transitions can be summarized in the following state machine:
 
-```mermaid
-flowchart TD
-    init["Initialization"] --> preprocess["Preprocessing"]
-    preprocess --> api["API Call"]
-    api --> has_tool{"Tool calls?"}
-
-    has_tool -->|No tools| no_tool["Termination check"]
-    has_tool -->|Has tools| yes_tool["Tool Execution"]
-
-    no_tool --> done{"Terminal result"}
-    done -->|Complete| terminal1["Terminal: completed"]
-    done -->|Stop hook| terminal2["Terminal: stop_hook_prevented"]
-    done -->|Recovery| recovery_path["continue -> recovery"]
-
-    yes_tool --> result["Result Backfill"]
-    result --> next_turn["continue -> next_turn"]
-    next_turn -.->|Next round| init
-
-    recovery_path -.->|Retry| init
-
-    classDef state fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#1565C0
-    classDef decision fill:#fef9f0,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    classDef terminal fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#991b1b
-    classDef cont fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#166534
-    class init,preprocess,api,no_tool,yes_tool,result state
-    class has_tool,done decision
-    class terminal1,terminal2 terminal
-    class next_turn,recovery_path cont
-```
+![State Transition Diagram](../assets/fundamentals/state_transition_diagram.png)
 
 Key transition paths include:
 
