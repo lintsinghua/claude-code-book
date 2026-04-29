@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/lintsinghua-claude-code-book-badge.png)](https://mseep.ai/app/lintsinghua-claude-code-book)
+
 <div align="center">
 
 **[English](en/README.md)** | **中文**
