@@ -129,23 +129,23 @@ Before analyzing Claude Code's architecture, let's widen our perspective and loo
 ```mermaid
 flowchart TD
     A["2021.06 GitHub Copilot Technical Preview<br/>First LLM integration into editor"] -->
-    B["2022.12 ChatGPT Launch<br/>Proves LLM's general conversational ability"] -->
+    B["2022.11 ChatGPT Launch<br/>Proves LLM's general conversational ability"] -->
     C["2023.03 GPT-4 + Function Calling<br/>LLM transforms from text generator to instruction orchestrator"] -->
     D["2023.06 OpenAI Code Interpreter<br/>LLM gains code execution capability for the first time"] -->
     E["2023.11 Claude 2.1 + Tool Use<br/>200K context window"] -->
-    F["2024.01 Devin Launch<br/>First AI software engineer"] -->
+    F["2024.03 Devin Launch<br/>First AI software engineer"] -->
     G["2024.08 Cursor Agent Mode<br/>Editor-integrated Agent"] -->
     H["2024.10 Anthropic Computer Use<br/>LLM can operate GUI"] -->
+    J["2024.11 Anthropic Publishes MCP<br/>Standardized Agent communication protocol"] -->
     I["2025.02 Claude Code Launch<br/>Terminal-native Agent"] -->
-    J["2025.11 Anthropic Publishes MCP<br/>Standardized Agent communication protocol"] -->
     K["2026.03 Source Code Accidentally Exposed<br/>Community deeply examines Agent Harness"] -->
     L["Now ← You are here"]
 
     classDef event fill:#f0f7ff,stroke:#3b82f6,stroke-width:1px,color:#1e3a5f
     classDef milestone fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e40af
     classDef current fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    class A,B,C,D,E,F,G,H event
-    class I,J,K milestone
+    class A,B,C,D,E,F,G,H,J event
+    class I,K milestone
     class L current
 ```
 
