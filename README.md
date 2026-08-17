@@ -180,7 +180,13 @@
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=lintsinghua/claude-code-book&type=Date)](https://star-history.com/#lintsinghua/claude-code-book&Date)
+<a href="https://star-history.com/#lintsinghua/claude-code-book&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="docs/images/star-history-dark.svg" />
+   <source media="(prefers-color-scheme: light)" srcset="docs/images/star-history-light.svg" />
+   <img alt="Star History Chart" src="docs/images/star-history-light.svg" />
+ </picture>
+</a>
 
 ---
 
