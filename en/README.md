@@ -176,7 +176,7 @@ Issues and PRs welcome — fix technical errors, supplement practical examples, 
 
 ## Star History
 
-<a href="https://star-history.com/#lintsinghua/claude-code-book&Date">
+<a href="https://star-history.dera.page/#lintsinghua/claude-code-book&Date">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="../docs/images/star-history-dark.svg" />
    <source media="(prefers-color-scheme: light)" srcset="../docs/images/star-history-light.svg" />
