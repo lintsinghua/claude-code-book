@@ -821,10 +821,10 @@ flowchart TD
 stateDiagram-v2
     [*] --> Closed : 正常运行
 
-    Closed --> Closed : 操作成功\n重置 consecutiveFailures
+    Closed --> Closed : 操作成功<br/>重置 consecutiveFailures
     Closed --> Open : 连续失败 >= 3 次
 
-    Open --> Fallback : 切换到 fallback 模型\n清理状态后重试
+    Open --> Fallback : 切换到 fallback 模型<br/>清理状态后重试
 
     state Open {
         [*] --> 退出循环
@@ -836,8 +836,8 @@ stateDiagram-v2
         降级执行 : 确保系统在部分故障时仍可用
     }
 
-    note right of Closed : 正常状态\nconsecutiveFailures = 0
-    note right of Open : 失败状态\nconsecutiveFailures >= 3\n大概率是系统性问题
+    note right of Closed : 正常状态<br/>consecutiveFailures = 0
+    note right of Open : 失败状态<br/>consecutiveFailures >= 3<br/>大概率是系统性问题
 ```
 
 **断路器模式的设计维度：** 实现断路器时需要决定以下参数：

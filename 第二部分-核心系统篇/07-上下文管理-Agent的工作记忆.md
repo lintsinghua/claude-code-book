@@ -228,7 +228,7 @@ flowchart TD
 
     class step1,step2,step3,step5,step6 step
     class step4 decision
-    class result,output
+    class result output
 ```
 
 `CompactionResult` 接口描述了压缩产物的完整结构，包含：边界标记（boundaryMarker）、摘要消息（summaryMessages）、重新注入的附件（attachments）、钩子结果（hookResults）、部分压缩时保留的消息（messagesToKeep），以及压缩前后的令牌计数。

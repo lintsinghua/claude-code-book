@@ -17,13 +17,13 @@ These three waves can be summarized in a concise evolution diagram:
 ```mermaid
 flowchart LR
     subgraph wave1["2021-2022"]
-        A["Code Completion\nInline Complete"]
+        A["Code Completion<br/>Inline Complete"]
     end
     subgraph wave2["2023-2024"]
-        B["Chat Assistant\nChat Assisted"]
+        B["Chat Assistant<br/>Chat Assisted"]
     end
     subgraph wave3["2025 to present"]
-        C["Autonomous Agent\nAgent Autonomy"]
+        C["Autonomous Agent<br/>Agent Autonomy"]
     end
 
     wave1 --> wave2 --> wave3
@@ -75,7 +75,7 @@ On March 31, 2026, an unexpected event propelled Claude Code into the spotlight 
 
 It was this discussion that made us realize: Agent Harness had evolved from an obscure engineering concept into a topic the entire developer community cares about. But most of the discussions on the market were scattered and fragmented -- some focused on tool call design, others discussed permission models, and still others analyzed streaming architecture, yet no one had assembled these pieces into a complete picture.
 
-This book attempts to fill that gap. We do not rely on any unauthorized materials; instead, based on Claude Code's public documentation, product behavior, and community discussions, we systematically deduce and explain the design principles of Agent Harness.
+This book attempts to fill that gap. We explain Agent Harness design using public documentation, product behavior, and community discussion.
 
 ### Why Now
 
@@ -139,7 +139,7 @@ This book is divided into four parts, organized from macro to micro, from concep
 flowchart TD
     subgraph part1["Part 1: Foundations (Chapters 1-4)"]
         direction LR
-        ch1["Chapter 1\nNew Paradigm\nPanoramic Overview"] --> ch2["Chapter 2\nDialog Loop\nAgent Heartbeat"] --> ch3["Chapter 3\nTool System\nAgent Hands"] --> ch4["Chapter 4\nPermission Pipeline\nAgent Guardrails"]
+        ch1["Chapter 1<br/>New Paradigm<br/>Panoramic Overview"] --> ch2["Chapter 2<br/>Dialog Loop<br/>Agent Heartbeat"] --> ch3["Chapter 3<br/>Tool System<br/>Agent Hands"] --> ch4["Chapter 4<br/>Permission Pipeline<br/>Agent Guardrails"]
     end
 
     subgraph part2["Part 2: Core (Chapters 5-8)"]

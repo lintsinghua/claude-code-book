@@ -11,11 +11,11 @@
 
 ### 13.1.1 QueryEngine: The Manager of Query Lifecycle
 
-Claude Code's core interaction model is streaming. `QueryEngine` is the owner of query lifecycle and session state, extracting core logic originally scattered across query functions into an independent class, serving both headless/SDK paths and REPL interaction paths.
+Claude Code's core interaction model is streaming. `QueryEngine` is the owner of query lifecycle and session state, extracting core logic originally scattered across query functions into an independent class, serving the headless/SDK path. This chapter covers the headless/SDK implementation; REPL reuse is a future integration phase.
 
 One session corresponds to one `QueryEngine` instance. Each time a user sends a message, `submitMessage()` starts a new turn, with state (messages, file cache, usage, etc.) persisting across turns. `QueryEngine` internally maintains core state including message list, abort controller, permission denial records, usage statistics, file state cache, and discovered skill names.
 
-**Why introduce a class instead of using functional APIs directly?** The answer lies in the complexity of state management. If session state is passed as parameters between functions, the call chain becomes extremely fragile -- any new state field requires modifying all function signatures. Classes encapsulate state as instance properties; adding new state only requires initialization in the constructor without breaking existing interfaces. This also binds the state's lifecycle to the instance: destroying the instance destroys the state, avoiding memory leak risks from global state.
+**Why introduce a class instead of using functional APIs directly?** The answer lies in the complexity of state management. If session state is passed as parameters between functions, the call chain becomes extremely fragile -- any new state field requires modifying all function signatures. Classes encapsulate state as instance properties; adding new state only requires initialization in the constructor without breaking existing interfaces. This also binds the state's lifecycle to the instance: unreachable state can be garbage-collected, but timers, listeners, subprocesses, and external references still need explicit cleanup.
 
 ```mermaid
 classDiagram
@@ -46,7 +46,7 @@ classDiagram
     QueryEngine ..> QueryEngine_PropertyNotes : field descriptions
 ```
 
-QueryEngine's design embodies the "single ownership" principle: session state has one and only one owner. This is particularly important in concurrent scenarios -- if multiple components simultaneously modify the message list, it could lead to disordered messages or duplicate processing. Class instantiation provides a natural mutual exclusion boundary for state.
+QueryEngine's design embodies the "single ownership" principle: session state has one and only one owner. This is particularly important in concurrent scenarios -- if multiple components simultaneously modify the message list, it could lead to disordered messages or duplicate processing. An instance defines an ownership boundary, not a lock: overlapping asynchronous calls still require serialization or explicit concurrency control.
 
 > **Cross-reference:** QueryEngine's core query loop is analyzed in detail in Chapter 2 "The Dialog Loop -- Heartbeat of an Agent". This chapter focuses on its streaming characteristics and performance optimization mechanisms.
 
@@ -140,10 +140,10 @@ stateDiagram-v2
     [*] --> queued : Tool added to executor
 
     queued --> executing : canExecute = true
-    queued --> queued : canExecute = false\nwait for next check
+    queued --> queued : canExecute = false<br/>wait for next check
 
     executing --> completed : Execution complete
-    executing --> cancelled : Execution failed (Bash)\nsiblingAbort cancels all parallel siblings
+    executing --> cancelled : Execution failed (Bash)<br/>siblingAbort cancels all parallel siblings
 
     completed --> yielded : Arrived in order, output result
     yielded --> [*]
@@ -291,12 +291,12 @@ The top of Claude Code's entry file is the core of the parallel prefetching stra
 
 Both prefetch results are awaited in subsequent initialization stages, at which point the subprocesses are likely complete with almost zero wait.
 
-Let's calculate the benefit of parallel prefetching with specific numbers:
+The following is an idealized critical-path calculation, not an end-to-end benchmark. Assume independent tasks, simultaneous starts, and negligible process-launch overhead:
 
 ```mermaid
 gantt
     title Startup Performance: Serial vs Parallel Prefetch
-    dateFormat X
+    dateFormat x
     axisFormat %Lms
 
     section Before Optimization (Serial)
@@ -664,7 +664,7 @@ Run this chapter's "Startup Optimization Checklist" (Section 13.3.4) on the Agen
 
 2. **StreamingToolExecutor implements "execute on arrival"**, concurrency-safe tools can run in parallel, non-safe tools execute serially, results buffered for ordered output. This design achieves a pragmatic balance between latency and consistency -- better to wait for one serial tool than risk parallel execution of potentially conflicting operations.
 
-3. **The core idea of startup performance optimization is parallelization**: Let I/O-intensive operations (MDM read, keychain read) execute in parallel with CPU-intensive operations (module evaluation). Claude Code reduced startup latency from 160ms to 65ms through parallel prefetching at the entry file top, saving nearly 60%.
+3. **The core idea of startup performance optimization is parallelization**: Let I/O-intensive operations (MDM read, keychain read) execute in parallel with CPU-intensive operations (module evaluation). The illustrative critical-path calculation reduces 160ms to 65ms; actual startup gains require measurements with a specified machine, version, cache state, and endpoint.
 
 4. **Cost tracking uses a two-layer function design**: `updateUsage` handles incremental data from single streaming events (using `> 0` guard to prevent true values from being overwritten), `accumulateUsage` accumulates totals across messages. Different lifecycle components (QueryEngine vs forked agent) use different accumulation granularity strategies.
 

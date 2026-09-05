@@ -6,7 +6,7 @@
 **学习目标：** 阅读本章后，你将能够：
 
 - 理解 MCP（Model Context Protocol）诞生的技术背景、设计哲学和它所解决的核心问题
-- 掌握 8 种传输协议的适用场景、性能特征和选型策略
+- 掌握 8 类连接配置的适用场景、性能特征和选型策略
 - 深入分析 7 层配置作用域和三层安全策略的设计逻辑
 - 理解 Bridge 系统的双向通信架构、SSE 序列号延续和多会话安全设计
 - 掌握 MCP 工具的发现、映射、命名和权限模型的完整链路
@@ -30,18 +30,18 @@ flowchart TD
 
     subgraph Protocol["MCP 协议层"]
         direction LR
-        Stdio["stdio\n进程间管道"]
-        SSE["SSE / HTTP\n远程 HTTP"]
-        WS["WebSocket\n全双工通信"]
-        SDK["SDK\n进程内调用"]
+        Stdio["stdio<br/>进程间管道"]
+        SSE["SSE / HTTP<br/>远程 HTTP"]
+        WS["WebSocket<br/>全双工通信"]
+        SDK["SDK<br/>进程内调用"]
     end
 
     subgraph Servers["MCP 服务器（外部工具）"]
         direction LR
-        S1["文件系统\n服务器"]
-        S2["GitHub\n服务器"]
-        S3["数据库\n服务器"]
-        S4["自定义\n服务器"]
+        S1["文件系统<br/>服务器"]
+        S2["GitHub<br/>服务器"]
+        S3["数据库<br/>服务器"]
+        S4["自定义<br/>服务器"]
     end
 
     ToolSys --> Protocol
@@ -71,11 +71,11 @@ MCP 的设计遵循三个核心原则，这些原则贯穿了 Claude Code 的整
 
 ```mermaid
 flowchart TD
-    Center["MCP\n设计哲学"]
+    Center["MCP<br/>设计哲学"]
 
-    Center --> P1["协议即契约\nProtocol as Contract\n先声明、后使用\n严格消息格式与能力声明"]
-    Center --> P2["传输无关性\nTransport Agnostic\n不绑定特定传输\nstdio / HTTP / WS 均可"]
-    Center --> P3["安全边界内嵌\nSecurity by Design\n默认不信任\n每层都有安全策略"]
+    Center --> P1["协议即契约<br/>Protocol as Contract<br/>先声明、后使用<br/>严格消息格式与能力声明"]
+    Center --> P2["传输无关性<br/>Transport Agnostic<br/>不绑定特定传输<br/>stdio / HTTP / WS 均可"]
+    Center --> P3["安全边界内嵌<br/>Security by Design<br/>默认不信任<br/>每层都有安全策略"]
 
     P1 -.->|"能力协商"| P2
     P2 -.->|"传输层安全"| P3
@@ -97,19 +97,19 @@ flowchart TD
 
 > **交叉引用：** MCP 工具被映射为 Claude Code 内部 Tool 对象后，会完全融入第3章描述的工具系统。这意味着 MCP 工具同样经过权限管线（第4章）的四阶段检查，同样参与并发调度策略，同样可以通过钩子系统（第8章）进行拦截和增强。
 
-### 12.1.2 支持的传输协议
+### 12.1.2 连接配置与底层传输
 
-Claude Code 支持 8 种 MCP 传输协议，每种协议针对不同的部署场景和网络拓扑进行了优化。理解这些协议的适用场景，是设计高效 MCP 集成架构的基础。
+本章讨论的 `McpServerConfigSchema` 定义了 8 类连接配置，包含底层传输、IDE 专用变体、SDK 集成和代理配置，不能将其等同于 MCP 标准定义了 8 种独立传输协议。选型时应区分传输方式与部署适配层。
 
-| 协议类型 | 配置类型 | 传输方式 | 延迟特征 | 适用场景 |
+| 配置类别 | 配置类型 | 传输方式 | 延迟特征 | 适用场景 |
 |---------|---------|---------|---------|---------|
-| `stdio` | `McpStdioServerConfig` | 标准输入/输出管道 | 最低（进程内通信） | 本地开发工具、文件系统操作、CLI 工具封装 |
+| `stdio` | `McpStdioServerConfig` | 标准输入/输出管道 | 本地进程间通信 | 本地开发工具、文件系统操作、CLI 工具封装 |
 | `sse` | `McpSSEServerConfig` | Server-Sent Events | 网络延迟 | 远程 HTTP 服务、云端部署的 MCP 服务器 |
 | `sse-ide` | `McpSSEIDEServerConfig` | SSE + IDE 元数据 | 本地网络 | IDE 扩展专用，包含 `ideName` 标识 |
 | `http` | `McpHTTPServerConfig` | HTTP Streamable | 网络延迟 | MCP 规范新协议，支持流式响应 |
 | `ws` | `McpWebSocketServerConfig` | WebSocket 全双工 | 网络延迟 | 需要实时双向通信的场景 |
 | `ws-ide` | `McpWebSocketIDEServerConfig` | WebSocket + IDE 元数据 | 本地网络 | IDE 扩展专用，需要低延迟双向通信 |
-| `sdk` | `McpSdkServerConfig` | 进程内函数调用 | 近零延迟 | SDK 内部调用，不启动实际进程或网络连接 |
+| `sdk` | `McpSdkServerConfig` | 进程内函数调用 | 无外部传输跳转 | SDK 内部调用，不启动实际进程或网络连接 |
 | `claudeai-proxy` | `McpClaudeAIProxyServerConfig` | Claude.ai 代理 | 网络延迟 | Claude.ai 平台代理服务器 |
 
 **传输协议选型决策树**
@@ -119,20 +119,19 @@ Claude Code 支持 8 种 MCP 传输协议，每种协议针对不同的部署场
 ```mermaid
 flowchart TD
     START{"需要集成 MCP 服务器？"}
-    START -->|"本地机器"| STDIO["首选"]
-    STDIO --> IDE{"是 IDE 扩展？"}
+    START -->|"本地机器"| IDE{"是 IDE 扩展？"}
     IDE -->|"Yes"| SSE_IDE["sse-ide / ws-ide"]
-    IDE -->|"No"| STDIO
+    IDE -->|"No"| STDIO["stdio"]
     START -->|"远程服务器"| REMOTE{"需要双向推送？"}
     REMOTE -->|"No"| SSE_HTTP["sse 或 http"]
     REMOTE -->|"Yes"| WS["ws"]
-    START -->|"SDK 内嵌"| SDK["sdk（零开销）"]
+    START -->|"SDK 内嵌"| SDK["sdk（进程内）"]
     START -->|"Claude.ai 平台"| PROXY["claudeai-proxy"]
 ```
 
 **协议详解与适用场景分析**
 
-**stdio 协议**是最常见也是最推荐的类型。它通过 `command` 和 `args` 启动本地 MCP 服务器子进程，利用操作系统的标准输入/输出管道进行通信。这种方式的优势在于：零网络开销（数据在进程间通过内存缓冲区传递）、天然的安全隔离（子进程继承父进程的权限边界）、以及简单的生命周期管理（父进程退出时子进程自动终止）。绝大多数本地开发场景——文件系统访问、Git 操作、数据库客户端——都应优先选择 stdio。
+**stdio 协议**是最常见也是最推荐的类型。它通过 `command` 和 `args` 启动本地 MCP 服务器子进程，利用操作系统的标准输入/输出管道进行通信。这种方式的优势在于：零网络开销（数据在进程间通过内存缓冲区传递）、无需监听网络端口，以及可显式管理的生命周期。子进程并不是安全沙箱：继承的权限可能很宽，父进程退出也不保证子进程自动终止，仍需管理关闭、信号和回收。绝大多数本地开发场景——文件系统访问、Git 操作、数据库客户端——都应优先选择 stdio。
 
 ```json
 {
@@ -180,9 +179,9 @@ Claude Code 的 UI 层基于 React 构建。在 React 组件树中，如果每�
 flowchart TD
     subgraph Mgr["MCPConnectionManager"]
         subgraph CTX["React Context: reconnect / toggle"]
-            A["组件 A\nuseReconnect"]
-            B["组件 B\nuseToggle"]
-            C["组件 C\nuseReconn + Toggle"]
+            A["组件 A<br/>useReconnect"]
+            B["组件 B<br/>useToggle"]
+            C["组件 C<br/>useReconn + Toggle"]
         end
         A --> Pool
         B --> Pool
@@ -221,11 +220,11 @@ stateDiagram-v2
 ```mermaid
 flowchart LR
     subgraph legend["状态说明"]
-        C["Connected\n服务器已连接，工具可用"]
-        F["Failed\n连接失败，记录原因"]
-        N["NeedsAuth\n需要用户认证"]
-        P["Pending\n等待重连，指数退避"]
-        D["Disabled\n已禁用，不自动重连"]
+        C["Connected<br/>服务器已连接，工具可用"]
+        F["Failed<br/>连接失败，记录原因"]
+        N["NeedsAuth<br/>需要用户认证"]
+        P["Pending<br/>等待重连，指数退避"]
+        D["Disabled<br/>已禁用，不自动重连"]
     end
     classDef conn fill:#c8e6c9,stroke:#4CAF50,stroke-width:2px,color:#333
     classDef fail fill:#ffcdd2,stroke:#f44336,stroke-width:2px,color:#333
@@ -288,18 +287,18 @@ MCP 工具集成是将外部服务器的能力无缝融入 Claude Code 内部工
 ```mermaid
 flowchart LR
     subgraph Discovery["阶段1：工具发现"]
-        D1["MCP 服务器\nConnected 状态"] -->|"tools/list 请求"| D2["获取工具元信息\n名称 / 描述 / Schema"]
+        D1["MCP 服务器<br/>Connected 状态"] -->|"tools/list 请求"| D2["获取工具元信息<br/>名称 / 描述 / Schema"]
     end
 
     subgraph Mapping["阶段2：工具映射"]
-        M1["Unicode 清理"] --> M2["前缀决策\nmcp__server__tool"]
-        M2 --> M3["Tool 对象构造\n注解桥接"]
+        M1["Unicode 清理"] --> M2["前缀决策<br/>mcp__server__tool"]
+        M2 --> M3["Tool 对象构造<br/>注解桥接"]
     end
 
     subgraph Registration["阶段3：工具注册"]
         R1["权限检查"] --> R2{"alwaysLoad？"}
         R2 -->|"是"| R3["直接注入 System Prompt"]
-        R2 -->|"否"| R4["延迟加载\n首次调用时加载"]
+        R2 -->|"否"| R4["延迟加载<br/>首次调用时加载"]
     end
 
     D2 --> M1
@@ -424,23 +423,23 @@ MCP 工具的权限检查采用了"默认拒绝，显式允许"的安全原则�
 flowchart TD
     subgraph L1["第一层：企业策略 Enterprise Policy"]
         direction LR
-        D["deniedMcpServers\n黑名单，绝对拒绝"]
-        A["allowedMcpServers\n白名单，不在名单中则拒绝"]
+        D["deniedMcpServers<br/>黑名单，绝对拒绝"]
+        A["allowedMcpServers<br/>白名单，不在名单中则拒绝"]
     end
 
     subgraph L2["第二层：IDE 工具白名单"]
         direction LR
-        IDE["IDE 类型服务器\n仅允许 executeCode\n和 getDiagnostics"]
+        IDE["IDE 类型服务器<br/>仅允许 executeCode<br/>和 getDiagnostics"]
     end
 
     subgraph L3["第三层：用户权限配置 User Permissions"]
         direction LR
-        Allow["allow 规则\n自动允许匹配的工具"]
-        Deny["deny 规则\n自动拒绝匹配的工具"]
+        Allow["allow 规则<br/>自动允许匹配的工具"]
+        Deny["deny 规则<br/>自动拒绝匹配的工具"]
     end
 
     subgraph L4["第四层：运行时确认 Runtime Confirmation"]
-        Confirm["未被任何规则覆盖\n每次调用弹窗确认"]
+        Confirm["未被任何规则覆盖<br/>每次调用弹窗确认"]
     end
 
     L1 --> L2 --> L3 --> L4
@@ -484,19 +483,19 @@ MCP 服务器的配置有七个作用域，每个作用域对应不同的管理�
 ```mermaid
 flowchart TD
     subgraph HardConstraints["硬性约束层（不可覆盖）"]
-        ENT["enterprise\n组织级 — 企业批准的白名单/黑名单"]
-        MGD["managed\n管理级 — IT 管理员强制策略"]
+        ENT["enterprise<br/>组织级 — 企业批准的白名单/黑名单"]
+        MGD["managed<br/>管理级 — IT 管理员强制策略"]
     end
 
     subgraph SoftConfig["软性配置层（就近原则）"]
-        PROJ["project\n项目-共享 — 团队工具配置"]
-        USR["user\n用户全局 — 跨项目通用工具"]
-        LOC["local\n项目-个人 — 开发者个人工具"]
+        PROJ["project<br/>项目-共享 — 团队工具配置"]
+        USR["user<br/>用户全局 — 跨项目通用工具"]
+        LOC["local<br/>项目-个人 — 开发者个人工具"]
     end
 
     subgraph Temporary["临时层（会话级）"]
-        DYN["dynamic\n运行时临时添加"]
-        CAI["claudeai\n平台级连接器"]
+        DYN["dynamic<br/>运行时临时添加"]
+        CAI["claudeai<br/>平台级连接器"]
     end
 
     ENT --> PROJ
@@ -579,11 +578,11 @@ URL 模式匹配支持 `*` 通配符，可以灵活地匹配一组相关的服�
 
 ```mermaid
 flowchart TD
-    Input["对每个 MCP 服务器配置"] --> CheckSDK{"是否为\nSDK 类型？"}
-    CheckSDK -->|"是"| Allow["加入允许列表\n（豁免策略检查）"]
-    CheckSDK -->|"否"| CheckDeny{"匹配\ndeniedMcpServers？"}
+    Input["对每个 MCP 服务器配置"] --> CheckSDK{"是否为<br/>SDK 类型？"}
+    CheckSDK -->|"是"| Allow["加入允许列表<br/>（豁免策略检查）"]
+    CheckSDK -->|"否"| CheckDeny{"匹配<br/>deniedMcpServers？"}
     CheckDeny -->|"是"| Block1["加入阻止列表"]
-    CheckDeny -->|"否"| CheckAllow{"已定义 allowedMcpServers\n且不匹配？"}
+    CheckDeny -->|"否"| CheckAllow{"已定义 allowedMcpServers<br/>且不匹配？"}
     CheckAllow -->|"是"| Block2["加入阻止列表"]
     CheckAllow -->|"否"| Allow
 
@@ -629,9 +628,9 @@ SDK 服务器签名为 null，不做去重。这是因为 SDK 服务器可能通
 
 ```mermaid
 flowchart TD
-    Manual["手动配置\n（最高优先级）"]
-    Plugin["插件配置\n（中等优先级）"]
-    Connector["Claude.ai 连接器\n（最低优先级）"]
+    Manual["手动配置<br/>（最高优先级）"]
+    Plugin["插件配置<br/>（中等优先级）"]
+    Connector["Claude.ai 连接器<br/>（最低优先级）"]
     Manual -->|"覆盖"| Plugin
     Plugin -->|"覆盖"| Connector
 
@@ -708,9 +707,9 @@ Bridge 系统的复杂性来自它需要同时满足多个维度的需求：
 ```mermaid
 flowchart LR
     subgraph External["外部世界"]
-        VS["VS Code\nExtension"]
-        JB["JetBrains\nPlugin"]
-        CAI["claude.ai\n平台"]
+        VS["VS Code<br/>Extension"]
+        JB["JetBrains<br/>Plugin"]
+        CAI["claude.ai<br/>平台"]
     end
 
     subgraph BridgeCore["Bridge 核心"]
@@ -731,7 +730,7 @@ flowchart LR
     end
 
     subgraph CLI["CLI 内部"]
-        REPL["REPL\n会话管理"]
+        REPL["REPL<br/>会话管理"]
     end
 
     VS --> Router
@@ -776,18 +775,18 @@ CLI 中的对话消息、工具调用结果、状态更新等通过传输层发�
 flowchart TD
     Inbound["入站消息"] --> Type1{"消息类型判断"}
 
-    Type1 -->|"权限响应"| P1["第一重：权限响应\n用户在 IDE 中点击\n'允许' 或 '拒绝'"]
-    P1 --> PermPipeline["直接路由到权限管线\n无需额外检查"]
+    Type1 -->|"权限响应"| P1["第一重：权限响应<br/>用户在 IDE 中点击<br/>'允许' 或 '拒绝'"]
+    P1 --> PermPipeline["直接路由到权限管线<br/>无需额外检查"]
 
-    Type1 -->|"控制请求"| P2["第二重：控制请求\ninitialize / set_model\n/ interrupt 等"]
-    P2 --> CheckOutbound{"是否为\noutbound-only 模式？"}
+    Type1 -->|"控制请求"| P2["第二重：控制请求<br/>initialize / set_model<br/>/ interrupt 等"]
+    P2 --> CheckOutbound{"是否为<br/>outbound-only 模式？"}
     CheckOutbound -->|"是"| Reject["拒绝入站控制"]
     CheckOutbound -->|"否"| ExecCtrl["执行控制逻辑"]
 
-    Type1 -->|"用户消息"| P3["第三重：用户消息\n来自外部的新用户输入"]
-    P3 --> EchoFilter{"回声过滤\n是否已作为出站发送？"}
+    Type1 -->|"用户消息"| P3["第三重：用户消息<br/>来自外部的新用户输入"]
+    P3 --> EchoFilter{"回声过滤<br/>是否已作为出站发送？"}
     EchoFilter -->|"是"| Discard1["丢弃回声消息"]
-    EchoFilter -->|"否"| RedeliverFilter{"重投递过滤\n是否已处理过？"}
+    EchoFilter -->|"否"| RedeliverFilter{"重投递过滤<br/>是否已处理过？"}
     RedeliverFilter -->|"是"| Discard2["丢弃重复消息"]
     RedeliverFilter -->|"否"| Deliver["投递到 CLI 处理"]
 
@@ -844,10 +843,10 @@ flowchart TD
 ```mermaid
 flowchart TD
     Request["控制请求到达"] --> InitCheck{"是 initialize？"}
-    InitCheck -->|"是"| AllowInit["允许执行\n返回能力信息"]
-    InitCheck -->|"否"| OutboundCheck{"是 outbound-only\n模式？"}
-    OutboundCheck -->|"是"| Reject["拒绝，返回错误\n'需要启用 Remote Control'"]
-    OutboundCheck -->|"否"| Execute["执行控制逻辑\nset_model / interrupt / ..."]
+    InitCheck -->|"是"| AllowInit["允许执行<br/>返回能力信息"]
+    InitCheck -->|"否"| OutboundCheck{"是 outbound-only<br/>模式？"}
+    OutboundCheck -->|"是"| Reject["拒绝，返回错误<br/>'需要启用 Remote Control'"]
+    OutboundCheck -->|"否"| Execute["执行控制逻辑<br/>set_model / interrupt / ..."]
     Execute --> Result["返回执行结果"]
 
     classDef start fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#333
@@ -867,20 +866,20 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Interface["ReplBridgeTransport 统一接口"]
-        API["send(message)\nsubscribe(handler)\nconnect() / disconnect()"]
+        API["send(message)<br/>subscribe(handler)<br/>connect() / disconnect()"]
     end
 
     subgraph V1["v1 适配器 createV1ReplTransport"]
         direction LR
-        V1R["WebSocket\n读取"]
-        V1W["HTTP POST\n写入"]
+        V1R["WebSocket<br/>读取"]
+        V1W["HTTP POST<br/>写入"]
         V1Target["Session-Ingress"]
     end
 
     subgraph V2["v2 适配器 推荐"]
         direction LR
-        V2R["SSETransport\n读取"]
-        V2W["CCRClient\n写入"]
+        V2R["SSETransport<br/>读取"]
+        V2W["CCRClient<br/>写入"]
         V2Target["CCR v2 端点"]
     end
 
@@ -966,7 +965,7 @@ flowchart LR
         S1a["会话1: 读取 → token_A"]
         S2a["会话2: 刷新 Token"]
         G2["全局: OAUTH_TOKEN = token_B"]
-        S1b["会话1: 读取 → token_B\n不一致!"]
+        S1b["会话1: 读取 → token_B<br/>不一致!"]
         S1a --> G1
         S2a --> G2
         G2 --> S1b
@@ -974,10 +973,10 @@ flowchart LR
 
     subgraph v2Safe["v2 认证（安全的多会话）"]
         direction TB
-        C1["闭包1: token_A\n不可变"]
-        C2a["闭包2: token_A\n独立副本"]
+        C1["闭包1: token_A<br/>不可变"]
+        C2a["闭包2: token_A<br/>独立副本"]
         C2b["闭包2: 刷新 → token_B"]
-        C1c["闭包1: token_A\n不受影响"]
+        C1c["闭包1: token_A<br/>不受影响"]
         C2a --> C2b
         C2b -.->|"隔离"| C1c
     end
@@ -1060,14 +1059,14 @@ Bridge（远程控制）功能不是对所有用户开放的——它需要 clau
 
 ```mermaid
 flowchart TD
-    Start["Bridge 功能检查\ngetBridgeDisabledReason"] --> L1{"第1层：订阅类型\n是否为 claude.ai 订阅者？"}
-    L1 -->|"否：Bedrock/Vertex/Foundry"| Disabled1["Bridge 不可用\n需要 claude.ai 订阅"]
-    L1 -->|"是"| L2{"第2层：Profile 完整性\n是否有完整 profile scope？"}
-    L2 -->|"否：受限 token"| Disabled2["Bridge 不可用\nProfile 信息不完整"]
-    L2 -->|"是"| L3{"第3层：组织信息\n是否有组织 UUID？"}
-    L3 -->|"否：未关联组织"| Disabled3["Bridge 不可用\n缺少组织信息"]
-    L3 -->|"是"| L4{"第4层：功能标志\ntengu_ccr_bridge 是否开启？"}
-    L4 -->|"否：灰度未覆盖"| Disabled4["Bridge 不可用\n功能标志未开启"]
+    Start["Bridge 功能检查<br/>getBridgeDisabledReason"] --> L1{"第1层：订阅类型<br/>是否为 claude.ai 订阅者？"}
+    L1 -->|"否：Bedrock/Vertex/Foundry"| Disabled1["Bridge 不可用<br/>需要 claude.ai 订阅"]
+    L1 -->|"是"| L2{"第2层：Profile 完整性<br/>是否有完整 profile scope？"}
+    L2 -->|"否：受限 token"| Disabled2["Bridge 不可用<br/>Profile 信息不完整"]
+    L2 -->|"是"| L3{"第3层：组织信息<br/>是否有组织 UUID？"}
+    L3 -->|"否：未关联组织"| Disabled3["Bridge 不可用<br/>缺少组织信息"]
+    L3 -->|"是"| L4{"第4层：功能标志<br/>tengu_ccr_bridge 是否开启？"}
+    L4 -->|"否：灰度未覆盖"| Disabled4["Bridge 不可用<br/>功能标志未开启"]
     L4 -->|"是"| Enabled["Bridge 功能可用"]
 
     classDef check fill:#fff9c4,stroke:#FFC107,stroke-width:2px,color:#333
@@ -1086,13 +1085,13 @@ API 客户端的认证使用 OAuth Bearer Token，并支持 401 时的自动 Tok
 
 ```mermaid
 flowchart TD
-    Step1["1. 携带当前 Bearer Token\n发送 API 请求"] --> Step2{"2. 收到响应"}
+    Step1["1. 携带当前 Bearer Token<br/>发送 API 请求"] --> Step2{"2. 收到响应"}
     Step2 -->|"200 OK"| Success["请求成功"]
-    Step2 -->|"401 Unauthorized"| Step3["3. 使用 Refresh Token\n获取新的 Bearer Token"]
-    Step3 --> Step4["4. 使用新 Token\n重试原始请求"]
+    Step2 -->|"401 Unauthorized"| Step3["3. 使用 Refresh Token<br/>获取新的 Bearer Token"]
+    Step3 --> Step4["4. 使用新 Token<br/>重试原始请求"]
     Step4 --> Step5{"5. 重试结果"}
     Step5 -->|"200 OK"| Success
-    Step5 -->|"401 Unauthorized"| Fail["Bridge 功能不可用\n通知用户"]
+    Step5 -->|"401 Unauthorized"| Fail["Bridge 功能不可用<br/>通知用户"]
 
     classDef step fill:#e8f4f8,stroke:#2196F3,stroke-width:1.5px,color:#333
     classDef decision fill:#fff9c4,stroke:#FFC107,stroke-width:2px,color:#333
@@ -1225,7 +1224,7 @@ flowchart TD
 
 1. **MCP 的设计使命**：MCP 是 AI 世界的"USB-C 接口"，通过标准化协议解决工具集成的碎片化问题。其三大设计原则——协议即契约、传输无关性、安全边界内嵌——贯穿了 Claude Code 的整个 MCP 实现。
 
-2. **八种传输协议的分层设计**：从零开销的 SDK（进程内调用）到最低延迟的 stdio（进程间管道），从灵活部署的 SSE/HTTP（远程服务）到全双工的 WebSocket（实时通信），每种协议针对特定的部署场景和网络拓扑进行了优化。优先选择 stdio，只在必要时使用远程协议。
+2. **八类连接配置的分层设计**：这些配置包含本地进程管道、HTTP 连接、WebSocket 适配、SDK 调用和代理集成。选型应匹配两端实际支持的配置，并区分传输耗时与服务器执行耗时。
 
 3. **三段式命名的安全价值**：`mcp__{server}__{tool}` 命名规则不仅解决了工具名称冲突问题，更重要的是在权限检查时提供了独立的命名空间，防止 MCP 工具与内置工具之间的权限混淆。SDK 模式下的前缀跳过是一种高级用法，允许 MCP 工具覆盖内置工具。
 

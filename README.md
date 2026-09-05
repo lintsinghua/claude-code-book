@@ -1,97 +1,39 @@
 <div align="center">
 
-**[English](en/README.md)** | **中文**
-
 # 御舆：解码 Agent Harness
 
-### Claude Code 架构深度剖析
+Claude Code 架构深度剖析
 
-<br/>
+**中文** · [English](en/README.md)
 
-> *"一器而工聚焉者，车为多。"* ——《考工记》
->
-> 两千年前，造一辆马车是最复杂的系统工程：**舆**承载乘者，辕定方向，辐传动力，軎辖为约束——每个构件各司其职，合而为一，车方能行。
->
-> 今天，构建一个 AI Agent 亦是如此：对话循环为**辕**，工具系统为**辐**，权限管线为**軎辖**，而将这一切承载于其上、使智能体真正运转的运行时框架—— Agent Harness——正是那个**舆**。
->
-> 古人御舆，驾驭的是天地之间最精密的机械；今人御舆，驾驭的是硅基时代最复杂的智能体系统。
->
-> 本书因此得名 **舆书**。
-
-<br/>
-
-当所有人都在教你怎么 **用** AI Agent——**这本书带你拆开它。**
-
-<br/>
-
-[![在线阅读](https://img.shields.io/badge/在线阅读-lintsinghua.github.io-9f7aea?style=for-the-badge)](https://lintsinghua.github.io/)
-
-[![GitHub Stars](https://img.shields.io/github/stars/lintsinghua/claude-code-book?style=flat-square&logo=github&label=Stars)](https://github.com/lintsinghua/claude-code-book/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/lintsinghua/claude-code-book?style=flat-square&logo=github&label=Forks)](https://github.com/lintsinghua/claude-code-book/network/members)
-[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey?style=flat-square)](LICENSE)
-[![中文](https://img.shields.io/badge/语言-中文-red?style=flat-square)](./)
-[![English](https://img.shields.io/badge/lang-English-blue?style=flat-square)](en/README.md)
-[![Last Commit](https://img.shields.io/github/last-commit/lintsinghua/claude-code-book?style=flat-square)](https://github.com/lintsinghua/claude-code-book/commits/main)
-
-<br/>
-
-<img width="480" src="cover.png" alt="御舆：解码 Agent Harness — Claude Code 架构深度剖析" />
-
-<img width="2880" height="1558" alt="Decoding Agent Harness — A Deep Architectural Analysis of Claude Code" src="https://github.com/user-attachments/assets/39efa7d4-4521-444e-a222-fd0acb756e51" />
+<img src="cover.png" width="420" alt="御舆：解码 Agent Harness — Claude Code 架构深度剖析，LinTsinghua" />
 
 </div>
 
----
+从对话循环、工具调用和权限检查，到记忆、上下文管理与多智能体编排，理解一个 Agent 运行时如何协同工作。全书 15 章、4 篇附录，结合架构图、设计权衡与动手练习，逐步构建自己的 Agent Harness。
 
-> **对话循环如何驱动？工具权限为何是四阶段管线？上下文压缩怎样在 token 预算内运转？子智能体如何通过 Fork 继承父级上下文？**
+> *“一器而工聚焉者，车为多。”* ——《考工记》
 >
-> 读懂 Claude Code 的设计决策，你就拥有了一套**可迁移到任何 Agent 框架**的心智模型。
-
----
-
-## 这本书有什么不同
-
-**不做使用教程，不列 Prompt 技巧。**
-
-市面上充斥着"如何写好 Prompt"和"如何调用 Agent API"的指南。但如果你想知道一个生产级 Agent 系统的**骨架**是怎么搭的——几乎没有资料可查。这本书填补了这个空白。
-
-|  | 特色 | 说明 |
-|:-:|------|------|
-| | **架构分析而非 API 文档** | 不讲"怎么调用"，讲"为什么这样设计"——追溯动机、分析权衡、指出反模式 |
-| | **设计哲学而非使用教程** | 从异步生成器到断路器模式，每章提炼可迁移的设计原则 |
-| | **可迁移的认知模型** | 无论你用 LangChain、AutoGen、CrewAI 还是从零构建，书中 139 张架构图直接复用 |
-
-<details>
-<summary><b>书中的数据一览</b></summary>
-
-| 指标 | 数量 |
-|------|------|
-| 全书字数 | 42 万字（中文）/ 75K+ words（English） |
-| 正文章节 | 15 章 + 4 篇附录 |
-| Mermaid 架构图/流程图/状态机 | 139 张 |
-| 覆盖核心子系统 | 工具系统、权限管线、上下文压缩、记忆系统、钩子系统、子智能体调度、MCP 集成、技能插件、流式架构、Plan 模式 |
-| 分析的设计决策 | 50+ 个"为什么这样设计" |
-| 术语条目（中英对照） | 100 条 |
-| 功能标志 | 89 个 |
-| 注册工具 | 50+ 个 |
-
-</details>
-
-> **声明：** 本书基于对 Claude Code 公开文档和产品行为的架构分析编写，未引用、未使用任何未公开或未授权的源码。Claude Code 为 Anthropic PBC 产品，本书不隶属于、未获授权于、也不代表 Anthropic。
-
----
-
-## 快速导航
-
-> **时间紧张？** 01 → 02 → 04 → 15，拿到核心认知和动手能力就够用
+> 两千年前，造车已是一项汇聚众工的系统工程：**舆**承载乘者，辕、辐、軎辖各司其职。部件相合，车方能行。
 >
-> **有经验？** 直接读 Part 2 + Part 3，遇到概念缺口回溯 Part 1
+> 今天，构建一个 AI Agent 亦是如此：对话循环推进任务，工具系统执行动作，权限管线约束边界。而将这些能力承载、组织起来，使智能体持续运转的运行时框架——**Agent Harness**——恰如车之有**舆**。
 >
-> **系统学习？** 从头到尾，每章做练习，最后 Ch15 构建自己的 Harness（约 2–3 周）
+> 古人造车，合众工之巧；今人构建智能体，亦需理解各部分如何协作。所谓“御舆”，既是驾驭，也是知其构造、明其机理。
 >
-> **查资料？** 直接翻 [附录 A](#appendix--参考资料速查)（模块定位）/ [B](#appendix--参考资料速查)（工具）/ [C](#appendix--参考资料速查)（功能标志）/ [D](#appendix--参考资料速查)（术语）
+> 本书因此以 **“御舆”** 为名，亦称 **舆书**。
 
----
+## 开始阅读
+
+- **初次阅读：** 从[前言](00-前言.md)开始，再读 01 → 02 → 04 → 15。
+- **动手构建：** 先读基础篇与工程实践篇，增加记忆和扩展能力时查阅第二、三部分。
+- **按需查阅：** 使用下方四篇附录定位模块、工具、功能标志和术语。
+- **网站阅读：** [在线阅读入口](https://lintsinghua.github.io/)；也可直接点击本仓库的章节链接。
+
+## 阅读说明
+
+阅读时需区分源码可确认的行为、架构推演和教学示例。功能标志与工具可用性取决于构建和运行时配置；数量和耗时示例不代表当前发行版承诺。
+
+Claude Code 为 Anthropic 产品，本书是独立的技术分析作品，并非官方出版物。本书的许可不覆盖第三方源码。
 
 ## 目录
 
@@ -126,7 +68,7 @@
 | 09 | [子智能体与 Fork 模式](第三部分-高级模式篇/09-子智能体与Fork模式.md) | 三种 Agent 来源；四种内置 Agent；Fork 字节级上下文继承；递归 Fork 防护 |
 | 10 | [协调器模式 — 多智能体编排](第三部分-高级模式篇/10-协调器模式-多智能体编排.md) | Coordinator-Worker 双重门控；"只编排不执行"约束；四种寻址模式；四阶段工作流 |
 | 11 | [技能系统与插件架构](第三部分-高级模式篇/11-技能系统与插件架构.md) | 11 个核心技能；SKILL.md frontmatter；三级参数替换；分层加载；插件缓存 |
-| 12 | [MCP 集成与外部协议](第三部分-高级模式篇/12-MCP集成与外部协议.md) | 8 种传输协议；五态连接管理；三段式工具命名；Bridge 双向通信系统 |
+| 12 | [MCP 集成与外部协议](第三部分-高级模式篇/12-MCP集成与外部协议.md) | 8 类连接配置；五态连接管理；三段式工具命名；Bridge 双向通信系统 |
 
 ### Part 4. 工程实践篇 — 从原理到构建
 
@@ -134,7 +76,7 @@
 
 | # | 章节 | 核心内容 |
 |:-:|------|---------|
-| 13 | [流式架构与性能优化](第四部分-工程实践篇/13-流式架构与性能优化.md) | QueryEngine 生命周期管理；并发控制；启动优化 160ms→65ms（-59%）；惰性加载策略 |
+| 13 | [流式架构与性能优化](第四部分-工程实践篇/13-流式架构与性能优化.md) | QueryEngine 生命周期管理；并发控制；并行预取与启动耗时估算；惰性加载策略 |
 | 14 | [Plan 模式与结构化工作流](第四部分-工程实践篇/14-Plan模式与结构化工作流.md) | "先想后做"哲学；计划文件三层恢复策略；本地调度与远程触发 |
 | 15 | [构建你自己的 Agent Harness](第四部分-工程实践篇/15-构建你自己的Agent-Harness.md) | 六步实现路线图；循环依赖解决方案；四层可观测性体系；安全威胁模型 |
 
@@ -147,36 +89,16 @@
 | [C](附录/C-功能标志速查表.md) | **功能标志速查表** — 89 个 Flag × 13 类，编译时/运行时类型，依赖关系图 |
 | [D](附录/D-术语表.md) | **术语表** — 100 条中英对照术语，含交叉引用和章节定位 |
 
----
 
-## 适合谁
+## 参与修订
 
-|  | 读者 | 收获 |
-|:-:|------|------|
-| | **架构师** | 完整的 Agent 设计空间地图和工程权衡分析 |
-| | **高级工程师** | 工具调用、流式处理、权限管控的底层机制 |
-| | **研究者** | 可发表论文级别的 Agent 系统实现分析 |
-| | **Claude Code 用户** | 理解设计意图，最大化利用其能力 |
+欢迎通过 Issue 或 PR 修正技术错误、补充案例和改进表达。请提供章节、小节、建议修改和参考来源；显示问题请注明阅读平台和复现步骤。涉及双语内容时，请同步检查英文版。
 
----
+提交前运行 `python3 scripts/check_book.py` 和 `python3 -m unittest discover -s tests`。
 
-## 背景
+## 许可与致谢
 
-2026 年 3 月 31 日，安全研究员 [Chaofan Shou (@Fried_rice)](https://x.com/Fried_rice) 发现 npm registry 中的 `@anthropic-ai/claude-code` 包存在构建配置失误。披露推文获得超 1700 万次浏览，引发了技术社区对 Agent 架构的空前讨论。
-
-这本书的诞生正是受到这场讨论的启发——当 Agent 架构成为热门话题，我们意识到需要一本系统性的书来讲解 Agent Harness 的设计原理。
-
----
-
-## 贡献
-
-欢迎 Issue 和 PR — 修正技术错误、补充实战案例、改进章节结构。
-
-## 致谢
-
-[Linux.Do](https://linux.do/) 社区
-
----
+本书文字采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)：须署名、非商业使用，并以相同协议共享改编内容。第三方资料保留其原有权利与许可条件。感谢 [Linux.Do](https://linux.do/) 社区。
 
 ## Star History
 
@@ -187,13 +109,3 @@
    <img alt="Star History Chart" src="docs/images/star-history-light.svg" />
  </picture>
 </a>
-
----
-
-<p align="center">
-  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-    <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" alt="CC BY-NC-SA 4.0" />
-  </a>
-  <br/><br/>
-  可自由分享和改编，但须署名、非商业使用、并以相同协议共享。
-</p>

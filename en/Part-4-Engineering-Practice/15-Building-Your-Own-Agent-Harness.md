@@ -837,10 +837,10 @@ The circuit breaker implementation is particularly elegant. In the source code, 
 stateDiagram-v2
     [*] --> Closed : Normal operation
 
-    Closed --> Closed : Operation succeeded\nReset consecutiveFailures
+    Closed --> Closed : Operation succeeded<br/>Reset consecutiveFailures
     Closed --> Open : Consecutive failures >= 3
 
-    Open --> Fallback : Switch to fallback model\nClean state and retry
+    Open --> Fallback : Switch to fallback model<br/>Clean state and retry
 
     state Open {
         [*] --> ExitLoop
@@ -849,11 +849,11 @@ stateDiagram-v2
 
     state Fallback {
         [*] --> DegradedExecution
-        DegradedExecution : Ensure system remains usable\nduring partial failure
+        DegradedExecution : Ensure system remains usable<br/>during partial failure
     }
 
-    note right of Closed : Normal state\nconsecutiveFailures = 0
-    note right of Open : Failed state\nconsecutiveFailures >= 3\nLikely a systemic issue
+    note right of Closed : Normal state<br/>consecutiveFailures = 0
+    note right of Open : Failed state<br/>consecutiveFailures >= 3<br/>Likely a systemic issue
 ```
 
 **Design dimensions for the circuit breaker pattern:** When implementing a circuit breaker, the following parameters need to be decided:

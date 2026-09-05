@@ -6,7 +6,7 @@
 **Learning Objectives:** After reading this chapter, you will be able to:
 
 - Understand the technical background behind MCP (Model Context Protocol), its design philosophy, and the core problems it solves
-- Master the use cases, performance characteristics, and selection strategies for 8 transport protocols
+- Master the use cases, performance characteristics, and selection strategies for 8 connection configuration variants
 - Analyze in depth the design logic behind 7 configuration scopes and the three-layer security strategy
 - Understand the Bridge system's bidirectional communication architecture, SSE sequence number continuation, and multi-session security design
 - Master the complete pipeline of MCP tool discovery, mapping, naming, and permission models
@@ -30,18 +30,18 @@ flowchart TD
 
     subgraph Protocol["MCP Protocol Layer"]
         direction LR
-        Stdio["stdio\nInter-process Pipe"]
-        SSE["SSE / HTTP\nRemote HTTP"]
-        WS["WebSocket\nFull-duplex"]
-        SDK["SDK\nIn-process Call"]
+        Stdio["stdio<br/>Inter-process Pipe"]
+        SSE["SSE / HTTP<br/>Remote HTTP"]
+        WS["WebSocket<br/>Full-duplex"]
+        SDK["SDK<br/>In-process Call"]
     end
 
     subgraph Servers["MCP Servers (External Tools)"]
         direction LR
-        S1["Filesystem\nServer"]
-        S2["GitHub\nServer"]
-        S3["Database\nServer"]
-        S4["Custom\nServer"]
+        S1["Filesystem<br/>Server"]
+        S2["GitHub<br/>Server"]
+        S3["Database<br/>Server"]
+        S4["Custom<br/>Server"]
     end
 
     ToolSys --> Protocol
@@ -71,11 +71,11 @@ MCP's design follows three core principles that permeate Claude Code's entire MC
 
 ```mermaid
 flowchart TD
-    Center["MCP\nDesign Philosophy"]
+    Center["MCP<br/>Design Philosophy"]
 
-    Center --> P1["Protocol as Contract\nDeclare first, use later\nStrict message format\nand capability declaration"]
-    Center --> P2["Transport Agnostic\nNot bound to specific transport\nstdio / HTTP / WS all work"]
-    Center --> P3["Security by Design\nDefault distrust\nSecurity strategy at every layer"]
+    Center --> P1["Protocol as Contract<br/>Declare first, use later<br/>Strict message format<br/>and capability declaration"]
+    Center --> P2["Transport Agnostic<br/>Not bound to specific transport<br/>stdio / HTTP / WS all work"]
+    Center --> P3["Security by Design<br/>Default distrust<br/>Security strategy at every layer"]
 
     P1 -.->|"Capability negotiation"| P2
     P2 -.->|"Transport-layer security"| P3
@@ -97,19 +97,19 @@ flowchart TD
 
 > **Cross-reference:** Once MCP tools are mapped to internal Claude Code Tool objects, they fully integrate into the tool system described in Chapter 3. This means MCP tools go through the same four-stage permission pipeline checks (Chapter 4), participate in the same concurrency scheduling strategies, and can be intercepted and enhanced through the hook system (Chapter 8).
 
-### 12.1.2 Supported Transport Protocols
+### 12.1.2 Connection Configurations and Transports
 
-Claude Code supports 8 MCP transport protocols, each optimized for different deployment scenarios and network topologies. Understanding the appropriate use cases for these protocols is the foundation for designing efficient MCP integration architectures.
+The `McpServerConfigSchema` discussed in this chapter defines eight configuration variants. These include transports, IDE-specific variants, SDK integration, and a proxy configuration; they are not eight independent MCP-standard transport protocols. Distinguish the transport from the deployment adapter when choosing an integration.
 
-| Protocol Type | Config Type | Transport Method | Latency Profile | Use Case |
+| Configuration Kind | Config Type | Transport Method | Latency Profile | Use Case |
 |---------|---------|---------|---------|---------|
-| `stdio` | `McpStdioServerConfig` | Standard I/O pipes | Lowest (inter-process) | Local dev tools, filesystem operations, CLI tool wrappers |
+| `stdio` | `McpStdioServerConfig` | Standard I/O pipes | Local inter-process communication | Local dev tools, filesystem operations, CLI tool wrappers |
 | `sse` | `McpSSEServerConfig` | Server-Sent Events | Network latency | Remote HTTP services, cloud-deployed MCP servers |
 | `sse-ide` | `McpSSEIDEServerConfig` | SSE + IDE metadata | Local network | IDE extension only, includes `ideName` identifier |
 | `http` | `McpHTTPServerConfig` | HTTP Streamable | Network latency | New MCP spec protocol, supports streaming responses |
 | `ws` | `McpWebSocketServerConfig` | WebSocket full-duplex | Network latency | Scenarios requiring real-time bidirectional communication |
 | `ws-ide` | `McpWebSocketIDEServerConfig` | WebSocket + IDE metadata | Local network | IDE extension only, requires low-latency bidirectional communication |
-| `sdk` | `McpSdkServerConfig` | In-process function calls | Near-zero latency | SDK internal calls, no actual process or network connection started |
+| `sdk` | `McpSdkServerConfig` | In-process function calls | No external transport hop | SDK internal calls, no actual process or network connection started |
 | `claudeai-proxy` | `McpClaudeAIProxyServerConfig` | Claude.ai proxy | Network latency | Claude.ai platform proxy servers |
 
 **Transport Protocol Selection Decision Tree**
@@ -118,21 +118,20 @@ When you need to choose a transport protocol for an MCP server, refer to the fol
 
 ```mermaid
 flowchart TD
-    START{"Need to integrate\nan MCP server?"}
-    START -->|"Local machine"| STDIO["Preferred"]
-    STDIO --> IDE{"Is it an IDE\nextension?"}
+    START{"Need to integrate<br/>an MCP server?"}
+    START -->|"Local machine"| IDE{"IDE extension?"}
     IDE -->|"Yes"| SSE_IDE["sse-ide / ws-ide"]
-    IDE -->|"No"| STDIO
-    START -->|"Remote server"| REMOTE{"Need bidirectional\npush?"}
+    IDE -->|"No"| STDIO["stdio"]
+    START -->|"Remote server"| REMOTE{"Need bidirectional<br/>push?"}
     REMOTE -->|"No"| SSE_HTTP["sse or http"]
     REMOTE -->|"Yes"| WS["ws"]
-    START -->|"SDK embedded"| SDK["sdk (zero overhead)"]
+    START -->|"SDK embedded"| SDK["sdk (in-process)"]
     START -->|"Claude.ai platform"| PROXY["claudeai-proxy"]
 ```
 
 **Protocol Details and Use Case Analysis**
 
-**The stdio protocol** is the most common and recommended type. It launches a local MCP server subprocess via `command` and `args`, communicating through the operating system's standard I/O pipes. The advantages of this approach are: zero network overhead (data passes between processes via memory buffers), natural security isolation (child processes inherit the parent process's permission boundaries), and simple lifecycle management (child processes automatically terminate when the parent exits). The vast majority of local development scenarios — filesystem access, Git operations, database clients — should prefer stdio.
+**The stdio protocol** is the most common and recommended type. It launches a local MCP server subprocess via `command` and `args`, communicating through the operating system's standard I/O pipes. The advantages of this approach are: zero network overhead (data passes between processes via memory buffers), explicit lifecycle management and no network listener requirement. A subprocess is not a sandbox: inherited permissions may be broad, and parent exit alone does not guarantee child termination. The vast majority of local development scenarios — filesystem access, Git operations, database clients — should prefer stdio.
 
 ```json
 {
@@ -180,9 +179,9 @@ Child components access these operations through two hooks: one for the reconnec
 flowchart TD
     subgraph Mgr["MCPConnectionManager"]
         subgraph CTX["React Context: reconnect / toggle"]
-            A["Component A\nuseReconnect"]
-            B["Component B\nuseToggle"]
-            C["Component C\nuseReconn + Toggle"]
+            A["Component A<br/>useReconnect"]
+            B["Component B<br/>useToggle"]
+            C["Component C<br/>useReconn + Toggle"]
         end
         A --> Pool
         B --> Pool
@@ -221,11 +220,11 @@ stateDiagram-v2
 ```mermaid
 flowchart LR
     subgraph legend["State Descriptions"]
-        C["Connected\nServer connected, tools available"]
-        F["Failed\nConnection failed, reason recorded"]
-        N["NeedsAuth\nUser authentication required"]
-        P["Pending\nAwaiting reconnection, exponential backoff"]
-        D["Disabled\nDisabled, no auto-reconnect"]
+        C["Connected<br/>Server connected, tools available"]
+        F["Failed<br/>Connection failed, reason recorded"]
+        N["NeedsAuth<br/>User authentication required"]
+        P["Pending<br/>Awaiting reconnection, exponential backoff"]
+        D["Disabled<br/>Disabled, no auto-reconnect"]
     end
     classDef conn fill:#c8e6c9,stroke:#4CAF50,stroke-width:2px,color:#333
     classDef fail fill:#ffcdd2,stroke:#f44336,stroke-width:2px,color:#333
@@ -288,18 +287,18 @@ MCP tool integration is the process of seamlessly incorporating external server 
 ```mermaid
 flowchart LR
     subgraph Discovery["Stage 1: Tool Discovery"]
-        D1["MCP Server\nConnected state"] -->|"tools/list request"| D2["Retrieve tool metadata\nName / Description / Schema"]
+        D1["MCP Server<br/>Connected state"] -->|"tools/list request"| D2["Retrieve tool metadata<br/>Name / Description / Schema"]
     end
 
     subgraph Mapping["Stage 2: Tool Mapping"]
-        M1["Unicode sanitization"] --> M2["Prefix decision\nmcp__server__tool"]
-        M2 --> M3["Tool object construction\nAnnotation bridging"]
+        M1["Unicode sanitization"] --> M2["Prefix decision<br/>mcp__server__tool"]
+        M2 --> M3["Tool object construction<br/>Annotation bridging"]
     end
 
     subgraph Registration["Stage 3: Tool Registration"]
         R1["Permission check"] --> R2{"alwaysLoad?"}
-        R2 -->|"Yes"| R3["Inject directly into\nSystem Prompt"]
-        R2 -->|"No"| R4["Lazy loading\nLoad on first invocation"]
+        R2 -->|"Yes"| R3["Inject directly into<br/>System Prompt"]
+        R2 -->|"No"| R4["Lazy loading<br/>Load on first invocation"]
     end
 
     D2 --> M1
@@ -424,23 +423,23 @@ Placing the MCP tool permission model within Claude Code's overall permission sy
 flowchart TD
     subgraph L1["Layer 1: Enterprise Policy"]
         direction LR
-        D["deniedMcpServers\nDenylist, absolute rejection"]
-        A["allowedMcpServers\nAllowlist, rejected if not listed"]
+        D["deniedMcpServers<br/>Denylist, absolute rejection"]
+        A["allowedMcpServers<br/>Allowlist, rejected if not listed"]
     end
 
     subgraph L2["Layer 2: IDE Tool Allowlist"]
         direction LR
-        IDE["IDE-type servers\nOnly executeCode\nand getDiagnostics allowed"]
+        IDE["IDE-type servers<br/>Only executeCode<br/>and getDiagnostics allowed"]
     end
 
     subgraph L3["Layer 3: User Permission Config"]
         direction LR
-        Allow["allow rules\nAuto-allow matching tools"]
-        Deny["deny rules\nAuto-deny matching tools"]
+        Allow["allow rules<br/>Auto-allow matching tools"]
+        Deny["deny rules<br/>Auto-deny matching tools"]
     end
 
     subgraph L4["Layer 4: Runtime Confirmation"]
-        Confirm["Not covered by any rule\nConfirmation dialog per invocation"]
+        Confirm["Not covered by any rule<br/>Confirmation dialog per invocation"]
     end
 
     L1 --> L2 --> L3 --> L4
@@ -484,19 +483,19 @@ MCP server configuration has seven scopes, each corresponding to different manag
 ```mermaid
 flowchart TD
     subgraph HardConstraints["Hard Constraint Layer (cannot be overridden)"]
-        ENT["enterprise\nOrg-level — Enterprise-approved allowlist/denylist"]
-        MGD["managed\nAdmin-level — IT administrator-enforced policies"]
+        ENT["enterprise<br/>Org-level — Enterprise-approved allowlist/denylist"]
+        MGD["managed<br/>Admin-level — IT administrator-enforced policies"]
     end
 
     subgraph SoftConfig["Soft Config Layer (proximity principle)"]
-        PROJ["project\nProject-shared — Team tool config"]
-        USR["user\nUser-global — Cross-project general tools"]
-        LOC["local\nProject-personal — Developer's personal tools"]
+        PROJ["project<br/>Project-shared — Team tool config"]
+        USR["user<br/>User-global — Cross-project general tools"]
+        LOC["local<br/>Project-personal — Developer's personal tools"]
     end
 
     subgraph Temporary["Temporary Layer (session-level)"]
-        DYN["dynamic\nRuntime temporary additions"]
-        CAI["claudeai\nPlatform-level connectors"]
+        DYN["dynamic<br/>Runtime temporary additions"]
+        CAI["claudeai<br/>Platform-level connectors"]
     end
 
     ENT --> PROJ
@@ -579,11 +578,11 @@ Practical matching examples:
 
 ```mermaid
 flowchart TD
-    Input["For each MCP server config"] --> CheckSDK{"Is it an\nSDK type?"}
-    CheckSDK -->|"Yes"| Allow["Add to allowed list\n(exempt from policy checks)"]
-    CheckSDK -->|"No"| CheckDeny{"Matches\ndeniedMcpServers?"}
+    Input["For each MCP server config"] --> CheckSDK{"Is it an<br/>SDK type?"}
+    CheckSDK -->|"Yes"| Allow["Add to allowed list<br/>(exempt from policy checks)"]
+    CheckSDK -->|"No"| CheckDeny{"Matches<br/>deniedMcpServers?"}
     CheckDeny -->|"Yes"| Block1["Add to blocked list"]
-    CheckDeny -->|"No"| CheckAllow{"allowedMcpServers defined\nand no match?"}
+    CheckDeny -->|"No"| CheckAllow{"allowedMcpServers defined<br/>and no match?"}
     CheckAllow -->|"Yes"| Block2["Add to blocked list"]
     CheckAllow -->|"No"| Allow
 
@@ -629,9 +628,9 @@ When duplicates are detected, the system determines which configuration to keep 
 
 ```mermaid
 flowchart TD
-    Manual["Manual config\n(Highest priority)"]
-    Plugin["Plugin config\n(Medium priority)"]
-    Connector["Claude.ai connector\n(Lowest priority)"]
+    Manual["Manual config<br/>(Highest priority)"]
+    Plugin["Plugin config<br/>(Medium priority)"]
+    Connector["Claude.ai connector<br/>(Lowest priority)"]
     Manual -->|"Overrides"| Plugin
     Plugin -->|"Overrides"| Connector
 
@@ -708,16 +707,16 @@ These requirements, layered together, evolved what could be a simple message for
 ```mermaid
 flowchart LR
     subgraph External["External World"]
-        VS["VS Code\nExtension"]
-        JB["JetBrains\nPlugin"]
-        CAI["claude.ai\nPlatform"]
+        VS["VS Code<br/>Extension"]
+        JB["JetBrains<br/>Plugin"]
+        CAI["claude.ai<br/>Platform"]
     end
 
     subgraph BridgeCore["Bridge Core"]
         subgraph Router["Message Routing & Dedup"]
-            Perm["Permission Response\nHandling"]
-            Ctrl["Control Request\nHandling"]
-            User["User Message\nHandling"]
+            Perm["Permission Response<br/>Handling"]
+            Ctrl["Control Request<br/>Handling"]
+            User["User Message<br/>Handling"]
         end
         subgraph Transport["Transport Layer Abstraction"]
             V1["v1: HybridTransport"]
@@ -731,7 +730,7 @@ flowchart LR
     end
 
     subgraph CLI["CLI Internal"]
-        REPL["REPL\nSession Management"]
+        REPL["REPL<br/>Session Management"]
     end
 
     VS --> Router
@@ -774,20 +773,20 @@ The core message routing logic implements triple filtering:
 
 ```mermaid
 flowchart TD
-    Inbound["Inbound Message"] --> Type1{"Message Type\nDetermination"}
+    Inbound["Inbound Message"] --> Type1{"Message Type<br/>Determination"}
 
-    Type1 -->|"Permission response"| P1["Filter 1: Permission Response\nUser clicks 'Allow' or 'Deny'\nin the IDE"]
-    P1 --> PermPipeline["Route directly to\npermission pipeline\nNo additional checks needed"]
+    Type1 -->|"Permission response"| P1["Filter 1: Permission Response<br/>User clicks 'Allow' or 'Deny'<br/>in the IDE"]
+    P1 --> PermPipeline["Route directly to<br/>permission pipeline<br/>No additional checks needed"]
 
-    Type1 -->|"Control request"| P2["Filter 2: Control Request\ninitialize / set_model\n/ interrupt etc."]
-    P2 --> CheckOutbound{"Is it\noutbound-only mode?"}
+    Type1 -->|"Control request"| P2["Filter 2: Control Request<br/>initialize / set_model<br/>/ interrupt etc."]
+    P2 --> CheckOutbound{"Is it<br/>outbound-only mode?"}
     CheckOutbound -->|"Yes"| Reject["Reject inbound control"]
     CheckOutbound -->|"No"| ExecCtrl["Execute control logic"]
 
-    Type1 -->|"User message"| P3["Filter 3: User Message\nNew user input from external"]
-    P3 --> EchoFilter{"Echo filter\nAlready sent as outbound?"}
+    Type1 -->|"User message"| P3["Filter 3: User Message<br/>New user input from external"]
+    P3 --> EchoFilter{"Echo filter<br/>Already sent as outbound?"}
     EchoFilter -->|"Yes"| Discard1["Discard echo message"]
-    EchoFilter -->|"No"| RedeliverFilter{"Redelivery filter\nAlready processed?"}
+    EchoFilter -->|"No"| RedeliverFilter{"Redelivery filter<br/>Already processed?"}
     RedeliverFilter -->|"Yes"| Discard2["Discard duplicate message"]
     RedeliverFilter -->|"No"| Deliver["Deliver to CLI for processing"]
 
@@ -844,10 +843,10 @@ Why is `initialize` still allowed in outbound-only mode? Because initialize is a
 ```mermaid
 flowchart TD
     Request["Control request arrives"] --> InitCheck{"Is it initialize?"}
-    InitCheck -->|"Yes"| AllowInit["Allow execution\nReturn capability info"]
-    InitCheck -->|"No"| OutboundCheck{"Is it outbound-only\nmode?"}
-    OutboundCheck -->|"Yes"| Reject["Reject, return error\n'Remote Control must be enabled'"]
-    OutboundCheck -->|"No"| Execute["Execute control logic\nset_model / interrupt / ..."]
+    InitCheck -->|"Yes"| AllowInit["Allow execution<br/>Return capability info"]
+    InitCheck -->|"No"| OutboundCheck{"Is it outbound-only<br/>mode?"}
+    OutboundCheck -->|"Yes"| Reject["Reject, return error<br/>'Remote Control must be enabled'"]
+    OutboundCheck -->|"No"| Execute["Execute control logic<br/>set_model / interrupt / ..."]
     Execute --> Result["Return execution result"]
 
     classDef start fill:#e8f4f8,stroke:#2196F3,stroke-width:2px,color:#333
@@ -867,20 +866,20 @@ The transport layer defines a unified `ReplBridgeTransport` interface that encap
 ```mermaid
 flowchart TD
     subgraph Interface["ReplBridgeTransport Unified Interface"]
-        API["send(message)\nsubscribe(handler)\nconnect() / disconnect()"]
+        API["send(message)<br/>subscribe(handler)<br/>connect() / disconnect()"]
     end
 
     subgraph V1["v1 Adapter: createV1ReplTransport"]
         direction LR
-        V1R["WebSocket\nRead"]
-        V1W["HTTP POST\nWrite"]
+        V1R["WebSocket<br/>Read"]
+        V1W["HTTP POST<br/>Write"]
         V1Target["Session-Ingress"]
     end
 
     subgraph V2["v2 Adapter (Recommended)"]
         direction LR
-        V2R["SSETransport\nRead"]
-        V2W["CCRClient\nWrite"]
+        V2R["SSETransport<br/>Read"]
+        V2W["CCRClient<br/>Write"]
         V2Target["CCR v2 Endpoint"]
     end
 
@@ -966,7 +965,7 @@ flowchart LR
         S1a["Session 1: read → token_A"]
         S2a["Session 2: refresh Token"]
         G2["Global: OAUTH_TOKEN = token_B"]
-        S1b["Session 1: read → token_B\nInconsistent!"]
+        S1b["Session 1: read → token_B<br/>Inconsistent!"]
         S1a --> G1
         S2a --> G2
         G2 --> S1b
@@ -974,10 +973,10 @@ flowchart LR
 
     subgraph v2Safe["v2 Auth (safe multi-session)"]
         direction TB
-        C1["Closure 1: token_A\nImmutable"]
-        C2a["Closure 2: token_A\nIndependent copy"]
+        C1["Closure 1: token_A<br/>Immutable"]
+        C2a["Closure 2: token_A<br/>Independent copy"]
         C2b["Closure 2: refresh → token_B"]
-        C1c["Closure 1: token_A\nUnaffected"]
+        C1c["Closure 1: token_A<br/>Unaffected"]
         C2a --> C2b
         C2b -.->|"Isolated"| C1c
     end
@@ -1060,14 +1059,14 @@ The complete diagnostic function `getBridgeDisabledReason` checks four layers of
 
 ```mermaid
 flowchart TD
-    Start["Bridge Feature Check\ngetBridgeDisabledReason"] --> L1{"Layer 1: Subscription Type\nclaude.ai subscriber?"}
-    L1 -->|"No: Bedrock/Vertex/Foundry"| Disabled1["Bridge unavailable\nclaude.ai subscription required"]
-    L1 -->|"Yes"| L2{"Layer 2: Profile Completeness\nFull profile scope?"}
-    L2 -->|"No: restricted token"| Disabled2["Bridge unavailable\nProfile info incomplete"]
-    L2 -->|"Yes"| L3{"Layer 3: Organization Info\nOrganization UUID present?"}
-    L3 -->|"No: not associated"| Disabled3["Bridge unavailable\nOrganization info missing"]
-    L3 -->|"Yes"| L4{"Layer 4: Feature Flag\ntengu_ccr_bridge enabled?"}
-    L4 -->|"No: not in rollout"| Disabled4["Bridge unavailable\nFeature flag not enabled"]
+    Start["Bridge Feature Check<br/>getBridgeDisabledReason"] --> L1{"Layer 1: Subscription Type<br/>claude.ai subscriber?"}
+    L1 -->|"No: Bedrock/Vertex/Foundry"| Disabled1["Bridge unavailable<br/>claude.ai subscription required"]
+    L1 -->|"Yes"| L2{"Layer 2: Profile Completeness<br/>Full profile scope?"}
+    L2 -->|"No: restricted token"| Disabled2["Bridge unavailable<br/>Profile info incomplete"]
+    L2 -->|"Yes"| L3{"Layer 3: Organization Info<br/>Organization UUID present?"}
+    L3 -->|"No: not associated"| Disabled3["Bridge unavailable<br/>Organization info missing"]
+    L3 -->|"Yes"| L4{"Layer 4: Feature Flag<br/>tengu_ccr_bridge enabled?"}
+    L4 -->|"No: not in rollout"| Disabled4["Bridge unavailable<br/>Feature flag not enabled"]
     L4 -->|"Yes"| Enabled["Bridge feature available"]
 
     classDef check fill:#fff9c4,stroke:#FFC107,stroke-width:2px,color:#333
@@ -1086,13 +1085,13 @@ The API client authenticates using OAuth Bearer Tokens and supports automatic To
 
 ```mermaid
 flowchart TD
-    Step1["1. Send API request\nwith current Bearer Token"] --> Step2{"2. Response received"}
+    Step1["1. Send API request<br/>with current Bearer Token"] --> Step2{"2. Response received"}
     Step2 -->|"200 OK"| Success["Request successful"]
-    Step2 -->|"401 Unauthorized"| Step3["3. Use Refresh Token\nto obtain new Bearer Token"]
-    Step3 --> Step4["4. Retry original request\nwith new Token"]
+    Step2 -->|"401 Unauthorized"| Step3["3. Use Refresh Token<br/>to obtain new Bearer Token"]
+    Step3 --> Step4["4. Retry original request<br/>with new Token"]
     Step4 --> Step5{"5. Retry result"}
     Step5 -->|"200 OK"| Success
-    Step5 -->|"401 Unauthorized"| Fail["Bridge feature unavailable\nNotify user"]
+    Step5 -->|"401 Unauthorized"| Fail["Bridge feature unavailable<br/>Notify user"]
 
     classDef step fill:#e8f4f8,stroke:#2196F3,stroke-width:1.5px,color:#333
     classDef decision fill:#fff9c4,stroke:#FFC107,stroke-width:2px,color:#333
@@ -1225,7 +1224,7 @@ Analyze the Bridge communication behavior in the following scenarios:
 
 1. **MCP's Design Mission**: MCP is the "USB-C port" of the AI world, solving the fragmentation problem in tool integration through a standardized protocol. Its three core design principles — Protocol as Contract, Transport Agnostic, and Security by Design — permeate Claude Code's entire MCP implementation.
 
-2. **Layered Design of Eight Transport Protocols**: From the zero-overhead SDK (in-process calls) to the lowest-latency stdio (inter-process pipes), from the flexibly deployable SSE/HTTP (remote services) to full-duplex WebSocket (real-time communication), each protocol is optimized for specific deployment scenarios and network topologies. Prefer stdio; only use remote protocols when necessary.
+2. **Eight connection configuration variants**: These configurations combine local process pipes, HTTP-based connections, WebSocket adapters, SDK calls, and proxy integration. Choose a configuration supported by both endpoints; distinguish transport latency from server execution cost.
 
 3. **Security Value of Three-part Naming**: The `mcp__{server}__{tool}` naming convention not only solves tool name conflicts but, more importantly, provides independent namespaces during permission checks, preventing permission confusion between MCP tools and built-in tools. The prefix skip in SDK mode is an advanced feature that allows MCP tools to override built-in tools.
 

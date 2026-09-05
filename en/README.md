@@ -1,95 +1,41 @@
 <div align="center">
 
-**English** | **[中文](../README.md)**
-
 # Yù Yú: Decoding Agent Harness
 
-### A Deep Architectural Analysis of Claude Code
+A Deep Architectural Analysis of Claude Code
 
-<br/>
+[中文](../README.md) · **English**
 
-> *"Of all instruments, the chariot demands the most hands to build."* — *Kǎo Gōng Jì* (Rites of Zhou, c. 300 BC)
->
-> In ancient China, the chariot was the most complex system ever engineered. The **yú** (舆, carriage) bears the rider; the shaft sets direction; the spokes transmit force; the linchpin constrains the wheel. Each part has its duty — only together can the vehicle move.
->
-> Today, building an AI Agent is no different. The conversation loop is the **shaft**, the tool system the **spokes**, the permission pipeline the **linchpin**, and the runtime framework that bears it all — the Agent Harness — is the **yú**.
->
-> This book is thus known as the **"Yú Shū"** (舆书, The Chariot Book).
-
-<br/>
-
-While everyone else teaches you how to **use** AI Agents — **This book dissects one.**
-
-<br/>
-
-[![Read Online](https://img.shields.io/badge/Read_Online-lintsinghua.github.io-9f7aea?style=for-the-badge)](https://lintsinghua.github.io/)
-
-[![GitHub Stars](https://img.shields.io/github/stars/lintsinghua/claude-code-book?style=flat-square&logo=github&label=Stars)](https://github.com/lintsinghua/claude-code-book/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/lintsinghua/claude-code-book?style=flat-square&logo=github&label=Forks)](https://github.com/lintsinghua/claude-code-book/network/members)
-[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey?style=flat-square)](LICENSE)
-[![中文](https://img.shields.io/badge/语言-中文-red?style=flat-square)](../README.md)
-[![English](https://img.shields.io/badge/lang-English-blue?style=flat-square)](./)
-[![Last Commit](https://img.shields.io/github/last-commit/lintsinghua/claude-code-book?style=flat-square)](https://github.com/lintsinghua/claude-code-book/commits/main)
-
-<br/>
-
-<img width="2880" height="1558" alt="Decoding Agent Harness — A Deep Architectural Analysis of Claude Code" src="https://github.com/user-attachments/assets/39efa7d4-4521-444e-a222-fd0acb756e51" />
+<img src="../cover.png" width="420" alt="御舆：解码 Agent Harness — Claude Code 架构深度剖析，LinTsinghua" />
 
 </div>
 
----
+Explore how an agent runtime connects the conversation loop, tools, permissions, memory, and orchestration. Fifteen chapters and four appendices connect implementation details to design trade-offs and a hands-on harness project.
 
-> **How does the dialog loop drive execution? Why is the permission system a four-stage pipeline? How does context compression operate within token budgets? How do sub-agents inherit parent context through Fork?**
+> *“Of all artifacts that bring many crafts together, the chariot calls upon the most.”* — *Kǎo Gōng Jì* (Book of Crafts)
 >
-> Understand Claude Code's design decisions, and you gain a **mental model transferable to any Agent framework**.
-
----
-
-## What Makes This Book Different
-
-**Not a usage tutorial. Not a list of prompt tricks.**
-
-The market is saturated with guides on "how to write better prompts" and "how to call Agent APIs." But if you want to understand the **skeleton** of a production-grade Agent system — there's almost nothing to consult. This book fills that gap.
-
-|  | Feature | Description |
-|:-:|---------|-------------|
-| | **Architecture Analysis, Not API Docs** | Not "how to call," but "why designed this way" — tracing motivations, analyzing trade-offs, identifying anti-patterns |
-| | **Design Philosophy, Not Tutorials** | From async generators to circuit breakers, every chapter distills transferable design principles |
-| | **Transferable Cognitive Models** | Whether you use LangChain, AutoGen, CrewAI, or build from scratch — 139 architecture diagrams apply directly |
-
-<details>
-<summary><b>By the Numbers</b></summary>
-
-| Metric | Count |
-|--------|-------|
-| Total word count | 420K characters (Chinese) / 75K+ words (English) |
-| Main chapters | 15 chapters + 4 appendices |
-| Mermaid architecture/flow/state diagrams | 139 |
-| Core subsystems covered | Tool system, permission pipeline, context compression, memory system, hook system, sub-agent dispatch, MCP integration, skill plugins, streaming architecture, Plan mode |
-| Design decisions analyzed | 50+ "why designed this way" |
-| Glossary terms (bilingual) | 100 |
-| Feature flags | 89 |
-| Registered tools | 50+ |
-
-</details>
-
-> **Disclaimer:** This book is based on architectural analysis of Claude Code's public documentation and product behavior. No unpublished or unauthorized source code was used. Claude Code is a product of Anthropic PBC. This book is not affiliated with, authorized by, or representative of Anthropic.
-
----
-
-## Quick Navigation
-
-> **Short on time?** 01 → 02 → 04 → 15 — get the core insights and hands-on skills
+> Two thousand years ago, building a chariot was already an exercise in systems engineering. The **yú** (舆, carriage body) carries the rider; shafts, spokes, and axle fittings each serve their purpose. Only together can the vehicle move.
 >
-> **Experienced?** Jump to Part 2 + Part 3, backtrack to Part 1 for concept gaps
+> Building an AI Agent calls for similar coordination: the conversation loop advances the task, tools perform actions, and permissions set boundaries. The runtime framework that supports and organizes these capabilities—**Agent Harness**—plays the role of the **yú**.
 >
-> **Systematic study?** Cover to cover with exercises, build your Harness in Ch15 (~2–3 weeks)
+> Chariot builders brought many crafts into one working whole. Agent builders, too, must understand how the parts work together. **Yù Yú** (御舆, “driving the chariot”) evokes both control and an understanding of the machinery that makes it possible.
 >
-> **Just need reference?** Go straight to [Appendices](#appendix--reference-quick-lookup) — A (modules) / B (tools) / C (flags) / D (glossary)
+> This is the idea behind the title **Yù Yú**, also known as **Yú Shū** (舆书, “The Chariot Book”).
 
----
+## Start reading
 
-## Table of Contents
+- **First visit:** [Foreword](00-Foreword.md), then chapters 01 → 02 → 04 → 15.
+- **Build an agent:** read Parts 1 and 4; use Parts 2 and 3 when adding memory and extensions.
+- **Look up a concept:** use the four appendices below.
+- **Website:** [Online reading](https://lintsinghua.github.io/). Repository chapters remain directly readable on GitHub.
+
+## Reading notes
+
+Readers should distinguish observed implementation, architectural interpretation, and teaching examples. Feature flags and tool availability depend on build and runtime configuration; counts and timing examples are not promises about current releases.
+
+Claude Code belongs to Anthropic. This independent book is not an official Anthropic publication. The book’s license does not extend to third-party code.
+
+## Contents
 
 ### Part 1. Foundations — Building Mental Models
 
@@ -122,7 +68,7 @@ The market is saturated with guides on "how to write better prompts" and "how to
 | 09 | [Sub-Agents and the Fork Pattern](Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md) | Three Agent sources; four built-in Agents; byte-level Fork context inheritance; recursive Fork protection |
 | 10 | [The Coordinator Pattern — Multi-Agent Orchestration](Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md) | Coordinator-Worker dual gating; "orchestrate-only" constraint; four addressing modes; four-stage workflow |
 | 11 | [The Skill System & Plugin Architecture](Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md) | 11 core skills; SKILL.md frontmatter; three-level parameter substitution; layered loading; plugin cache |
-| 12 | [MCP Integration & External Protocols](Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md) | 8 transport protocols; five-state connection management; three-part tool naming; Bridge bidirectional comms |
+| 12 | [MCP Integration & External Protocols](Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md) | 8 connection configuration variants; five-state connection management; three-part tool naming; Bridge bidirectional comms |
 
 ### Part 4. Engineering Practice — From Principles to Construction
 
@@ -130,7 +76,7 @@ The market is saturated with guides on "how to write better prompts" and "how to
 
 | # | Chapter | Core Content |
 |:-:|---------|-------------|
-| 13 | [Streaming Architecture & Performance Optimization](Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md) | QueryEngine lifecycle; concurrency control; startup optimization 160ms→65ms (-59%); lazy loading |
+| 13 | [Streaming Architecture & Performance Optimization](Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md) | QueryEngine lifecycle; concurrency control; parallel prefetching and startup estimates; lazy loading |
 | 14 | [Plan Mode & Structured Workflows](Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md) | "Think before you act" philosophy; plan file three-layer recovery; local scheduling & remote triggers |
 | 15 | [Building Your Own Agent Harness](Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md) | Six-step implementation roadmap; circular dependency solutions; four-layer observability; security threat model |
 
@@ -143,36 +89,16 @@ The market is saturated with guides on "how to write better prompts" and "how to
 | [C](Appendices/C-Feature-Flag-Reference.md) | **Feature Flag Reference** — 89 flags × 13 categories, compile-time/runtime types, dependency graphs |
 | [D](Appendices/D-Glossary.md) | **Glossary** — 100 bilingual term definitions with cross-references and chapter locations |
 
----
-
-## Who Is This For
-
-|  | Reader | What You'll Gain |
-|:-:|--------|-----------------|
-| | **Architects** | Complete Agent design space map and engineering trade-off analysis |
-| | **Senior Engineers** | Underlying mechanisms of tool invocation, streaming, and permission control |
-| | **Researchers** | Publishable-quality Agent system implementation analysis |
-| | **Claude Code Users** | Understand design intent and maximize capabilities |
-
----
-
-## Background
-
-On March 31, 2026, security researcher [Chaofan Shou (@Fried_rice)](https://x.com/Fried_rice) discovered that the `@anthropic-ai/claude-code` package on npm contained a build configuration error where source map files referenced an unprotected Cloudflare R2 storage bucket. The disclosure tweet received over 17 million views, sparking unprecedented community discussion about Agent architecture.
-
-This book was born from that discussion — when Agent architecture became a hot topic, we realized the need for a systematic book explaining the design principles of Agent Harness.
-
----
 
 ## Contributing
 
-Issues and PRs welcome — fix technical errors, supplement practical examples, improve chapter structure.
+Issues and pull requests are welcome. Include the chapter, section, expected correction, and a source link; for rendering problems, include the viewer and reproduction steps. Please keep Chinese and English changes aligned.
 
-## Acknowledgments
+Run `python3 scripts/check_book.py` and `python3 -m unittest discover -s tests` before submitting.
 
-[Linux.Do](https://linux.do/) community
+## License and acknowledgements
 
----
+Book content: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Credit the author, use non-commercially, and share adaptations under the same license. Third-party material retains its own terms. Thanks to the [Linux.Do](https://linux.do/) community.
 
 ## Star History
 
@@ -183,13 +109,3 @@ Issues and PRs welcome — fix technical errors, supplement practical examples, 
    <img alt="Star History Chart" src="../docs/images/star-history-light.svg" />
  </picture>
 </a>
-
----
-
-<p align="center">
-  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-    <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" alt="CC BY-NC-SA 4.0" />
-  </a>
-  <br/><br/>
-  Free to share and adapt, with attribution, non-commercial use, and same-license sharing.
-</p>
