@@ -113,7 +113,9 @@ This means that policy-level custom agents can override built-in agents with the
 
 ## 9.2 Built-in Agents
 
-Built-in agents are returned as a list of currently available agents by the `getBuiltInAgents()` function in the registration module. Each agent is carefully designed as an expert in a specific domain. Together, they cover the four most common work patterns in software engineering: exploration, planning, execution, and verification.
+`getBuiltInAgents()` assembles the agents available in the current environment; it does not return a fixed list of four agents. Registration depends on the entrypoint, build flags, and runtime gates. The roles below illustrate exploration, planning, execution, and verification rather than a universally available product inventory.
+
+**Availability:** Verification is registered only when both the build flag `VERIFICATION_AGENT` and the runtime gate `tengu_hive_evidence` are enabled. The latter defaults to `false`. A definition can therefore exist without the agent being available to users. Explore and Plan also have their own gates; other built-in roles include status-line setup and a Claude Code guide, depending on the entrypoint.
 
 ```mermaid
 graph LR
@@ -123,7 +125,9 @@ graph LR
     end
     subgraph Read-Write Layer
         G["General<br/>(Execution)"]
-        V["Verification<br/>(Verification)"]
+    end
+    subgraph Gated["Conditionally registered"]
+        V["Verification<br/>Build flag + runtime gate"]
     end
 
     style E fill:#3498db,stroke:#2471a3,color:#fff
@@ -180,9 +184,9 @@ The design philosophy of the General Purpose Agent is "trust by default, push bo
 >
 > Although the General Purpose Agent can technically perform read-only searches, this introduces unnecessary cost and security risks. Read-only tasks should use the Explore Agent: its haiku model is cheaper, omitting CLAUDE.md saves tokens, and tool restrictions eliminate the risk of accidental modifications. This is a classic application of the **principle of least privilege**.
 
-### Verification Agent: Verification Agent
+### Verification Agent: A Gated Verification Design
 
-The Verification Agent is a unique "adversarial" agent designed to **break the code being verified as thoroughly as possible**, rather than confirming that it works. It uses a red UI indicator to emphasize its adversarial nature, always runs in the background, is prohibited from modifying project files, and uses the inherit model.
+When enabled and invoked, the Verification Agent is a unique "adversarial" agent designed to **break the code being verified as thoroughly as possible**, rather than confirming that it works. It uses a red UI indicator to emphasize its adversarial nature, always runs in the background, is prohibited from modifying project files, and uses the inherit model.
 
 #### The Deep Philosophy of Adversarial Design
 
@@ -196,7 +200,7 @@ This adversarial design draws on the **Red Teaming** concept in software enginee
 
 ```mermaid
 flowchart TD
-    A["Main agent completes code modifications"] --> B["Verification Agent is activated (background)"]
+    A["Main agent completes code modifications"] --> B["Verification enabled and invoked<br/>(background)"]
     B --> C["Attempt to run tests, search for failing cases"]
     B --> D["Check boundary conditions and exception paths"]
     B --> E["Find missing imports or type errors"]
@@ -660,7 +664,7 @@ Design a complete software development workflow using the following combination 
 2. Use the Explore Agent to investigate the existing authentication code structure
 3. Use the Plan Agent to create an implementation plan
 4. Use the General Purpose Agent to execute the implementation
-5. Use the Verification Agent to verify the implementation
+5. Verify the implementation with an independent verification agent; if the built-in Verification Agent is unavailable, use a custom agent with explicit tool restrictions
 
 Write out the input and expected output for each step.
 
@@ -670,7 +674,7 @@ Write out the input and expected output for each step.
 
 1. **AgentTool's three-tier agent system** (built-in, custom, plugin) provides a complete spectrum from out-of-the-box to deep customization, and the priority mechanism allows enterprise-level overrides. Custom agents are defined through Markdown files, lowering the barrier to creation.
 
-2. **Built-in agents each serve their purpose**: Explore focuses on high-speed read-only search, Plan does structured planning, General Purpose is the all-rounder, and Verification adopts an adversarial verification strategy. Together, they cover the core software engineering workflow.
+2. **Built-in agents each serve their purpose**: Explore focuses on high-speed read-only search, Plan does structured planning, General Purpose is the all-rounder, and Verification adopts an adversarial verification strategy. These roles illustrate the core workflow; availability depends on registration gates.
 
 3. **The core innovation of the Fork pattern** is achieving prompt cache sharing through byte-level inheritance: identical system prompts, tool definitions, message prefixes, plus uniform placeholder results maximize the cache hit area. In large-scale parallel scenarios, it can save 60%+ tokens.
 

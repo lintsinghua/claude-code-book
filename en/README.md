@@ -65,7 +65,7 @@ Claude Code belongs to Anthropic. This independent book is not an official Anthr
 
 | # | Chapter | Core Content |
 |:-:|---------|-------------|
-| 09 | [Sub-Agents and the Fork Pattern](Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md) | Three Agent sources; four built-in Agents; byte-level Fork context inheritance; recursive Fork protection |
+| 09 | [Sub-Agents and the Fork Pattern](Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md) | Three Agent sources; agent roles and availability gates; byte-level Fork context inheritance; recursive Fork protection |
 | 10 | [The Coordinator Pattern — Multi-Agent Orchestration](Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md) | Coordinator-Worker dual gating; "orchestrate-only" constraint; four addressing modes; four-stage workflow |
 | 11 | [The Skill System & Plugin Architecture](Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md) | 11 core skills; SKILL.md frontmatter; three-level parameter substitution; layered loading; plugin cache |
 | 12 | [MCP Integration & External Protocols](Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md) | 8 connection configuration variants; five-state connection management; three-part tool naming; Bridge bidirectional comms |
@@ -94,7 +94,7 @@ Claude Code belongs to Anthropic. This independent book is not an official Anthr
 
 Issues and pull requests are welcome. Include the chapter, section, expected correction, and a source link; for rendering problems, include the viewer and reproduction steps. Please keep Chinese and English changes aligned.
 
-Run `python3 scripts/check_book.py` and `python3 -m unittest discover -s tests` before submitting.
+Before submitting, run `python3 scripts/check_book.py` and `python3 -m unittest discover -s tests`. To validate Mermaid syntax, install Node.js 22 or later and run `npm ci` followed by `npm run check:diagrams`.
 
 ## License and acknowledgements
 

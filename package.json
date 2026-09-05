@@ -1,0 +1,14 @@
+{
+  "name": "claude-code-book-checks",
+  "private": true,
+  "scripts": {
+    "check:diagrams": "node scripts/check_mermaid.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0",
+    "mermaid": "11.17.2"
+  }
+}

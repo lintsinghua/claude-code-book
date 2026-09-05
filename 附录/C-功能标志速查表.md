@@ -59,7 +59,7 @@ flowchart TD
 | `AGENT_TRIGGERS` | 编译时 | 智能体触发器。启用定时任务调度（cron）、后台周期性执行的智能体行为 | CronCreateTool, CronDeleteTool, CronListTool | 依赖 DAEMON 或长运行环境 | 第 9 章 |
 | `AGENT_TRIGGERS_REMOTE` | 编译时 | 远程智能体触发器。支持远程托管的定时触发器执行 | RemoteTriggerTool、远程触发器通信协议 | 依赖 AGENT_TRIGGERS | 第 9 章 |
 | `ULTRAPLAN` | 编译时 | 超级规划模式。提供交互式规划对话框，允许用户审查和修改复杂任务的执行计划 | EnterPlanModeTool/ExitPlanModeV2Tool 的增强规划界面 | 无前置依赖 | 第 5 章 |
-| `VERIFICATION_AGENT` | 编译时 | 验证智能体。在任务完成后自动启动验证流程 | 任务完成后的自动验证逻辑、验证结果报告 | 无前置依赖 | 第 8 章 |
+| `VERIFICATION_AGENT` | 编译时 | 包含受门控的验证智能体设计，不保证向用户开放 | 验证智能体注册与行为 | 同时要求运行时开关 `tengu_hive_evidence` 开启（默认 `false`） | 第 9 章 |
 | `BUILTIN_EXPLORE_PLAN_AGENTS` | 编译时 | 内置探索-规划智能体。提供预装的探索和规划类型的子智能体 | ExploreAgent, PlanAgent 等内置智能体定义 | 依赖 FORK_SUBAGENT | 第 8 章 |
 | `AGENT_MEMORY_SNAPSHOT` | 编译时 | 智能体内存快照。支持对智能体状态进行快照和恢复 | 快照创建、序列化存储、恢复加载逻辑 | 无前置依赖 | 第 10 章 |
 | `WORKFLOW_SCRIPTS` | 编译时 | 工作流脚本。启用本地工作流任务处理器，支持自动化脚本编排 | WorkflowTool、工作流脚本解析和执行引擎 | 无前置依赖 | 第 9 章 |
@@ -87,7 +87,7 @@ flowchart TD
 | `REACTIVE_COMPACT` | 编译时 + 运行时门控 | 响应式压缩。在 Token 接近阈值时自动触发上下文压缩，而非等待用户确认 | 自动压缩触发逻辑、阈值检测器 | 无前置依赖 | 第 4 章 |
 | `CONTEXT_COLLAPSE` | 编译时 | 上下文折叠。提供比传统压缩更激进的上下文缩减策略，包含专门的折叠 UI 和恢复机制 | CtxInspectTool、折叠 UI 组件、内容恢复逻辑 | 无前置依赖 | 第 4 章 |
 | `CACHED_MICROCOMPACT` | 编译时 | 缓存式微压缩。在微压缩过程中维护提示缓存边界，避免缓存失效导致的额外开销 | 微压缩缓存边界标记、缓存感知压缩策略 | 依赖 Prompt Cache API 支持 | 第 4 章 |
-| `HISTORY_SNIP` | 编译时 | 历史裁剪（Snip Compact）。对已处理的对话历史进行智能裁剪，保留关键信息的同时大幅缩减 token 占用 | SnipTool、历史消息裁剪算法 | 无前置依赖 | 第 4 章 |
+| `HISTORY_SNIP` | 编译时 | 消息级历史裁剪，与工具结果正文清理不同 | 对话预处理、已释放令牌数传递 | 需要构建包含对应功能 | 第 7 章 |
 | `COMPACTION_REMINDERS` | 编译时 | 压缩提醒。在压缩过程中向用户展示提醒信息 | 压缩前后的用户通知 UI | 依赖压缩操作 | 第 4 章 |
 | `PROMPT_CACHE_BREAK_DETECTION` | 编译时 | 提示缓存断裂检测。在压缩操作中检测并报告提示缓存边界的断裂情况 | 缓存断点检测逻辑、断裂报告生成 | 依赖压缩操作 | 第 4 章 |
 | `TOKEN_BUDGET` | 编译时 | Token 预算管理器。跟踪和可视化 Token 使用预算，提供预算超限预警 | Token 使用量追踪、预算预警 UI、用量统计 | 无前置依赖 | 第 4 章 |

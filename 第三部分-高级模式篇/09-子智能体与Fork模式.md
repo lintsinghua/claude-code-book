@@ -113,7 +113,9 @@ graph TD
 
 ## 9.2 内置智能体
 
-内置智能体在注册模块中通过 `getBuiltInAgents()` 函数返回当前环境下可用的智能体列表。每个智能体都被精心设计为特定领域的专家。它们的组合覆盖了软件工程中最常见的四种工作模式：探索、规划、执行和验证。
+`getBuiltInAgents()` 根据当前环境组装可用智能体，并不是固定返回四个智能体。注册结果受入口、构建标志和运行时开关影响。下文按探索、规划、执行和验证四类职责分析设计，不应将其视为所有用户都能调用的产品清单。
+
+**可用性边界：** Verification 只有在构建标志 `VERIFICATION_AGENT` 和运行时开关 `tengu_hive_evidence` 同时开启时才会注册，后者默认值为 `false`。因此，存在智能体定义不等于它已向用户开放。Explore、Plan 也有各自的门控；状态栏设置、Claude Code 使用指南等其他内置角色是否注册，还取决于调用入口。
 
 ```mermaid
 graph LR
@@ -123,7 +125,9 @@ graph LR
     end
     subgraph 读写层
         G["General<br/>（执行）"]
-        V["Verification<br/>（验证）"]
+    end
+    subgraph gated["条件注册"]
+        V["Verification<br/>构建标志 + 运行时开关"]
     end
 
     style E fill:#3498db,stroke:#2471a3,color:#fff
@@ -180,9 +184,9 @@ General Purpose Agent 的设计哲学是"默认信任，边界后移"。它不�
 >
 > 虽然 General Purpose Agent 技术上可以执行只读搜索，但这会带来不必要的成本和安全风险。只读任务应该使用 Explore Agent：它的 haiku 模型更便宜、省略 CLAUDE.md 节省 token、工具限制消除了意外修改的风险。这是一个典型的**最小权限原则**的应用。
 
-### Verification Agent：验证智能体
+### Verification Agent：受门控的验证设计
 
-Verification Agent 是一个独特的"对抗性"智能体，设计目标是**尽可能破坏被验证的代码**，而不是确认它能工作。它使用红色 UI 标识强调对抗性质，始终后台运行，禁止修改项目文件，使用 inherit 模型。
+在启用并调用后，Verification Agent 是一个独特的"对抗性"智能体，设计目标是**尽可能破坏被验证的代码**，而不是确认它能工作。它使用红色 UI 标识强调对抗性质，始终后台运行，禁止修改项目文件，使用 inherit 模型。
 
 #### 对抗性设计的深层哲学
 
@@ -196,7 +200,7 @@ Verification Agent 的系统提示明确警告了两种失败模式：
 
 ```mermaid
 flowchart TD
-    A["主智能体完成了代码修改"] --> B["Verification Agent 被激活（后台）"]
+    A["主智能体完成了代码修改"] --> B["Verification 已启用并被调用<br/>（后台）"]
     B --> C["尝试运行测试，寻找失败的用例"]
     B --> D["检查边界条件和异常路径"]
     B --> E["寻找遗漏的 import 或类型错误"]
@@ -660,7 +664,7 @@ stateDiagram-v2
 2. 使用 Explore Agent 调查现有的认证代码结构
 3. 使用 Plan Agent 制定实施计划
 4. 使用 General Purpose Agent 执行实施
-5. 使用 Verification Agent 验证实现
+5. 使用独立的验证智能体验证实现；若内置 Verification Agent 不可用，可改用具有明确工具限制的自定义智能体
 
 写出每一步的输入和预期输出。
 
@@ -670,7 +674,7 @@ stateDiagram-v2
 
 1. **AgentTool 的三层智能体体系**（内置、自定义、插件）提供了从开箱即用到深度定制的完整光谱，优先级机制允许企业级覆盖。自定义智能体通过 Markdown 文件定义，降低了创建门槛。
 
-2. **内置智能体各司其职**：Explore 专注高速只读搜索，Plan 做结构化规划，General Purpose 是万能选手，Verification 采取对抗性验证策略。四者组合覆盖了软件工程的核心工作流。
+2. **内置智能体各司其职**：Explore 专注高速只读搜索，Plan 做结构化规划，General Purpose 是万能选手，Verification 采取对抗性验证策略。这些角色展示了核心工作流，可用性仍取决于注册门控。
 
 3. **Fork 模式的核心创新**是通过字节级继承实现 prompt cache 共享：相同的系统提示、工具定义、消息前缀加上统一的占位符结果，最大化缓存命中面积。在大规模并行场景下可节省 60%+ 的 token。
 

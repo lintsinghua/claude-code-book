@@ -283,7 +283,7 @@ flowchart LR
 | Ultraplan | 超级规划 | 提供交互式计划审查界面的高级规划功能，支持用户在执行前审批和修改复杂任务的执行方案。由 `ULTRAPLAN` 功能标志控制 | Plan Mode, EnterPlanModeTool | 第 5 章 |
 | Ultrathink | 深度思考 | 启用扩展思考（Extended Thinking）能力的功能标志，允许模型在生成回复前进行更深入的推理 | Extended Thinking, Feature Flag, Token | 第 5 章 |
 | Unattended Retry | 无人值守重试 | 在 API 调用失败时自动重试的机制，无需用户干预。由 `UNATTENDED_RETRY` 功能标志控制。配合 Power Assertion 确保重试的安全性 | Feature Flag, Power Assertion | 第 13 章 |
-| Verification Agent | 验证智能体 | 在任务完成后自动启动的验证流程，用于确认任务结果的正确性和完整性。由 `VERIFICATION_AGENT` 功能标志控制 | Agent, Feature Flag | 第 8 章 |
+| Verification Agent | 验证智能体 | 受门控的对抗性验证智能体，注册需要 `VERIFICATION_AGENT` 与运行时开关 `tengu_hive_evidence`（默认 `false`）同时开启，并非普遍可用 | Agent, Feature Flag | 第 9 章 |
 | Voice Mode | 语音模式 | 启用 Push-to-Talk 语音输入和语音合成输出的交互模式，支持语音驱动的对话体验。由 `VOICE_MODE` 功能标志控制 | Feature Flag | 第 12 章 |
 
 ## W-Z

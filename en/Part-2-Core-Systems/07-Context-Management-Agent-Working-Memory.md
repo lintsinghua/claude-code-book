@@ -123,7 +123,7 @@ This design philosophy can be understood through an analogy: **compression strat
 graph LR
     subgraph CompressionStrategy["Four-Level Compression Strategy (Increasing Cost ->)"]
         direction LR
-        L1["Level 1: Snip<br/>───────<br/>No LLM<br/>Token Clearance<br/>Cost ~ 0"]
+        L1["Level 1: Snip<br/>───────<br/>No LLM<br/>Message Trimming<br/>Cost ~ 0"]
         L2["Level 2: MicroCompact<br/>───────<br/>No LLM<br/>Time-Triggered<br/>Very Low Cost"]
         L3["Level 3: Collapse<br/>───────<br/>Partial LLM<br/>Active Restructuring<br/>Medium Cost"]
         L4["Level 4: AutoCompact<br/>───────<br/>Full LLM<br/>Conversation Summary<br/>High Cost"]
@@ -153,15 +153,15 @@ graph LR
 
 ### Level 1: Snip
 
-Snip is the lightest-weight compression method. It does not invoke any LLM; instead, it directly clears old tool result content. When a user marks messages as no longer needed through the Snip tool, the system replaces the tool call results with a brief marker text (e.g., `[Old tool result content cleared]`), thereby freeing token space.
+Snip trims history at the **message-sequence level**, rather than merely clearing text inside old tool results. When `HISTORY_SNIP` is enabled, the query loop calls `snipCompactIfNeeded(messagesForQuery)` and uses its returned message sequence for the next request. The result also reports freed tokens and may include a boundary message.
 
-In the micro-compaction module, you can see the definition of this marker text: `'[Old tool result content cleared]'`.
+This differs from MicroCompact: the marker `[Old tool result content cleared]` belongs to the time-based MicroCompact path, which replaces eligible tool-result bodies while retaining their message structure. It is not the definition of Snip.
 
-Snip operations record the number of tokens freed and pass this information to the auto-compression decision function, enabling a more accurate assessment of whether higher-level compression needs to be triggered.
+**The design trade-off:** Removing old messages can reclaim more than tool-output tokens, but requires careful handling of retained context and tool-call/result relationships. A shorter model-facing history also need not mean the UI has discarded its scrollback. Message trimming and tool-result replacement solve related problems at different levels.
 
-**The design wisdom of Snip:** Why replace messages with marker text instead of deleting them outright? Because deleting messages breaks the continuity of the message chain -- subsequent messages may reference earlier tool call IDs. The marker text both frees space and maintains message structural integrity.
+Snip's freed-token count is passed to the auto-compaction decision so that it can account for the reduced history. Snip and MicroCompact may both run in the same preprocessing pass; they are not mutually exclusive.
 
-**Typical usage scenario:** You just used the Read tool to read 10 files, each with 500 lines of code, consuming approximately 15,000 tokens. Once the analysis is complete, these file contents are no longer needed. At this point, using Snip to clear these tool results immediately reclaims a large amount of space.
+**Typical usage scenario:** An earlier investigation produced many messages and tool calls, and the current task has moved beyond that phase. History trimming reduces the old message sequence; clearing the contents of individual file-read results is instead a MicroCompact example. This mechanism does not imply that every installation exposes a user-callable Snip tool.
 
 ### Level 2: MicroCompact
 
@@ -408,7 +408,7 @@ When working with large projects, context management is especially critical:
 
 | Scenario | Recommended Strategy |
 |----------|---------------------|
-| After reading 10+ files | Use Snip to clear analyzed file contents |
+| After reading 10+ files | Consider MicroCompact for old tool results; distinguish this from message-level Snip |
 | Returning after a long pause | MicroCompact automatically clears expired cache |
 | Implementing multiple features consecutively | Manually compress after completing each feature |
 | Refactoring across multiple subsystems | Phased work + memory system support |
@@ -455,7 +455,7 @@ Start a long conversation session using Claude Code:
 3. When usage reaches 60%, manually type `/compact` with the key points you want to preserve
 4. Compare token counts before and after compression
 
-> *Advanced Challenge:* Try manually clearing unnecessary tool results with the Snip tool before compression. Compare the difference between "Snip first, then compact" versus "compact directly."
+> *Advanced Challenge:* Using a synthetic conversation, compare message-level trimming with replacement of old tool-result bodies. Check retained context, tool-call/result pairing, and token estimates; do not assume a Snip tool is available in the installed release.
 
 **Exercise 5: Cross-Chapter Comprehensive Analysis**
 

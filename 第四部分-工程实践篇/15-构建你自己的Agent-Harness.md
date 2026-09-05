@@ -500,6 +500,8 @@ export async function checkToolPermission(
 
 长对话必然触及 Token 上限。Claude Code 采用了 **渐进式压缩策略**，由多个层级组成：
 
+> **示例范围：** 下方固定窗口策略用于演示纯文本消息裁剪，不是生产级 Snip 实现。包含工具调用时，裁剪边界还必须保留完整的工具调用／结果分组。
+
 ```typescript
 // contextManager.ts
 export interface CompressionStrategy {
@@ -508,14 +510,14 @@ export interface CompressionStrategy {
   compress: (messages: Message[]) => Promise<Message[]>
 }
 
-// 策略 1：历史裁剪（最廉价）
+// 教学示例：保留系统消息与最近的文本消息窗口
 const snipStrategy: CompressionStrategy = {
   name: 'snip',
   shouldTrigger: (count, limit) => count > limit * 0.7,
   async compress(messages) {
     // 保留系统消息和最近 N 条消息
     const systemMsgs = messages.filter(m => m.role === 'system')
-    const recentMsgs = messages.slice(-20)
+    const recentMsgs = messages.filter(m => m.role !== 'system').slice(-20)
     return [...systemMsgs, ...recentMsgs]
   },
 }
@@ -572,7 +574,7 @@ export class ContextManager {
 +----------+----------+-----------+---------------------------+
 ```
 
-关键洞察：**信息损失是相对的。** Snip 丢弃了完整的工具结果，但保留了对话结构。摘要压缩保留了语义信息，但丢失了原始措辞。选择哪种策略取决于对话中什么信息最重要 -- 如果用户在调试一个复杂 bug，工具结果（如日志输出）可能是最不能丢的；如果用户在进行代码重构，整体的设计决策比中间步骤更重要。
+关键洞察：**信息损失是相对的。** 消息级 Snip 会移除历史消息；MicroCompact 则替换工具结果正文并保留其消息结构。摘要压缩保留了语义信息，但丢失了原始措辞。选择哪种策略取决于对话中什么信息最重要 -- 如果用户在调试一个复杂 bug，工具结果（如日志输出）可能是最不能丢的；如果用户在进行代码重构，整体的设计决策比中间步骤更重要。
 
 > **交叉引用：** Claude Code 的四级压缩策略在第 7 章"上下文管理 -- Agent 的工作记忆"中有完整分析。本章的两级策略是简化版本。
 

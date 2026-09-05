@@ -187,7 +187,7 @@ Before calling the model, the loop executes a series of preprocessing steps. The
 
 1. **Tool Result Budget**: Truncates or persists overly large tool results to disk, ensuring the context window limit is not exceeded. This is similar to the "paging" mechanism in computer science -- when data is too large to fit entirely in memory (the context window), some data is stored to disk, retaining only a summary or reference.
 
-2. **Snip Compression**: If history trimming is enabled, overly long history messages are trimmed. Snip is the most "brutal" compression method -- it directly truncates message content. It is typically used to handle excessively long output from tools (such as the complete contents of large files).
+2. **Snip compression**: When history trimming is enabled, the system trims the message sequence and passes the returned messages and freed-token count downstream. This is distinct from truncating a single oversized tool result or replacing its body during MicroCompact.
 
 3. **Microcompact**: Performs lightweight compression before auto-compaction, using cached editing techniques to reduce token consumption. The elegance of Microcompact lies in being "cache-friendly" -- it tries to reuse tokens already cached on the API side, avoiding complete cache invalidation caused by compression.
 
@@ -199,7 +199,7 @@ Before calling the model, the loop executes a series of preprocessing steps. The
 
 7. **Token Block Check**: If the token count exceeds a hard limit, an error message is returned directly without making an API call. This is a "fail fast" mechanism -- rather than sending an API request doomed to fail, it's better to block it locally.
 
-> **Best Practice:** The design of this seven-step pipeline follows an important principle: **compression methods are arranged from lightweight to heavyweight, and each step tries the lowest-cost approach first.** This principle is worth following when building your own Agent system -- first use Snip to trim overly long content, then use Microcompact to reduce cache waste, then use Context Collapse to fold redundant information, and only finally use Autocompact for a full summary. Because each step loses some information, you should delay using the most "aggressive" compression methods as long as possible.
+> **Best Practice:** The design of this seven-step pipeline follows an important principle: **compression methods are arranged from lightweight to heavyweight, and each step tries the lowest-cost approach first.** This principle is worth following when building your own Agent system -- first use Snip to trim the historical message sequence, then use Microcompact to reduce cache waste, then use Context Collapse to fold redundant information, and only finally use Autocompact for a full summary. Because each step loses some information, you should delay using the most "aggressive" compression methods as long as possible.
 
 ### Phase 3: API Call
 
@@ -422,7 +422,7 @@ Reflection: If the model calling function were hard-coded directly in the loop, 
 **Exercise 4: Context Compression Pipeline in Practice**
 
 Send Claude Code a series of requests that require substantial context (such as "read this large file, then generate documentation based on it, then run tests"), and observe how the compression pipeline is triggered. Note the following clues:
-- When Snip compression is triggered (sign that tool results are being truncated)
+- When Snip compression is triggered (message-level history trimming)
 - When Autocompact is triggered (sign that conversation history is being summarized)
 - Whether the model's reasoning ability is affected after compression
 

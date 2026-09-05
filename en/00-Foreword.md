@@ -136,30 +136,14 @@ This book is suitable for the following readers, each of whom can gain unique va
 This book is divided into four parts, organized from macro to micro, from concept to implementation:
 
 ```mermaid
-flowchart TD
-    subgraph part1["Part 1: Foundations (Chapters 1-4)"]
-        direction LR
-        ch1["Chapter 1<br/>New Paradigm<br/>Panoramic Overview"] --> ch2["Chapter 2<br/>Dialog Loop<br/>Agent Heartbeat"] --> ch3["Chapter 3<br/>Tool System<br/>Agent Hands"] --> ch4["Chapter 4<br/>Permission Pipeline<br/>Agent Guardrails"]
-    end
-
-    subgraph part2["Part 2: Core (Chapters 5-8)"]
-        core["Context Management · Cache Strategy · Streaming Architecture · Error Recovery"]
-    end
-
-    subgraph part3["Part 3: Extensions (Chapters 9-12)"]
-        ext["MCP Protocol · Sub-Agents · Plugin System · Hook Mechanism"]
-    end
-
-    subgraph part4["Part 4: Practice (Chapters 13-15)"]
-        practice["Mini Agent Harness Build · Debugging Tips · Production Deployment"]
-    end
-
-    part1 --> part2 --> part3 --> part4
-
-    classDef section fill:#f3f9ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-    classDef chapter fill:#eff6ff,stroke:#60a5fa,stroke-width:1px,color:#2563eb
-    class part1,part2,part3,part4 section
-    class ch1,ch2,ch3,ch4 chapter
+flowchart TB
+    p1["Part 1 · Foundations<br/>01 New paradigm<br/>02 Dialog loop<br/>03 Tool system<br/>04 Permission pipeline"]
+    p2["Part 2 · Core Systems<br/>05 Settings and configuration<br/>06 Memory system<br/>07 Context management<br/>08 Hooks"]
+    p3["Part 3 · Advanced Patterns<br/>09 Sub-agents and Fork<br/>10 Multi-agent coordination<br/>11 Skills and plugins<br/>12 MCP and external protocols"]
+    p4["Part 4 · Engineering Practice<br/>13 Streaming and performance<br/>14 Plan mode and workflows<br/>15 Build your own Harness"]
+    p1 --> p2 --> p3 --> p4
+    classDef part fill:#eff6ff,stroke:#3b82f6,color:#1e3a8a
+    class p1,p2,p3,p4 part
 ```
 
 **If you are short on time (Fast Path):** Read at least Chapter 1 (to establish a mental model) and Chapter 2 (to understand the core loop), then spend 15 minutes browsing the key takeaways sections of Chapters 3-4. These two chapters are the foundation for understanding everything that follows.

@@ -283,7 +283,7 @@ flowchart LR
 | Ultraplan | 超级规划 | An advanced planning feature that provides an interactive plan review interface, supporting user approval and modification of complex task execution plans before execution. Controlled by the `ULTRAPLAN` feature flag | Plan Mode, EnterPlanModeTool | Chapter 5 |
 | Ultrathink | 深度思考 | A feature flag that enables Extended Thinking capability, allowing the model to perform deeper reasoning before generating a response | Extended Thinking, Feature Flag, Token | Chapter 5 |
 | Unattended Retry | 无人值守重试 | A mechanism that automatically retries on API call failure without user intervention. Controlled by the `UNATTENDED_RETRY` feature flag. Combined with Power Assertion to ensure retry safety | Feature Flag, Power Assertion | Chapter 13 |
-| Verification Agent | 验证智能体 | An automated verification process launched after task completion, used to confirm the correctness and completeness of task results. Controlled by the `VERIFICATION_AGENT` feature flag | Agent, Feature Flag | Chapter 8 |
+| Verification Agent | 验证智能体 | A gated adversarial verification agent. Registration requires both `VERIFICATION_AGENT` and runtime gate `tengu_hive_evidence` (default `false`); not universally available | Agent, Feature Flag | Chapter 9 |
 | Voice Mode | 语音模式 | An interactive mode that enables Push-to-Talk voice input and speech synthesis output, supporting voice-driven conversation experiences. Controlled by the `VOICE_MODE` feature flag | Feature Flag | Chapter 12 |
 
 ## W-Z

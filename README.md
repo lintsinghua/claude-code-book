@@ -65,7 +65,7 @@ Claude Code 为 Anthropic 产品，本书是独立的技术分析作品，并非
 
 | # | 章节 | 核心内容 |
 |:-:|------|---------|
-| 09 | [子智能体与 Fork 模式](第三部分-高级模式篇/09-子智能体与Fork模式.md) | 三种 Agent 来源；四种内置 Agent；Fork 字节级上下文继承；递归 Fork 防护 |
+| 09 | [子智能体与 Fork 模式](第三部分-高级模式篇/09-子智能体与Fork模式.md) | 三种 Agent 来源；智能体职责与可用性门控；Fork 字节级上下文继承；递归 Fork 防护 |
 | 10 | [协调器模式 — 多智能体编排](第三部分-高级模式篇/10-协调器模式-多智能体编排.md) | Coordinator-Worker 双重门控；"只编排不执行"约束；四种寻址模式；四阶段工作流 |
 | 11 | [技能系统与插件架构](第三部分-高级模式篇/11-技能系统与插件架构.md) | 11 个核心技能；SKILL.md frontmatter；三级参数替换；分层加载；插件缓存 |
 | 12 | [MCP 集成与外部协议](第三部分-高级模式篇/12-MCP集成与外部协议.md) | 8 类连接配置；五态连接管理；三段式工具命名；Bridge 双向通信系统 |
@@ -94,7 +94,7 @@ Claude Code 为 Anthropic 产品，本书是独立的技术分析作品，并非
 
 欢迎通过 Issue 或 PR 修正技术错误、补充案例和改进表达。请提供章节、小节、建议修改和参考来源；显示问题请注明阅读平台和复现步骤。涉及双语内容时，请同步检查英文版。
 
-提交前运行 `python3 scripts/check_book.py` 和 `python3 -m unittest discover -s tests`。
+提交前运行 `python3 scripts/check_book.py` 和 `python3 -m unittest discover -s tests`。Mermaid 语法检查需要 Node.js 22 或更高版本：先运行 `npm ci`，再运行 `npm run check:diagrams`。
 
 ## 许可与致谢
 

@@ -13,7 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def check(root=ROOT):
     errors = []
-    files = sorted(root.rglob('*.md'))
+    files = sorted(
+        path for path in root.rglob('*.md')
+        if not any(part.startswith('.') or part == 'node_modules'
+                   for part in path.relative_to(root).parts)
+    )
     diagrams = 0
     for path in files:
         if any(part.startswith('.') for part in path.relative_to(root).parts):
