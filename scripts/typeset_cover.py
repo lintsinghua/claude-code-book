@@ -49,7 +49,7 @@ def main():
     text_at('解码 Agent Harness', sans(48), 84, 415, 'white')
     draw.line((84, 1358, 940, 1358), fill='#A4058B', width=2)
     text_at('Claude Code 架构深度剖析', sans(34), 84, 1388, '#202020')
-    text_at('LinTsinghua', sans(23), 84, 1462, '#424242')
+    text_at('LinTsinghua', sans(36), 84, 1462, '#252525')
 
     image.save(args.image, optimize=True)
     print(f'Typeset 御舆 using {title_font.getname()}: {args.image}')

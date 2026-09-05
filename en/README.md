@@ -6,7 +6,9 @@ A Deep Architectural Analysis of Claude Code
 
 [中文](../README.md) · **English**
 
-<img src="../cover.png" width="420" alt="御舆：解码 Agent Harness — Claude Code 架构深度剖析，LinTsinghua" />
+<table align="center">
+<tr><td><img src="../cover.png" width="420" alt="御舆：解码 Agent Harness — Claude Code 架构深度剖析，LinTsinghua" /></td></tr>
+</table>
 
 </div>
 
