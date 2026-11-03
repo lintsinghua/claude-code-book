@@ -389,3 +389,21 @@ flowchart LR
 | 网络操作 | 高（网络延迟） | 中（取决于页面内容） | 高（均并发安全） | 受网络状况影响大 |
 | 子智能体 | 高（递归 API 调用） | 高（独立上下文） | 高（独立执行） | 注意嵌套深度限制 |
 | MCP 操作 | 中（进程间通信） | 中（取决于资源大小） | 取决于 MCP 服务器 | 连接状态影响可用性 |
+---
+
+## 注册 ≠ 送达：一次请求实际声明了多少工具
+
+本附录清点的是**架构中注册**的工具。模型在一次请求里看到的是另一个数字：harness 按入口裁剪之后才发出去。
+
+同一模型、同一天（2026-09-02，`claude-fable-5-1`）的线上抓取对照：
+
+| 入口 | 请求中声明的工具数 | 系统提示词字符数 |
+|---|---:|---:|
+| 交互式 CLI（`cc_entrypoint=cli`） | 35 | 26,131 |
+| `-p` / Agent SDK（`cc_entrypoint=sdk-cli`） | 29 | 20,806 |
+
+两者相差 6 个工具与 5,325 个字符，开头那句身份也从 `You are Claude Code, Anthropic's official CLI for Claude` 改成 `You are a Claude agent, built on Anthropic's Claude Agent SDK`。入口本身写在请求头的 `cc_entrypoint` 字段里。
+
+因此本附录的清单应读作**上界**：注册过的工具不等于这一次会出现在模型面前。核对权限模型时，建议同时看「注册了什么」和「这一次声明了什么」。
+
+> 数据来源：<https://github.com/Continuum-AI-Corp/OrcaPromptVault/tree/main/Claude-Code> —— 按产品分目录的系统提示词与工具 schema 实抓归档，每份带日期；复现命令见该库 `docs/CAPTURES.md`。

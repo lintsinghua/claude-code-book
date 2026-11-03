@@ -389,3 +389,21 @@ Understanding the performance characteristics of tools helps in making reasonabl
 | Network Operations | High (network latency) | Medium (depends on page content) | High (all concurrency-safe) | Significantly affected by network conditions |
 | Sub-agent | High (recursive API calls) | High (independent context) | High (independent execution) | Note nesting depth limits |
 | MCP Operations | Medium (inter-process communication) | Medium (depends on resource size) | Depends on MCP server | Connection state affects availability |
+---
+
+## Registered Is Not Sent: How Many Tools a Single Request Declares
+
+This appendix inventories the tools **registered in the architecture**. What the model sees in one request is a different number: the harness trims by entry point before sending.
+
+Wire captures of the same model on the same day (2026-09-02, `claude-fable-5-1`):
+
+| Entry point | Tools declared in the request | System prompt characters |
+|---|---:|---:|
+| Interactive CLI (`cc_entrypoint=cli`) | 35 | 26,131 |
+| `-p` / Agent SDK (`cc_entrypoint=sdk-cli`) | 29 | 20,806 |
+
+Six tools and 5,325 characters apart, and the opening identity line is rewritten from `You are Claude Code, Anthropic's official CLI for Claude` to `You are a Claude agent, built on Anthropic's Claude Agent SDK`. The entry point itself travels in the request header as `cc_entrypoint`.
+
+So the inventory above reads as an **upper bound**: a registered tool is not necessarily one the model is shown in a given session. When checking the permission model, it is worth reading "what is registered" alongside "what this request declared".
+
+> Source: <https://github.com/Continuum-AI-Corp/OrcaPromptVault/tree/main/Claude-Code> — system prompts and tool schemas archived per product, each dated; reproduce commands in that repository's `docs/CAPTURES.md`.
