@@ -5,7 +5,7 @@
 
 **Learning Objectives:** After reading this chapter, you will be able to:
 
-- Master the design patterns of Claude Code's 45+ tools and understand the design philosophy of the five-element protocol
+- Master the design patterns of Claude Code's 55 registered tools and understand the design philosophy of the five-element protocol
 - Understand the complete architecture of the tool definition protocol, registration mechanism, and orchestration engine
 - Analyze the scheduling principles and practical effects of concurrency partitioning strategies
 - Understand the elegant design of the StreamingToolExecutor four-stage state machine
@@ -13,7 +13,7 @@
 
 ---
 
-Maslow's quote could not be more fitting when applied to Agent tool systems. If an Agent only has a Bash tool, every task becomes a Shell command -- reading files with `cat`, searching code with `grep`, editing files with `sed`. This works, but it violates the engineering principle of "using the right tool for the right problem." Claude Code's tool system provides 45+ specialized tools, each optimized for a specific type of operation -- like equipping different professional tools for different tasks, rather than solving every problem with a single hammer.
+Maslow's quote could not be more fitting when applied to Agent tool systems. If an Agent only has a Bash tool, every task becomes a Shell command -- reading files with `cat`, searching code with `grep`, editing files with `sed`. This works, but it violates the engineering principle of "using the right tool for the right problem." Claude Code's tool system registers 55 specialized tools (Appendix B lists them all), each optimized for a specific type of operation -- like equipping different professional tools for different tasks, rather than solving every problem with a single hammer.
 
 ## 3.1 The Tool Definition Protocol
 

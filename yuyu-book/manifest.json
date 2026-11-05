@@ -1,0 +1,1042 @@
+{
+  "version": "0.3.2",
+  "date": "2026-10-27",
+  "author": "LinTsinghua",
+  "repository": "https://github.com/lintsinghua/claude-code-book",
+  "license": {
+    "name": "CC BY-NC-SA 4.0",
+    "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  },
+  "title": {
+    "zh": "御舆：解码 Agent Harness",
+    "en": "Yù Yú: Decoding Agent Harness"
+  },
+  "subtitle": {
+    "zh": "Claude Code 架构深度剖析",
+    "en": "A Deep Architectural Analysis of Claude Code"
+  },
+  "epigraph": {
+    "zh": "一器而工聚焉者，车为多。——《周礼·考工记》",
+    "en": "Of all artifacts that bring many crafts together, the chariot calls upon the most. — Kǎo Gōng Jì"
+  },
+  "start_reading": [
+    {
+      "label": {
+        "zh": "初次阅读",
+        "en": "First visit"
+      },
+      "body": {
+        "zh": "从前言开始，再读第 1 章 → 第 2 章 → 第 4 章 → 第 15 章。",
+        "en": "Begin at the Foreword, then read Chapter 1 → 2 → 4 → 15."
+      }
+    },
+    {
+      "label": {
+        "zh": "动手构建",
+        "en": "Build an agent"
+      },
+      "body": {
+        "zh": "先读基础篇与工程实践篇；增加记忆和扩展能力时查阅核心系统篇与高级模式篇。",
+        "en": "Read Parts 1 and 4 first; consult Parts 2 and 3 when adding memory and extension capabilities."
+      }
+    },
+    {
+      "label": {
+        "zh": "按需查阅",
+        "en": "Look things up"
+      },
+      "body": {
+        "zh": "使用四份附录定位模块、工具、功能标志和术语；文末主题索引按字母给出术语的章节位置。",
+        "en": "Use the four appendices to locate modules, tools, feature flags and terms; the back-matter index maps glossary terms to chapters."
+      }
+    },
+    {
+      "label": {
+        "zh": "离线整书",
+        "en": "Offline edition"
+      },
+      "body": {
+        "zh": "本文件即离线整书：单文件 HTML，图、目录、交叉引用、来源锚点断网可用；PDF 版含书签、页码与页眉。",
+        "en": "This file is the offline edition: a single HTML with diagrams, TOC, cross-references and source anchors working without network; the PDF adds bookmarks, page numbers and running heads."
+      }
+    }
+  ],
+  "parts": [
+    {
+      "id": "p1",
+      "no": {
+        "zh": "第一部分",
+        "en": "Part 1"
+      },
+      "title": {
+        "zh": "基础篇",
+        "en": "Foundations"
+      },
+      "motto": {
+        "zh": "建立心智模型",
+        "en": "Building Mental Models"
+      },
+      "goal": {
+        "zh": "理解 Agent 编程的范式转移，建立对 Agent Harness 的整体认知框架。",
+        "en": "Understand the paradigm shift in agent programming and establish a holistic cognitive framework for the Agent Harness."
+      },
+      "units": [
+        {
+          "id": "ch01",
+          "zh": "第一部分-基础篇/01-智能体编程的新范式.md",
+          "en": "en/Part-1-Foundations/01-The-New-Paradigm-of-Agent-Programming.md"
+        },
+        {
+          "id": "ch02",
+          "zh": "第一部分-基础篇/02-对话循环-Agent的心跳.md",
+          "en": "en/Part-1-Foundations/02-The-Dialog-Loop-Heartbeat-of-an-Agent.md"
+        },
+        {
+          "id": "ch03",
+          "zh": "第一部分-基础篇/03-工具系统-Agent的双手.md",
+          "en": "en/Part-1-Foundations/03-The-Tool-System-Agent-Hands.md"
+        },
+        {
+          "id": "ch04",
+          "zh": "第一部分-基础篇/04-权限管线-Agent的护栏.md",
+          "en": "en/Part-1-Foundations/04-The-Permission-Pipeline-Agent-Guardrails.md"
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "no": {
+        "zh": "第二部分",
+        "en": "Part 2"
+      },
+      "title": {
+        "zh": "核心系统篇",
+        "en": "Core Systems"
+      },
+      "motto": {
+        "zh": "深入子系统",
+        "en": "Deep into Subsystems"
+      },
+      "goal": {
+        "zh": "拆解 Agent Harness 的四大核心子系统——配置、记忆、上下文、钩子。",
+        "en": "Dissect the four core subsystems of the harness — configuration, memory, context, and hooks."
+      },
+      "units": [
+        {
+          "id": "ch05",
+          "zh": "第二部分-核心系统篇/05-设置与配置-Agent的基因.md",
+          "en": "en/Part-2-Core-Systems/05-Settings-and-Configuration-Agent-DNA.md"
+        },
+        {
+          "id": "ch06",
+          "zh": "第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md",
+          "en": "en/Part-2-Core-Systems/06-The-Memory-System-Agent-Long-Term-Memory.md"
+        },
+        {
+          "id": "ch07",
+          "zh": "第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md",
+          "en": "en/Part-2-Core-Systems/07-Context-Management-Agent-Working-Memory.md"
+        },
+        {
+          "id": "ch08",
+          "zh": "第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md",
+          "en": "en/Part-2-Core-Systems/08-The-Hook-System-Agent-Lifecycle-Extension-Points.md"
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "no": {
+        "zh": "第三部分",
+        "en": "Part 3"
+      },
+      "title": {
+        "zh": "高级模式篇",
+        "en": "Advanced Patterns"
+      },
+      "motto": {
+        "zh": "Agent 的组合与扩展",
+        "en": "Composition and Extension"
+      },
+      "goal": {
+        "zh": "探索 Agent 如何组合、编排和扩展——从子智能体到 MCP 协议桥接。",
+        "en": "Explore how agents compose, orchestrate, and extend — from sub-agents to MCP protocol bridging."
+      },
+      "units": [
+        {
+          "id": "ch09",
+          "zh": "第三部分-高级模式篇/09-子智能体与Fork模式.md",
+          "en": "en/Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md"
+        },
+        {
+          "id": "ch10",
+          "zh": "第三部分-高级模式篇/10-协调器模式-多智能体编排.md",
+          "en": "en/Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md"
+        },
+        {
+          "id": "ch11",
+          "zh": "第三部分-高级模式篇/11-技能系统与插件架构.md",
+          "en": "en/Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md"
+        },
+        {
+          "id": "ch12",
+          "zh": "第三部分-高级模式篇/12-MCP集成与外部协议.md",
+          "en": "en/Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md"
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "no": {
+        "zh": "第四部分",
+        "en": "Part 4"
+      },
+      "title": {
+        "zh": "工程实践篇",
+        "en": "Engineering Practice"
+      },
+      "motto": {
+        "zh": "从原理到构建",
+        "en": "From Principles to Construction"
+      },
+      "goal": {
+        "zh": "性能优化的工程细节，以及从零构建一个完整 Harness 的实战路线图。",
+        "en": "Engineering details of performance, and a hands-on roadmap to building a complete Harness from scratch."
+      },
+      "units": [
+        {
+          "id": "ch13",
+          "zh": "第四部分-工程实践篇/13-流式架构与性能优化.md",
+          "en": "en/Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md"
+        },
+        {
+          "id": "ch14",
+          "zh": "第四部分-工程实践篇/14-Plan模式与结构化工作流.md",
+          "en": "en/Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md"
+        },
+        {
+          "id": "ch15",
+          "zh": "第四部分-工程实践篇/15-构建你自己的Agent-Harness.md",
+          "en": "en/Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md"
+        }
+      ]
+    }
+  ],
+  "front": {
+    "id": "front",
+    "zh": "00-前言.md",
+    "en": "en/00-Foreword.md"
+  },
+  "appendices": [
+    {
+      "id": "apxa",
+      "zh": "附录/A-源码导航地图.md",
+      "en": "en/Appendices/A-Architecture-Navigation-Map.md"
+    },
+    {
+      "id": "apxb",
+      "zh": "附录/B-工具完整清单.md",
+      "en": "en/Appendices/B-Complete-Tool-Inventory.md"
+    },
+    {
+      "id": "apxc",
+      "zh": "附录/C-功能标志速查表.md",
+      "en": "en/Appendices/C-Feature-Flag-Reference.md"
+    },
+    {
+      "id": "apxd",
+      "zh": "附录/D-术语表.md",
+      "en": "en/Appendices/D-Glossary.md"
+    }
+  ],
+  "guides": {
+    "front": {
+      "question": {
+        "zh": "为什么调用 LLM 的聊天机器人远远不够，Agent 需要 Harness 这一层工程基础设施？",
+        "en": "Why does an agent need a runtime layer—an Agent Harness—rather than a thin wrapper around the LLM API?"
+      },
+      "deliverable": {
+        "zh": "一张全书四部分知识地图，加一条匹配自身角色（架构师/工程师/开发者/研究者）的阅读路径。",
+        "en": "A map of the book's four parts and a reading path matched to your role—architect, senior engineer, app developer, or researcher."
+      },
+      "boundary": {
+        "zh": "不展开任何子系统的实现细节，也不提供 API 教程或技巧清单；架构拆解从第 1 章开始。",
+        "en": "No subsystem implementation details, no API how-to or tips list; the architecture walkthrough starts in Chapter 1."
+      },
+      "sources": [
+        "cc-changelog",
+        "docs-how-it-works",
+        "docs-best-practices",
+        "gh-book-repo",
+        "ld-topic-1870593"
+      ],
+      "plain": {
+        "zh": "模型会动手后，缺的是一层管住工具、权限和状态的外壳；这本书按公开行为推演它",
+        "en": "acting models need a shell for tools, permissions and state; the book deduces it from public behavior"
+      },
+      "analogy": {
+        "zh": "像医院接诊：再能诊断，也得有分诊台、处方签章和病历本才敢发药",
+        "en": "a hospital: sharp diagnoses still need triage, a signed script and a chart before anyone gets medicine"
+      },
+      "plain_evidence": [
+        "00-前言.md:93",
+        "00-前言.md:95",
+        "00-前言.md:143",
+        "00-前言.md:197",
+        "en/00-Foreword.md:64",
+        "en/00-Foreword.md:66",
+        "en/00-Foreword.md:114",
+        "en/00-Foreword.md:168"
+      ]
+    },
+    "ch01": {
+      "question": {
+        "zh": "从 Chatbot 到自主智能体的范式转移中，Claude Code 的架构骨架与五大设计原则是什么？",
+        "en": "What shifts AI programming from chatbot to autonomous agent, and what architectural skeleton and design principles does Claude Code embody?"
+      },
+      "deliverable": {
+        "zh": "一张五模块分层架构图，并能独立完成安装与 /doctor 首次诊断。",
+        "en": "A layered diagram of the five core modules and a working /doctor diagnostic run you can perform unaided."
+      },
+      "boundary": {
+        "zh": "只做全景导览；对话循环、工具系统、权限管线的内部实现分别见第 2、3、4 章。",
+        "en": "A panoramic tour only; loop internals, tool contracts, and permission stages are detailed in Chapters 2, 3, and 4."
+      },
+      "sources": [
+        "docs-how-it-works",
+        "blog-building-effective-agents",
+        "docs-best-practices",
+        "cc-release-v2-1-310",
+        "gh-opencode",
+        "gh-learn-cc"
+      ],
+      "plain": {
+        "zh": "模型动手后的门槛在工程侧：权限、状态、恢复谁来管？答案是一层运行时加五条原则",
+        "en": "the hard part moves to engineering: permissions, state, recovery - one runtime and five principles handle it"
+      },
+      "analogy": {
+        "zh": "像装修：电器再好也得先布线、装漏电保护、列回路清单，不能把插头直接拧进插座",
+        "en": "a renovation: before any appliance you run wiring, fit a leakage breaker and label every circuit"
+      },
+      "plain_evidence": [
+        "第一部分-基础篇/01-智能体编程的新范式.md:52",
+        "第一部分-基础篇/01-智能体编程的新范式.md:59",
+        "第一部分-基础篇/01-智能体编程的新范式.md:115",
+        "第一部分-基础篇/01-智能体编程的新范式.md:286",
+        "en/Part-1-Foundations/01-The-New-Paradigm-of-Agent-Programming.md:52",
+        "en/Part-1-Foundations/01-The-New-Paradigm-of-Agent-Programming.md:59",
+        "en/Part-1-Foundations/01-The-New-Paradigm-of-Agent-Programming.md:115",
+        "en/Part-1-Foundations/01-The-New-Paradigm-of-Agent-Programming.md:286"
+      ]
+    },
+    "ch02": {
+      "question": {
+        "zh": "对话主循环为何选异步生成器？一次 Turn 如何从请求流转到终止？",
+        "en": "Why is the dialog loop an async generator, and how does one turn flow from request to termination?"
+      },
+      "deliverable": {
+        "zh": "一张 Turn 生命周期与状态转换图，能独立实现最小 AsyncGenerator 循环。",
+        "en": "A turn lifecycle and state-transition diagram, plus a minimal async-generator loop you can implement yourself."
+      },
+      "boundary": {
+        "zh": "只讲循环本身；四级压缩管线细节见第 7 章，工具编排见第 3 章，权限见第 4 章。",
+        "en": "Covers the loop only: compression pipeline internals belong to Chapter 7, tool orchestration to Chapter 3, permissions to Chapter 4."
+      },
+      "sources": [
+        "docs-how-it-works",
+        "docs-interactive-mode",
+        "docs-glossary",
+        "cc-changelog"
+      ],
+      "plain": {
+        "zh": "一轮问模型、跑工具、回填的循环：能暂停能取消，续跑七条路，退出十种因",
+        "en": "ask model, run tools, backfill: a pausable cancellable loop with seven continue paths and ten exit reasons"
+      },
+      "analogy": {
+        "zh": "像收发室：登记、寄出、等回执，没回来就再问一次；叫停时必写明停在哪一步",
+        "en": "a mailroom: log, send, await the receipt, ask again if none comes; every halt names where it stopped"
+      },
+      "plain_evidence": [
+        "第一部分-基础篇/02-对话循环-Agent的心跳.md:18",
+        "第一部分-基础篇/02-对话循环-Agent的心跳.md:141",
+        "第一部分-基础篇/02-对话循环-Agent的心跳.md:251",
+        "第一部分-基础篇/02-对话循环-Agent的心跳.md:390",
+        "en/Part-1-Foundations/02-The-Dialog-Loop-Heartbeat-of-an-Agent.md:18",
+        "en/Part-1-Foundations/02-The-Dialog-Loop-Heartbeat-of-an-Agent.md:141",
+        "en/Part-1-Foundations/02-The-Dialog-Loop-Heartbeat-of-an-Agent.md:251",
+        "en/Part-1-Foundations/02-The-Dialog-Loop-Heartbeat-of-an-Agent.md:390"
+      ]
+    },
+    "ch03": {
+      "question": {
+        "zh": "55 个工具如何靠同一份类型契约注册、发现、并发调度，而不改动引擎代码？",
+        "en": "How do 55 tools share one type contract for registration, discovery, and concurrent scheduling without touching the engine?"
+      },
+      "deliverable": {
+        "zh": "一张并发分区批次图，能用 buildTool 独立实现一个自定义工具。",
+        "en": "A batch-partition diagram for concurrent scheduling, and one custom tool built independently with buildTool."
+      },
+      "boundary": {
+        "zh": "覆盖工具契约与编排引擎；管线内的权限判定见第 4 章，MCP 外部工具见第 12 章。",
+        "en": "Stops at the tool contract and orchestrator; permission decisions inside the pipeline are Chapter 4, MCP-sourced tools are Chapter 12."
+      },
+      "sources": [
+        "docs-tools-reference",
+        "blog-writing-tools-for-agents",
+        "docs-permissions",
+        "cc-changelog",
+        "gh-cc-router",
+        "gh-playwright-mcp"
+      ],
+      "plain": {
+        "zh": "几十个工具共用一份五要素契约：只读的成批跑，改东西的单独排队，边听指令边开工",
+        "en": "tools share a five-part contract: reads batch together, writes queue alone, work starts mid-reply"
+      },
+      "analogy": {
+        "zh": "像后厨出单：洗切可以一起上，动火的只能一个人来，做好也得按下单顺序报号",
+        "en": "a kitchen: chopping runs in parallel, only one cook may touch the flame, dishes get called in order"
+      },
+      "plain_evidence": [
+        "第一部分-基础篇/03-工具系统-Agent的双手.md:34",
+        "第一部分-基础篇/03-工具系统-Agent的双手.md:253",
+        "第一部分-基础篇/03-工具系统-Agent的双手.md:317",
+        "第一部分-基础篇/03-工具系统-Agent的双手.md:344",
+        "en/Part-1-Foundations/03-The-Tool-System-Agent-Hands.md:34",
+        "en/Part-1-Foundations/03-The-Tool-System-Agent-Hands.md:253",
+        "en/Part-1-Foundations/03-The-Tool-System-Agent-Hands.md:317",
+        "en/Part-1-Foundations/03-The-Tool-System-Agent-Hands.md:344"
+      ]
+    },
+    "ch04": {
+      "question": {
+        "zh": "一次工具调用如何穿过四阶段权限管线，在自主效率与安全控制之间取得平衡？",
+        "en": "How does a tool call traverse the four-stage pipeline, and how is autonomy balanced against safety?"
+      },
+      "deliverable": {
+        "zh": "一张四阶段决策流程图，能独立编写项目级 allow/deny 权限配置。",
+        "en": "A four-stage decision-flow diagram and a project-level allow/deny ruleset you can author from scratch."
+      },
+      "boundary": {
+        "zh": "只覆盖权限判定；生命周期钩子扩展点见第 8 章，配置分层与合并见第 5 章。",
+        "en": "Permission evaluation only; lifecycle hooks are Chapter 8, and settings layering and merge rules are Chapter 5."
+      },
+      "sources": [
+        "docs-permissions",
+        "docs-permission-modes",
+        "docs-env-vars",
+        "cc-issues",
+        "cc-changelog",
+        "gh-codex"
+      ],
+      "plain": {
+        "zh": "工具请求要过四道关：验格式、查规则、工具自审、人点头；显式拒绝压过一切放行",
+        "en": "every call clears four gates: schema, rules, tool self-check, human nod - an explicit deny outranks any allow"
+      },
+      "analogy": {
+        "zh": "像报销审批：验票、查黑名单、主管复核、老板签字；写明不予报销的，谁签都没用",
+        "en": "expense approval: receipt check, blocklist lookup, manager review, boss signs - a written denial ends it all"
+      },
+      "plain_evidence": [
+        "第一部分-基础篇/04-权限管线-Agent的护栏.md:19",
+        "第一部分-基础篇/04-权限管线-Agent的护栏.md:121",
+        "第一部分-基础篇/04-权限管线-Agent的护栏.md:138",
+        "第一部分-基础篇/04-权限管线-Agent的护栏.md:209",
+        "en/Part-1-Foundations/04-The-Permission-Pipeline-Agent-Guardrails.md:19",
+        "en/Part-1-Foundations/04-The-Permission-Pipeline-Agent-Guardrails.md:121",
+        "en/Part-1-Foundations/04-The-Permission-Pipeline-Agent-Guardrails.md:138",
+        "en/Part-1-Foundations/04-The-Permission-Pipeline-Agent-Guardrails.md:209"
+      ]
+    },
+    "ch05": {
+      "question": {
+        "zh": "六层配置源按什么优先级合并成 Agent 的“基因”，安全边界又划在哪里？",
+        "en": "How do six configuration sources merge into the agent's operating defaults, and where are the trust boundaries?"
+      },
+      "deliverable": {
+        "zh": "一张六层优先级与合并规则对照表，能独立设计团队分层配置策略。",
+        "en": "A priority-and-merge table for the six layers, plus a tiered settings strategy you can design for a team."
+      },
+      "boundary": {
+        "zh": "聚焦配置加载、功能开关与状态存储；权限规则语义见第 4 章，钩子配置项见第 8 章。",
+        "en": "Covers loading, merging, flags, and state storage; permission rule semantics stay in Chapter 4, hook options in Chapter 8."
+      },
+      "sources": [
+        "docs-settings",
+        "docs-env-vars",
+        "npm-claude-code",
+        "cc-changelog"
+      ],
+      "plain": {
+        "zh": "六层配置层层覆盖决定它怎么行动；外来仓库改不动安全项，运行时状态只换不改",
+        "en": "six config layers override in order; a foreign repo can't set security keys, and state is swapped not edited"
+      },
+      "analogy": {
+        "zh": "像办公室公告栏：新通知压在旧通知上面，但权限清单只增不减，消防通道归物业管",
+        "en": "an office notice board: new memos cover old ones, the access list only grows, fire exits are the landlord's"
+      },
+      "plain_evidence": [
+        "第二部分-核心系统篇/05-设置与配置-Agent的基因.md:23",
+        "第二部分-核心系统篇/05-设置与配置-Agent的基因.md:76",
+        "第二部分-核心系统篇/05-设置与配置-Agent的基因.md:223",
+        "第二部分-核心系统篇/05-设置与配置-Agent的基因.md:413",
+        "en/Part-2-Core-Systems/05-Settings-and-Configuration-Agent-DNA.md:23",
+        "en/Part-2-Core-Systems/05-Settings-and-Configuration-Agent-DNA.md:76",
+        "en/Part-2-Core-Systems/05-Settings-and-Configuration-Agent-DNA.md:223",
+        "en/Part-2-Core-Systems/05-Settings-and-Configuration-Agent-DNA.md:413"
+      ]
+    },
+    "ch06": {
+      "question": {
+        "zh": "哪些信息值得跨会话长期保存？后台提取又如何在提示缓存约束下进行？",
+        "en": "What deserves durable storage across sessions, and how does background extraction run within prompt-cache limits?"
+      },
+      "deliverable": {
+        "zh": "一份四类型分类判据速查表，能独立写出合规的 frontmatter 记忆文件。",
+        "en": "A four-type decision checklist and correctly formatted memory files you can write unaided."
+      },
+      "boundary": {
+        "zh": "只管跨会话的长期记忆；会话内的工作记忆与压缩见第 7 章，配置信任边界见第 5 章。",
+        "en": "Long-term memory only; in-session working memory and compaction are Chapter 7, settings trust boundaries are Chapter 5."
+      },
+      "sources": [
+        "docs-memory",
+        "blog-context-engineering",
+        "docs-glossary",
+        "cc-changelog",
+        "gh-claude-mem"
+      ],
+      "plain": {
+        "zh": "跨会话只记代码里读不出的四件事：你是谁、你纠正过什么、为何这么定、链接在哪",
+        "en": "it keeps only what code can't reveal: who you are, what you corrected, why it was decided, where links live"
+      },
+      "analogy": {
+        "zh": "像图书馆目录柜：只登记书在哪层架，正文不抄进卡片；真要引用还得走回架子核对",
+        "en": "a card catalog: it notes which shelf, never copies the text, and you still walk over to check the book"
+      },
+      "plain_evidence": [
+        "第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md:7",
+        "第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md:17",
+        "第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md:232",
+        "第二部分-核心系统篇/06-记忆系统-Agent的长期记忆.md:540",
+        "en/Part-2-Core-Systems/06-The-Memory-System-Agent-Long-Term-Memory.md:7",
+        "en/Part-2-Core-Systems/06-The-Memory-System-Agent-Long-Term-Memory.md:17",
+        "en/Part-2-Core-Systems/06-The-Memory-System-Agent-Long-Term-Memory.md:232",
+        "en/Part-2-Core-Systems/06-The-Memory-System-Agent-Long-Term-Memory.md:540"
+      ]
+    },
+    "ch07": {
+      "question": {
+        "zh": "上下文逼近窗口上限时，四级压缩按何顺序介入，各自付出多少成本？",
+        "en": "As the window fills, in what order do the four compression levels intervene, and what does each cost?"
+      },
+      "deliverable": {
+        "zh": "一张令牌阈值与四级压缩成本图，能自行算出有效窗口并选定压缩策略。",
+        "en": "A token-threshold and compression-cost map, plus the arithmetic to size an effective window yourself."
+      },
+      "boundary": {
+        "zh": "聚焦单会话内的窗口与预算；持久记忆见第 6 章，PreCompact 钩子见第 8 章，Fork 子代理见第 9 章。",
+        "en": "Working memory within one session; durable memory is Chapter 6, PreCompact hooks Chapter 8, forked sub-agents Chapter 9."
+      },
+      "sources": [
+        "docs-context-window",
+        "blog-context-engineering",
+        "docs-memory",
+        "docs-prompt-caching",
+        "cc-changelog",
+        "gh-openhands",
+        "gh-claude-mem"
+      ],
+      "plain": {
+        "zh": "白板写满就得擦：腾地方从轻到重分四级，压缩前先留好下笔的余量，连败三次就收手",
+        "en": "when the board fills, erase in four graded steps, save room before summarizing, quit after three failures"
+      },
+      "analogy": {
+        "zh": "像库房腾货架：先并零箱，再压缩打包，实在装不下才把旧货誊成一页台账贴门口",
+        "en": "clearing a crowded shelf: consolidate loose boxes, vacuum-pack, and only then write old stock onto one ledger"
+      },
+      "plain_evidence": [
+        "第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md:30",
+        "第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md:77",
+        "第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md:120",
+        "第二部分-核心系统篇/07-上下文管理-Agent的工作记忆.md:282",
+        "en/Part-2-Core-Systems/07-Context-Management-Agent-Working-Memory.md:30",
+        "en/Part-2-Core-Systems/07-Context-Management-Agent-Working-Memory.md:77",
+        "en/Part-2-Core-Systems/07-Context-Management-Agent-Working-Memory.md:120",
+        "en/Part-2-Core-Systems/07-Context-Management-Agent-Working-Memory.md:282"
+      ]
+    },
+    "ch08": {
+      "question": {
+        "zh": "22 个生命周期事件上，五种钩子类型如何观察、拦截并改写 Agent 的行为？",
+        "en": "Across 22 lifecycle events, how do five hook types observe, intercept, and reshape agent behavior?"
+      },
+      "deliverable": {
+        "zh": "一份事件×退出码×响应字段速查表，能独立写出可上线的 PreToolUse 钩子。",
+        "en": "An event/exit-code/response-field cheat sheet and a working PreToolUse hook you can ship."
+      },
+      "boundary": {
+        "zh": "讲扩展点本身；权限管线各阶段顺序见第 4 章，钩子配置的六层合并规则见第 5 章。",
+        "en": "The extension points themselves; permission-stage ordering stays in Chapter 4, hook config merge rules in Chapter 5."
+      },
+      "sources": [
+        "docs-hooks",
+        "docs-permissions",
+        "cc-changelog",
+        "cc-issues",
+        "gh-cc-action",
+        "gh-cc-templates"
+      ],
+      "plain": {
+        "zh": "不改源码就能插手关键节点：五种钩子挂在工具、会话、压缩、权限等生命周期事件上，能拦、能改输入、能补上下文",
+        "en": "five hook kinds hang on lifecycle events from tools to sessions to compaction: watch, block, rewrite tool input, add context - no source edits"
+      },
+      "analogy": {
+        "zh": "像小区门禁：保安不盖楼，但每次进出都能拦下、改道或在登记本上补一句",
+        "en": "an estate gatehouse: it builds nothing, yet stops, redirects or notes every comings and goings"
+      },
+      "plain_evidence": [
+        "第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md:15",
+        "第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md:53",
+        "第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md:211",
+        "第二部分-核心系统篇/08-钩子系统-Agent的生命周期扩展点.md:655",
+        "en/Part-2-Core-Systems/08-The-Hook-System-Agent-Lifecycle-Extension-Points.md:15",
+        "en/Part-2-Core-Systems/08-The-Hook-System-Agent-Lifecycle-Extension-Points.md:53",
+        "en/Part-2-Core-Systems/08-The-Hook-System-Agent-Lifecycle-Extension-Points.md:211",
+        "en/Part-2-Core-Systems/08-The-Hook-System-Agent-Lifecycle-Extension-Points.md:655"
+      ]
+    },
+    "ch09": {
+      "question": {
+        "zh": "一次对话装不下的大任务，Claude Code 怎样拆给子智能体，又不让 token 与缓存失控？",
+        "en": "When one conversation cannot hold the task, how does Claude Code split work into subagents without letting tokens or the prompt cache run away?"
+      },
+      "deliverable": {
+        "zh": "一张 AgentTool 同步/异步/Fork 三条路径的分流图，加上一份带工具白名单与 maxTurns 的自定义智能体定义。",
+        "en": "A map of AgentTool's sync, async and Fork paths, plus a custom agent definition with a tool allowlist, maxTurns and cache-prefix token math."
+      },
+      "boundary": {
+        "zh": "只讲委派与并行机制；多智能体显式编排和失败再分配见第10章，技能与插件注入见第11章。",
+        "en": "Delegation mechanics only; explicit multi-agent orchestration and reassignment are Chapter 10, skill and plugin injection is Chapter 11."
+      },
+      "sources": [
+        "docs-sub-agents",
+        "blog-multi-agent-research",
+        "docs-agent-sdk-overview",
+        "gh-agent-sdk-python",
+        "cc-changelog",
+        "gh-superpowers"
+      ],
+      "plain": {
+        "zh": "把活交给专职子智能体：内置与自定义智能体怎么定义，Fork 靠字节级继承父上下文并行且不浪费 token",
+        "en": "hand work to specialist sub-agents; Fork runs them in parallel by reusing the parent's exact cached prefix"
+      },
+      "analogy": {
+        "zh": "像复印同一份会议底稿：每人拿一份完全一样的原件各写各结论，不必重新打印",
+        "en": "one meeting brief photocopied for the table: each person annotates a copy, nobody reprints the original"
+      },
+      "plain_evidence": [
+        "第三部分-高级模式篇/09-子智能体与Fork模式.md:9",
+        "第三部分-高级模式篇/09-子智能体与Fork模式.md:226",
+        "第三部分-高级模式篇/09-子智能体与Fork模式.md:253",
+        "第三部分-高级模式篇/09-子智能体与Fork模式.md:343",
+        "en/Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md:9",
+        "en/Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md:226",
+        "en/Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md:253",
+        "en/Part-3-Advanced-Patterns/09-Sub-Agents-and-the-Fork-Pattern.md:343"
+      ]
+    },
+    "ch10": {
+      "question": {
+        "zh": "当子任务彼此依赖、发现需要共享、工人还会失败时，谁来当那个项目经理？",
+        "en": "Once subtasks depend on each other, discoveries must be shared, and workers fail mid-run, who plays the project manager?"
+      },
+      "deliverable": {
+        "zh": "一套 Coordinator 模式启用与工作者工具池的选型流程，含四阶段工作流和 Scratchpad 共享目录的落地方案。",
+        "en": "A decision flow for enabling Coordinator mode and sizing worker tool pools, with the four-phase workflow and a Scratchpad sharing plan."
+      },
+      "boundary": {
+        "zh": "不复推 Fork 的字节级缓存前缀（第9章），也不涉及技能与 MCP 扩展层（第11、12章）。",
+        "en": "Does not re-derive Fork's byte-level cache prefix (Chapter 9), nor the skill and MCP extension layers (Chapters 11 and 12)."
+      },
+      "sources": [
+        "docs-agent-teams",
+        "blog-multi-agent-research",
+        "docs-sub-agents",
+        "gh-agent-sdk-typescript",
+        "cc-changelog"
+      ],
+      "plain": {
+        "zh": "一个脑子忙不过来时：协调者只派活不干活，发消息、共用草稿区，还兜住worker失败和半成品",
+        "en": "when one agent isn't enough: a lead assigns but never executes, absorbing failures and half-finished work"
+      },
+      "analogy": {
+        "zh": "像酒席总厨：自己从不颠勺，各灶领单，一张备料单大家看，谁倒下了马上补位",
+        "en": "a banquet head chef: no pan himself, tickets out to stations, one prep list, covers whoever drops out"
+      },
+      "plain_evidence": [
+        "第三部分-高级模式篇/10-协调器模式-多智能体编排.md:9",
+        "第三部分-高级模式篇/10-协调器模式-多智能体编排.md:325",
+        "第三部分-高级模式篇/10-协调器模式-多智能体编排.md:543",
+        "第三部分-高级模式篇/10-协调器模式-多智能体编排.md:587",
+        "en/Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md:9",
+        "en/Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md:325",
+        "en/Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md:544",
+        "en/Part-3-Advanced-Patterns/10-The-Coordinator-Pattern-Multi-Agent-Orchestration.md:588"
+      ]
+    },
+    "ch11": {
+      "question": {
+        "zh": "怎样把一段反复粘贴的提示词，变成可分发、可覆盖、可控权限的能力包？",
+        "en": "How does a prompt you keep retyping become a capability package that can be distributed, overridden, and permission-scoped?"
+      },
+      "deliverable": {
+        "zh": "一个带 frontmatter、参数替换与路径触发的 SKILL.md，加一张 managed 到 bundled 的五层覆盖图。",
+        "en": "A SKILL.md with frontmatter, argument substitution and path triggers, plus a layering map from managed through user, project, plugin to bundled."
+      },
+      "boundary": {
+        "zh": "只到技能与插件的加载执行；MCP 传输与权限归第12章，工作流编排与定时调度归第14章。",
+        "en": "Stops at skill and plugin loading and execution; MCP transports belong to Chapter 12, workflow orchestration and scheduling to Chapter 14."
+      },
+      "sources": [
+        "docs-skills",
+        "docs-plugins",
+        "docs-env-vars",
+        "cc-changelog",
+        "gh-cc-templates",
+        "gh-dxt",
+        "gh-superpowers"
+      ],
+      "plain": {
+        "zh": "把反复要交代的话写成 Markdown 技能：五个来源分层覆盖、按路径动态发现，插件再整包带进来",
+        "en": "turn repeated instructions into Markdown skills: tiered sources override each other, plugins ship whole packs"
+      },
+      "analogy": {
+        "zh": "像墙上的菜谱卡：总部、本店、自家各一叠，同名听级别高的，要用时念名字抽一张",
+        "en": "a wall of recipe cards: HQ, house and home stacks; same name defers upward; call it out and pull one"
+      },
+      "plain_evidence": [
+        "第三部分-高级模式篇/11-技能系统与插件架构.md:17",
+        "第三部分-高级模式篇/11-技能系统与插件架构.md:302",
+        "第三部分-高级模式篇/11-技能系统与插件架构.md:413",
+        "第三部分-高级模式篇/11-技能系统与插件架构.md:512",
+        "en/Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md:17",
+        "en/Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md:302",
+        "en/Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md:413",
+        "en/Part-3-Advanced-Patterns/11-The-Skill-System-and-Plugin-Architecture.md:513"
+      ]
+    },
+    "ch12": {
+      "question": {
+        "zh": "当工具、资源或 IDE 都在 Claude Code 之外，怎样安全接进来并管住权限？",
+        "en": "When the tools, resources, or the IDE itself live outside Claude Code, how are they wired in safely and kept under permission control?"
+      },
+      "deliverable": {
+        "zh": "一份可用的 .mcp.json，一张八类连接的选型对照表，以及 mcp__server__tool 命名贯穿四层门控的排查路径。",
+        "en": "A working .mcp.json, a selection table across the eight connection types, and a trace of mcp__server__tool naming through the four permission gates."
+      },
+      "boundary": {
+        "zh": "工具接口本体见第3章，权限管线内部机制见第4章；本章只讲 MCP 如何接入这两套系统。",
+        "en": "The tool interface itself (Chapter 3) and the permission pipeline internals (Chapter 4) are assumed, not re-explained; only MCP's integration is."
+      },
+      "sources": [
+        "docs-mcp",
+        "mcp-spec-2026-07-28",
+        "docs-plugins",
+        "blog-writing-tools-for-agents",
+        "cc-changelog",
+        "gh-cc-router",
+        "gh-acp",
+        "gh-playwright-mcp",
+        "gh-mcp-servers"
+      ],
+      "plain": {
+        "zh": "接外部工具不再一家一个适配：连接配置怎么分八类、工具改名映射、逐层审批，外加 IDE 双向桥",
+        "en": "one protocol replaces per-tool adapters: connection configs, tool naming, layered approvals, an IDE bridge"
+      },
+      "analogy": {
+        "zh": "像小区快递驿站：任何商家只送一次就能被取，货架按楼栋分格贴名，取件先验码",
+        "en": "a shared parcel room: any courier drops once, shelves sorted and labelled by building, code scanned first"
+      },
+      "plain_evidence": [
+        "第三部分-高级模式篇/12-MCP集成与外部协议.md:64",
+        "第三部分-高级模式篇/12-MCP集成与外部协议.md:100",
+        "第三部分-高级模式篇/12-MCP集成与外部协议.md:283",
+        "第三部分-高级模式篇/12-MCP集成与外部协议.md:672",
+        "en/Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md:64",
+        "en/Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md:100",
+        "en/Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md:283",
+        "en/Part-3-Advanced-Patterns/12-MCP-Integration-and-External-Protocols.md:672"
+      ]
+    },
+    "ch13": {
+      "question": {
+        "zh": "模型还在吐字，工具为何已能开跑？延迟、并发与 token 成本之间怎么权衡？",
+        "en": "Why can tools start running while the model is still talking, and how are latency, concurrency, and token cost traded off against each other?"
+      },
+      "deliverable": {
+        "zh": "一份性能排查清单：流式管线、并/串行规则、启动并行预取、用量累加与缓存命中率的计算方法。",
+        "en": "A performance checklist covering the QueryEngine stream, the executor's parallel-versus-serial rules, startup prefetch, usage accounting, and cache-hit math."
+      },
+      "boundary": {
+        "zh": "不重讲对话循环（第2章）与压缩策略（第7章）；Fork 的字节级继承细节以第9章为主。",
+        "en": "The main loop is Chapter 2 and compaction is Chapter 7; Fork's byte-exact inheritance is detailed in Chapter 9, summarized here."
+      },
+      "sources": [
+        "docs-prompt-caching",
+        "docs-agent-sdk-overview",
+        "docs-context-window",
+        "cc-release-v2-1-310",
+        "npm-claude-code"
+      ],
+      "plain": {
+        "zh": "别干等：token 还在流就开工，工具该并行的并行、启动活儿同时跑，成本和缓存一路盯（数字多为示意）",
+        "en": "act while tokens arrive: overlap tool runs and startup, watch cost and cache breaks (the ms and cost figures are illustrative)"
+      },
+      "analogy": {
+        "zh": "像跑堂接菜：厨房喊一道先端一道，上桌仍按点单顺序；一道洒了，同批的先停",
+        "en": "a waiter carrying each dish as it's called, serving still in order, halting the whole batch if one spills"
+      },
+      "plain_evidence": [
+        "第四部分-工程实践篇/13-流式架构与性能优化.md:132",
+        "第四部分-工程实践篇/13-流式架构与性能优化.md:280",
+        "第四部分-工程实践篇/13-流式架构与性能优化.md:294",
+        "第四部分-工程实践篇/13-流式架构与性能优化.md:479",
+        "en/Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md:132",
+        "en/Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md:280",
+        "en/Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md:294",
+        "en/Part-4-Engineering-Practice/13-Streaming-Architecture-and-Performance-Optimization.md:482"
+      ]
+    },
+    "ch14": {
+      "question": {
+        "zh": "如何让 Agent 先想清楚再动手，并把「想清楚」变成可读回、可审批、可定时的资产？",
+        "en": "How do you make an agent think before acting, and turn that thinking into an artifact that can be re-read, approved, and scheduled?"
+      },
+      "deliverable": {
+        "zh": "一条 EnterPlanMode 到计划文件再到 ExitPlanMode 审批的完整链路，加 Cron 与远程触发的选型建议。",
+        "en": "The full EnterPlanMode-to-plan-file-to-ExitPlanMode approval chain, plus a selection guide for Cron, RemoteTrigger, workflow scripts, and SleepTool."
+      },
+      "boundary": {
+        "zh": "权限模式的实现底座在第4章，验证智能体的对抗提示在第9章，本章不展开。",
+        "en": "Permission-mode plumbing lives in Chapter 4 and the verification agent's adversarial prompting in Chapter 9; neither is developed here."
+      },
+      "sources": [
+        "docs-permission-modes",
+        "docs-interactive-mode",
+        "docs-tools-reference",
+        "cc-changelog",
+        "gh-gemini-cli"
+      ],
+      "plain": {
+        "zh": "先只读想清楚、批准了再动手改：计划能校验能续存，还能接上定时触发和后台长跑",
+        "en": "think read-only before writing: an approvable, recoverable plan, plus cron triggers and background runs"
+      },
+      "analogy": {
+        "zh": "像搬家：先列清单估价，老板签字才叫车；清单收进抽屉，下次接着用",
+        "en": "moving day: list and price first, the boss signs before a truck is called, the list is filed for reuse"
+      },
+      "plain_evidence": [
+        "第四部分-工程实践篇/14-Plan模式与结构化工作流.md:13",
+        "第四部分-工程实践篇/14-Plan模式与结构化工作流.md:17",
+        "第四部分-工程实践篇/14-Plan模式与结构化工作流.md:422",
+        "第四部分-工程实践篇/14-Plan模式与结构化工作流.md:661",
+        "en/Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md:13",
+        "en/Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md:17",
+        "en/Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md:423",
+        "en/Part-4-Engineering-Practice/14-Plan-Mode-and-Structured-Workflows.md:662"
+      ]
+    },
+    "ch15": {
+      "question": {
+        "zh": "抛开 Claude Code 从零起步，一个最小可用的 Agent Harness 需要哪几根承重梁，按什么顺序搭？",
+        "en": "Strip Claude Code away: which load-bearing parts does a minimal working agent harness need, and in what order would you build them?"
+      },
+      "deliverable": {
+        "zh": "六步路线图与可运行的最小 Harness：对话循环、buildTool、四阶段权限、压缩、记忆、钩子，附生产指标清单。",
+        "en": "A six-step roadmap to a runnable minimal harness — loop, buildTool factory, four-stage permission pipeline, compaction, memory, hooks — plus production metrics."
+      },
+      "boundary": {
+        "zh": "只提炼可迁移的取舍，各系统源码细节仍见第2—12章；不覆盖特定平台的部署运维。",
+        "en": "Recaps transferable principles only; per-system source detail stays in Chapters 2-12, and platform-specific deployment operations are out of scope."
+      },
+      "sources": [
+        "docs-headless",
+        "docs-cli-reference",
+        "docs-agent-sdk-overview",
+        "gh-agent-sdk-python",
+        "gh-agent-sdk-typescript",
+        "gh-opencode",
+        "gh-openhands",
+        "gh-cc-action",
+        "gh-learn-cc"
+      ],
+      "plain": {
+        "zh": "全书收口成一张施工图：按六步搭出最小可跑 Harness（代码是教学示例），再谈架构教训与生产化",
+        "en": "capstone: six steps to a minimal harness; the code is a teaching example, then production concerns"
+      },
+      "analogy": {
+        "zh": "像照邻居厨房自己搭灶：六样大致按顺序来，中间反复回去改，最后能自己开火",
+        "en": "copying a neighbour's kitchen to build your own: six parts in rough order, fixing earlier ones as you learn"
+      },
+      "plain_evidence": [
+        "第四部分-工程实践篇/15-构建你自己的Agent-Harness.md:62",
+        "第四部分-工程实践篇/15-构建你自己的Agent-Harness.md:167",
+        "第四部分-工程实践篇/15-构建你自己的Agent-Harness.md:186",
+        "第四部分-工程实践篇/15-构建你自己的Agent-Harness.md:503",
+        "en/Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md:62",
+        "en/Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md:167",
+        "en/Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md:186",
+        "en/Part-4-Engineering-Practice/15-Building-Your-Own-Agent-Harness.md:511"
+      ]
+    },
+    "apxa": {
+      "question": {
+        "zh": "要改一个不熟的功能：它归哪个模块、上下游依赖谁、数据实际怎么流过？",
+        "en": "You must change an unfamiliar feature: which module owns it, what does it depend on, and how does the data actually flow through?"
+      },
+      "deliverable": {
+        "zh": "一张模块索引表（职责与关键数据结构）、依赖关系图、数据流路径速查与接口契约概述，每条回指正文章节。",
+        "en": "A module index with responsibilities and key data structures, a dependency graph, dataflow path diagrams, contract summaries, and chapter pointers."
+      },
+      "boundary": {
+        "zh": "只做导航与回指，机制推导以正文各章为准；模块划分与命名随版本演进，不保证恒定。",
+        "en": "A conceptual map, not a mechanism derivation — the chapters carry the reasoning; module names and boundaries may shift between releases."
+      },
+      "sources": [
+        "cc-changelog",
+        "cc-issues",
+        "gh-book-repo",
+        "docs-settings",
+        "ld-topic-1871393"
+      ],
+      "plain": {
+        "zh": "用法：这是概念性地图不是文件清单——A.1 查模块归谁、看哪章，A.3 顺着一条数据流走一遍",
+        "en": "how to use: a conceptual map, not a file list - A.1 for who owns what and which chapter, A.3 to trace a flow"
+      },
+      "analogy": {
+        "zh": "像物业的水电管线总图：敲墙前先查这根管子归谁、水从哪进往哪出",
+        "en": "the building's utility plan: before hammering, check whose pipe it is and where water enters and exits"
+      },
+      "plain_evidence": [
+        "附录/A-源码导航地图.md:3",
+        "附录/A-源码导航地图.md:6",
+        "附录/A-源码导航地图.md:14",
+        "附录/A-源码导航地图.md:221",
+        "en/Appendices/A-Architecture-Navigation-Map.md:3",
+        "en/Appendices/A-Architecture-Navigation-Map.md:6",
+        "en/Appendices/A-Architecture-Navigation-Map.md:14",
+        "en/Appendices/A-Architecture-Navigation-Map.md:221"
+      ]
+    },
+    "apxb": {
+      "question": {
+        "zh": "想确认某工具是否存在，或它是只读、破坏性、可并行，还是被标志关在门外？",
+        "en": "Checking whether a tool exists at all, or whether it is read-only, destructive, concurrency-safe, or locked behind a feature flag?"
+      },
+      "deliverable": {
+        "zh": "十二类工具的属性对照（readOnly/destructive/concurrencySafe）、启用条件、注册默认值与延迟/消耗画像。",
+        "en": "Answers on every registered tool across twelve categories: three permission flags, enablement conditions, buildTool defaults, and rough latency and token profiles."
+      },
+      "boundary": {
+        "zh": "只登记属性与分类，不解释工具实现（第3章）与权限判定流程（第4章）；清单随版本增删。",
+        "en": "Registers attributes only; tool implementation is Chapter 3 and permission decisions are Chapter 4. The roster grows and shrinks with each release."
+      },
+      "sources": [
+        "docs-tools-reference",
+        "docs-permissions",
+        "cc-changelog"
+      ],
+      "plain": {
+        "zh": "用法：拿不准某个工具时按分类查——能不能并行、算不算破坏性、要开哪个标志、和谁搭配用",
+        "en": "how to use: look a tool up by category - destructive, parallel-safe, which flag gates it, what it pairs with"
+      },
+      "analogy": {
+        "zh": "像五金店零件柜：每格标签写着能不能随手拿、刃口利不利、要不要店员开钥匙",
+        "en": "a hardware-shop parts cabinet: each bin's tag says grab-and-go, blade sharp, or needs the clerk's key"
+      },
+      "plain_evidence": [
+        "附录/B-工具完整清单.md:3",
+        "附录/B-工具完整清单.md:5",
+        "附录/B-工具完整清单.md:255",
+        "附录/B-工具完整清单.md:378",
+        "en/Appendices/B-Complete-Tool-Inventory.md:3",
+        "en/Appendices/B-Complete-Tool-Inventory.md:5",
+        "en/Appendices/B-Complete-Tool-Inventory.md:255",
+        "en/Appendices/B-Complete-Tool-Inventory.md:378"
+      ]
+    },
+    "apxc": {
+      "question": {
+        "zh": "某个能力在你的构建里不见了——是编译时没打进去，还是运行时门控没放行？",
+        "en": "A capability is missing from your build: was it never compiled in, or is it compiled in but still gated off at runtime?"
+      },
+      "deliverable": {
+        "zh": "每个标志的类型、作用、影响范围、前置依赖与章节指引，外加典型场景的标志组合建议与依赖总图。",
+        "en": "Flag type, effect, blast radius, prerequisites, and chapter pointer for each flag, grouped in twelve categories, with recommended combinations per scenario."
+      },
+      "boundary": {
+        "zh": "只管功能标志；settings 层级与环境变量见第5章，标志解锁的工具见附录B；名称与数量非版本恒定。",
+        "en": "Flags only — settings tiers and environment variables are Chapter 5, unlocked tools are Appendix B. Flag names and counts are not stable across versions."
+      },
+      "sources": [
+        "docs-env-vars",
+        "docs-cli-reference",
+        "cc-release-v2-1-310",
+        "docs-settings"
+      ],
+      "plain": {
+        "zh": "用法：想知道某功能为什么不存在就查这表——标志管什么、依赖谁、影响哪些工具；数目随版本会变",
+        "en": "how to use: feature missing? look up what a flag gates, its dependencies and tools; counts drift by version"
+      },
+      "analogy": {
+        "zh": "像配电箱上的回路表：哪个闸管哪盏灯、跳了会连带断哪一路，看清了才敢伸手",
+        "en": "the breaker panel's circuit label: which switch feeds which light, and what else goes dark when one trips"
+      },
+      "plain_evidence": [
+        "附录/C-功能标志速查表.md:3",
+        "附录/C-功能标志速查表.md:9",
+        "附录/C-功能标志速查表.md:321",
+        "附录/C-功能标志速查表.md:325",
+        "en/Appendices/C-Feature-Flag-Reference.md:3",
+        "en/Appendices/C-Feature-Flag-Reference.md:9",
+        "en/Appendices/C-Feature-Flag-Reference.md:321",
+        "en/Appendices/C-Feature-Flag-Reference.md:325"
+      ]
+    },
+    "apxd": {
+      "question": {
+        "zh": "读到一半对某个名词失焦，或要确认本书中英译名是否统一、该词在哪章首次展开？",
+        "en": "Halfway through a chapter a term slips out of focus, or you need the book's canonical English-Chinese rendering and where it is first discussed?"
+      },
+      "deliverable": {
+        "zh": "约百条术语的英文原名、推荐中译、简明定义、相关术语与首现章节，另附核心概念关系图。",
+        "en": "For roughly a hundred core terms: original English name, recommended Chinese translation, concise definition, related terms, and chapter of first appearance."
+      },
+      "boundary": {
+        "zh": "只给定义与交叉引用，讲解在正文各章；译名为本书约定，词条随版本增删，不保证恒定。",
+        "en": "Defines, never teaches — the chapters do that. Translations are this book's convention, and entries keep changing as releases add features."
+      },
+      "sources": [
+        "docs-glossary",
+        "docs-how-it-works",
+        "blog-building-effective-agents"
+      ],
+      "plain": {
+        "zh": "用法：读到生词按字母查——一条给出英文原名、中文译名、短定义、相关词，和正文首次讨论的章节",
+        "en": "how to use: hit an unfamiliar term, sort by letter for name, translation, short definition, related terms and the chapter"
+      },
+      "analogy": {
+        "zh": "像夹在书末的中英对照小词典：先给译名和一句话解释，再告诉你哪一章细说",
+        "en": "the bilingual dictionary bound in at the back: the translation and a one-line gloss first, then which chapter goes on"
+      },
+      "plain_evidence": [
+        "附录/D-术语表.md:3",
+        "附录/D-术语表.md:5",
+        "附录/D-术语表.md:10",
+        "en/Appendices/D-Glossary.md:3",
+        "en/Appendices/D-Glossary.md:5",
+        "en/Appendices/D-Glossary.md:10"
+      ]
+    }
+  }
+}

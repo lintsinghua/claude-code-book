@@ -172,7 +172,7 @@ flowchart TD
         p1["Preprocessing Pipeline<br/>Compression/Trimming"] --> p2["API Call<br/>Streaming Reception"] --> p3["Tool Detection<br/>Permission Check"] --> p4["State Construction<br/>Message Backfill"]
     end
 
-    tools["Tool System<br/>45+ Tools · Orchestration Engine · Concurrency Partitioning"]
+    tools["Tool System<br/>55 Tools · Orchestration Engine · Concurrency Partitioning"]
     perm["Permission Pipeline<br/>Four-Stage Check · Five Modes · Rule Persistence"]
     ext["Extension Layer<br/>MCP Protocol · Sub-Agent Dispatch · Plugin System · Hook Mechanism"]
 

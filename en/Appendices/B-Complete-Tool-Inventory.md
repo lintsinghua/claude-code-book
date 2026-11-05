@@ -1,6 +1,6 @@
 # Appendix B: Complete Tool Inventory
 
-This appendix lists all tools registered in the Claude Code architecture, indexed by functional category. Tools are the fundamental capability units through which the agent interacts with the external world. Each tool is registered in the tool registry via a unified interface protocol and is dispatched by the conversation main loop.
+This appendix lists all 55 tools registered in the Claude Code architecture, indexed across 12 functional categories. Tools are the fundamental capability units through which the agent interacts with the external world. Each tool is registered in the tool registry via a unified interface protocol and is dispatched by the conversation main loop.
 
 **Permission Model Field Definitions**:
 - **readOnly**: Whether the tool only performs read operations and does not modify the file system or external state. Read-only tools typically have more relaxed permission constraints and can be used in plan mode.

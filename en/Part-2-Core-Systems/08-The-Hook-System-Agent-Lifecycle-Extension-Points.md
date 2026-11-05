@@ -3,7 +3,7 @@
 > **Learning Objectives:** After reading this chapter, you will be able to:
 >
 > - Understand the design philosophy, capability boundaries, and applicable scenarios of five hook types
-> - Master the trigger timing, input structure, and exit code semantics of 26 lifecycle events
+> - Master the trigger timing, input structure, and exit code semantics of 22 lifecycle events
 > - Design structured hook responses, utilizing `decision`, `updatedInput`, `additionalContext` and other fields for fine-grained control
 > - Understand the multi-layer security model: global disable, managed-hooks-only, workspace trust check three-layer gating
 > - Analyze hook priority ordering rules and conflict resolution strategies
@@ -210,7 +210,7 @@ Async hook implementation is completed in background execution functions. Async-
 
 ## 8.2 Core Lifecycle Events
 
-The SDK core types module defines the complete `HOOK_EVENTS` array with 26 lifecycle events, covering all critical nodes including tool invocation, user interaction, session management, sub-agents, compression, permissions, configuration changes, etc.
+The SDK core types module defines the complete `HOOK_EVENTS` array; this chapter introduces 22 of its lifecycle events, covering the critical nodes of tool invocation, user interaction, session management, sub-agents, compression, permissions and configuration changes.
 
 The best way to understand these events is to imagine an Agent's complete execution cycle as an "assembly line". Materials (user requests) enter from one end, are processed through multiple stations (lifecycle events), and finally exit from the other end as finished products (Agent responses). Each station has "sensors" (events) installed, and hooks are the "control units" connected to these sensors.
 
@@ -497,7 +497,7 @@ Typical use cases:
 - **CwdChanged / FileChanged**: Triggered when working directory and files change. Suitable for implementing filesystem monitoring and auto-refresh caches.
 - **InstructionsLoaded**: Triggered when instruction files are loaded (observable only, blocking not supported). Suitable for auditing and logging, understanding what instructions the system loaded.
 
-The table below summarizes all 26 events' classification, blockability, and typical uses:
+The table below summarizes the classification, blockability and typical uses of these 22 events:
 
 | Event Name | Category | Blockable | Core Use |
 |---------|------|-------|---------|
@@ -1042,7 +1042,7 @@ Design a complete hook configuration solution meeting above requirements.
 
 1. **Five hook types**: command (Shell command), prompt (LLM evaluation), agent (Agentic validation), http (HTTP call), function (runtime callback); first four are persistable, last one only exists in session memory. Decision tree for choosing hook type: need to execute system commands use Command, need intelligent judgment use Prompt, need multi-step validation use Agent, need external system integration use HTTP, need deep runtime interaction use Function.
 
-2. **26 lifecycle events**: Covering complete Agent lifecycle including tool calls, user interaction, session management, sub-agents, compression, permissions, configuration changes. Each event has clear trigger timing, input structure, and exit code semantics.
+2. **22 lifecycle events**: Covering complete Agent lifecycle including tool calls, user interaction, session management, sub-agents, compression, permissions, configuration changes. Each event has clear trigger timing, input structure, and exit code semantics.
 
 3. **Structured response protocol**: Hook output is JSON containing `decision` (approve/block), `updatedInput` (modify tool input), `additionalContext` (inject context) fields. Exit codes and JSON response jointly control hook behavior; both should express consistent intent.
 

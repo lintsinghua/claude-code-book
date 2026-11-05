@@ -1,0 +1,105 @@
+name: Book CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '00-前言.md'
+      - '第一部分-基础篇/**'
+      - '第二部分-核心系统篇/**'
+      - '第三部分-高级模式篇/**'
+      - '第四部分-工程实践篇/**'
+      - '附录/**'
+      - 'en/**'
+      - 'yuyu-book/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/book.yml'
+  pull_request:
+    paths:
+      - '00-前言.md'
+      - '第一部分-基础篇/**'
+      - '第二部分-核心系统篇/**'
+      - '第三部分-高级模式篇/**'
+      - '第四部分-工程实践篇/**'
+      - '附录/**'
+      - 'en/**'
+      - 'yuyu-book/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/book.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  book:
+    runs-on: ubuntu-latest
+    # A healthy run finishes in under 4 minutes, so 30 was never about the
+    # build — it was the ceiling that killed a run whose apt mirror crawled.
+    # Kept generous enough that a slow mirror still ships a book.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: npm ci
+
+      - run: python -m pip install -r yuyu-book/requirements.txt
+
+      # Playwright ships as a Python dependency here, so the browser comes from
+      # `python -m playwright install`, not `npx playwright`. The build is run
+      # without --browser on purpose: only the auto-detected msedge/chrome/
+      # chromium launches pass --allow-file-access-from-files, which the mermaid
+      # harness needs to import the ESM bundle from file://. Noto CJK faces are
+      # required for the printed pages and the diagram labels.
+      #
+      # Two downloads, two steps, each with its own clock. One run drew an
+      # azure.archive.ubuntu.com serving fonts-noto-cjk at 25 kB/s: it spent 26
+      # minutes on the font package, never reached the browser, and the job died
+      # as "cancelled" with the culprit buried in the log. Bounding each fetch
+      # says which mirror failed, on the step that failed, in minutes.
+      - name: Install CJK fonts
+        timeout-minutes: 12
+        run: |
+          sudo apt-get -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 \
+               install -y fonts-noto-cjk
+
+      - name: Install Chromium
+        timeout-minutes: 15
+        run: python -m playwright install --with-deps chromium
+
+      - run: python scripts/check_book.py
+
+      - run: npm run check:diagrams
+
+      - name: Unit tests
+        run: |
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s yuyu-book/tests -v
+
+      # Also warms yuyu-book/.cache/mermaid so the PDF pass reuses the plates.
+      - name: Assemble and audit both editions
+        run: python yuyu-book/build.py --check
+
+      - name: Build both PDF editions
+        run: python yuyu-book/build.py --lang both --pdf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yuyu-book-dist
+          path: yuyu-book/dist/*
+          if-no-files-found: error

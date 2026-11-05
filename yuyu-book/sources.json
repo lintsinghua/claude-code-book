@@ -1,0 +1,850 @@
+{
+  "cc-changelog": {
+    "title": "Claude Code CHANGELOG",
+    "authority": "Anthropic (anthropics/claude-code)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+    "pinned": {
+      "commit": "318b7e6ac4e726e88a4ad326214866a93c373b1b",
+      "release_at_head": "2.1.310"
+    },
+    "snapshot": "2026-10-25 读取（raw.githubusercontent 该 commit 下 CHANGELOG.md，HTTP 200，首条版本号为 2.1.310）",
+    "snapshot_en": "2026-10-25 read (CHANGELOG.md at that commit via raw.githubusercontent, HTTP 200; first listed version 2.1.310)",
+    "accessed": "2026-10-25",
+    "license": "© Anthropic PBC, All rights reserved；链接引用，不转载",
+    "license_en": "© Anthropic PBC, all rights reserved; linked, never republished",
+    "scope": "全书时序核对的总账本：凡本书写「某版本引入/修复某行为」的能力叙述（对话循环、工具集增减、权限询问、hooks 触发时机、子智能体与 Fork、技能/插件加载、MCP、压缩与缓存、Plan 模式）都用它逐条比对，避免把旧版本行为写成现状。",
+    "scope_en": "Chronology ledger for the whole book: every claim that a version introduced or fixed a behaviour — the conversation loop, tool-set changes, permission prompts, hook timing, subagents and forks, skill and plugin loading, MCP, compaction and caching, Plan mode — is checked against it line by line, so older behaviour is never written up as current."
+  },
+  "cc-release-v2-1-310": {
+    "title": "Claude Code Release v2.1.310",
+    "authority": "Anthropic (anthropics/claude-code)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.310",
+    "pinned": {
+      "tag": "v2.1.310",
+      "commit": "b70dc4113ad72e0ee44f7b1b95afaf510b53ee98"
+    },
+    "snapshot": "2026-10-25 读取（GitHub Releases API：最新 release 为 v2.1.310，发布于 2026-10-23T23:39:00Z，tag 指向 commit b70dc411）",
+    "snapshot_en": "2026-10-25 read (GitHub Releases API: latest release v2.1.310, published 2026-10-23T23:39:00Z; tag points at commit b70dc411)",
+    "accessed": "2026-10-25",
+    "license": "© Anthropic PBC, All rights reserved；链接引用，不转载",
+    "license_en": "© Anthropic PBC, all rights reserved; linked, never republished",
+    "scope": "全书「分析基准版本」的锚点：凡本书声称「以 vX.Y.Z 为准」的能力清单、默认值与行为差异（尤其附录 C 功能标志、第 13 章性能相关改动）都以此 release 与其 changelog 条目对齐。",
+    "scope_en": "Anchor for the book's stated baseline version: the capability lists, defaults and behavioural differences attributed to 'as of vX.Y.Z' — the feature flags in Appendix C and the performance changes of Chapter 13 above all — are aligned with this release and its changelog entry."
+  },
+  "cc-issues": {
+    "title": "Claude Code Issue Tracker",
+    "authority": "Anthropic (anthropics/claude-code)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-code/issues",
+    "pinned": {
+      "commit": "318b7e6ac4e726e88a4ad326214866a93c373b1b"
+    },
+    "snapshot": "2026-10-25 读取（页面 HTTP 200；issue 列表为流动内容，故同时钉住仓库 HEAD commit 作为核对基线）",
+    "snapshot_en": "2026-10-25 read (page HTTP 200; the issue list is fluid content, so the repository HEAD commit is pinned as the comparison baseline as well)",
+    "accessed": "2026-10-25",
+    "license": "© Anthropic PBC, All rights reserved；链接引用，不转载",
+    "license_en": "© Anthropic PBC, all rights reserved; linked, never republished",
+    "scope": "「文档没写但实际会踩」的行为证据源：权限询问回归、hooks 在 Windows/Git Bash 缺失时的放行、压缩后仍超上下文、子智能体与 Fork 的并发问题等第 4、8、9、13 章的缺陷叙述与边界案例，用 issue 报告核对而非凭印象断言。",
+    "scope_en": "Evidence for behaviour the documentation does not state but users actually hit: permission-prompt regressions, hooks letting actions through when Windows/Git Bash pieces are missing, context still overflowing after compaction, subagent and fork concurrency. The defect accounts and edge cases of Chapters 4, 8, 9 and 13 are checked against reports rather than asserted from memory."
+  },
+  "gh-agent-sdk-python": {
+    "title": "Claude Agent SDK for Python",
+    "authority": "Anthropic (anthropics/claude-agent-sdk-python)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-agent-sdk-python",
+    "pinned": {
+      "tag": "v0.2.174",
+      "commit": "0e89b298e771259378a6cd3734e00d323dff5703"
+    },
+    "snapshot": "2026-10-25 读取（releases/latest 返回 v0.2.174，发布于 2026-10-24T00:24:14Z；tag 解析到 commit 0e89b298）",
+    "snapshot_en": "2026-10-25 read (releases/latest returned v0.2.174, published 2026-10-24T00:24:14Z; tag resolves to commit 0e89b298)",
+    "accessed": "2026-10-25",
+    "license": "MIT；链接引用，不转载源码片段之外的内容",
+    "license_en": "MIT; linked and cited, nothing beyond minimal source fragments republished",
+    "scope": "第 15 章「构建你自己的 Agent Harness」与第 2、8、9 章的 SDK 侧对照：query 循环、工具注册、hooks 回调、子智能体声明、结构化输出等 API 形态是否与我们从 Claude Code 内部推演出的接口一致。",
+    "scope_en": "Chapter 15's build-your-own-harness work and the SDK-side comparisons in Chapters 2, 8 and 9: whether the query loop, tool registration, hook callbacks, subagent declarations and structured output match the interfaces we derived from Claude Code's internals."
+  },
+  "gh-agent-sdk-typescript": {
+    "title": "Claude Agent SDK for TypeScript",
+    "authority": "Anthropic (anthropics/claude-agent-sdk-typescript)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-agent-sdk-typescript",
+    "pinned": {
+      "tag": "v0.3.310",
+      "commit": "019515d3268e6f94946eb2d8e9edc1ea79c5a6aa"
+    },
+    "snapshot": "2026-10-25 读取（releases/latest 返回 v0.3.310，发布于 2026-10-23T23:39:13Z；tag 解析到 commit 019515d3）",
+    "snapshot_en": "2026-10-25 read (releases/latest returned v0.3.310, published 2026-10-23T23:39:13Z; tag resolves to commit 019515d3)",
+    "accessed": "2026-10-25",
+    "license": "仓库未公开 SPDX 声明，以仓库内 LICENSE 为准；链接引用，不转载",
+    "license_en": "No SPDX declaration published in the repository; its own LICENSE file governs; linked, never republished",
+    "scope": "第 15 章 harness 骨架的 TypeScript 参照实现（Claude Code 本体即 TS/Node 生态），并用于核对第 13 章流式事件与消息迭代器的对外类型；SDK 版本号尾数与 CLI 2.1.310 同步这一事实也在此核对。",
+    "scope_en": "TypeScript reference implementation for the harness skeleton in Chapter 15 (Claude Code itself lives in the TS/Node ecosystem), and the check on the public types for streaming events and the message iterator in Chapter 13; also where we confirm the SDK version suffix tracks CLI 2.1.310."
+  },
+  "gh-book-repo": {
+    "title": "御舆：解码 Agent Harness（本书仓库）",
+    "title_en": "Yù Yú: Decoding Agent Harness (this repository)",
+    "authority": "lintsinghua/claude-code-book",
+    "kind": "github",
+    "url": "https://github.com/lintsinghua/claude-code-book",
+    "pinned": {
+      "commit": "12e29d6697993f5f6809c6d01755ff61dc6bb755"
+    },
+    "snapshot": "2026-10-25 读取（默认分支 main，HEAD commit 12e29d66，提交时间 2026-10-16T08:17:38Z）",
+    "snapshot_en": "2026-10-25 read (default branch main, HEAD commit 12e29d66, committed 2026-10-16T08:17:38Z)",
+    "accessed": "2026-10-25",
+    "license": "CC BY-NC-SA 4.0（文字）；GitHub 未标注 SPDX",
+    "license_en": "CC BY-NC-SA 4.0 (text); no SPDX label on GitHub",
+    "scope": "自我引用锚点：钉住本书正文与「已核实来源」之间的对应版本，便于后续 diff 出哪些章节结论是在哪个提交上做出的；同时用于附录 A 源码导航地图与仓库目录结构的互查。",
+    "scope_en": "Self-reference anchor: pins the pairing between the book's text and its verified sources, so a later diff shows which commit each chapter conclusion was drawn against; also cross-checks Appendix A's source-navigation map against the repository layout."
+  },
+  "npm-claude-code": {
+    "title": "@anthropic-ai/claude-code（npm 发布元数据）",
+    "title_en": "@anthropic-ai/claude-code (npm registry metadata)",
+    "authority": "Anthropic（npm registry 官方包）",
+    "authority_en": "Anthropic (official npm registry package)",
+    "kind": "npm",
+    "url": "https://registry.npmjs.org/@anthropic-ai/claude-code",
+    "pinned": {
+      "version": "2.1.310",
+      "distTag": "latest",
+      "shasum": "b5029e530ac7794608227f2ef47d313b1af90460"
+    },
+    "snapshot": "2026-10-25 读取（registry API HTTP 200：dist-tags latest=2.1.310 / stable=2.1.308 / next=2.1.310；2.1.310 发布时间 2026-10-23T21:20:46.540Z；共 550 个已发布版本）",
+    "snapshot_en": "2026-10-25 read (registry API HTTP 200: dist-tags latest=2.1.310 / stable=2.1.308 / next=2.1.310; 2.1.310 published 2026-10-23T21:20:46.540Z; 550 published versions in total)",
+    "accessed": "2026-10-25",
+    "license": "包内 license 字段为 SEE LICENSE IN README.md（专有）；仅引用元数据，不转载包内容",
+    "license_en": "The package's license field reads SEE LICENSE IN README.md (proprietary); only metadata is cited, never the package contents",
+    "scope": "第 5 章安装/发布渠道与第 13 章冷启动、包体大小、Node 版本要求（该包声明 engines.node >= 22）的事实来源；stable/latest/next 三个 dist-tag 的差异也是「用户实际拿到的版本」与「GitHub 最新版本」可能不一致的解释依据。",
+    "scope_en": "The factual source for installation and release channels in Chapter 5 and for cold start, package size and the Node requirement in Chapter 13 (the package declares engines.node >= 22). The gap between the stable/latest/next dist-tags also explains why the version a user actually gets may differ from the newest one on GitHub."
+  },
+  "mcp-spec-2026-07-28": {
+    "title": "Model Context Protocol Specification (2026-07-28)",
+    "authority": "Model Context Protocol 开源项目",
+    "authority_en": "The Model Context Protocol open-source project",
+    "kind": "spec",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28",
+    "pinned": {
+      "spec-version": "2026-07-28",
+      "released": "2026-07-28T16:47:49Z"
+    },
+    "snapshot": "2026-10-25 读取（规范页 HTTP 200；GitHub releases/latest 亦确认 2026-07-28 为最新定版，2025-11-25 为上一版）",
+    "snapshot_en": "2026-10-25 read (spec page HTTP 200; GitHub releases/latest also confirms 2026-07-28 as the current release and 2025-11-25 as the previous one)",
+    "accessed": "2026-10-25",
+    "license": "规范仓库许可以其仓库声明为准；链接引用，不转载条文",
+    "license_en": "Licensing follows the specification repository's own statement; linked, clauses never republished",
+    "scope": "第 12 章协议基线：tools / resources / prompts 三类原语、生命周期与版本协商、传输层（stdio 与 HTTP）、能力协商的术语定义，用来判定 Claude Code 的 MCP 集成「实现了什么、简化了什么」，并以 2025-11-25 旧版做差异对照。",
+    "scope_en": "Chapter 12's protocol baseline: the tools / resources / prompts primitives, lifecycle and version negotiation, transports (stdio and HTTP) and the vocabulary of capability negotiation. It is what lets us judge what Claude Code's MCP integration implements and what it simplifies, with 2025-11-25 as the diff reference."
+  },
+  "blog-building-effective-agents": {
+    "title": "Building Effective Agents（Anthropic 工程博客，2024-12-19）",
+    "title_en": "Building Effective Agents (Anthropic engineering blog, 2024-12-19)",
+    "authority": "Anthropic Engineering / Research",
+    "kind": "blog",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "pinned": {
+      "published": "2024-12-19"
+    },
+    "snapshot": "2026-10-25 读取（anthropic.com/engineering/building-effective-agents 301 跳转到 /research/ 同名页，HTTP 200，页面 datePublished=2024-12-19）",
+    "snapshot_en": "2026-10-25 read (anthropic.com/engineering/building-effective-agents 301-redirects to the same path under /research/, HTTP 200; datePublished=2024-12-19)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 博客内容版权所有；链接引用，不转载",
+    "license_en": "Copyright Anthropic; linked, never republished",
+    "scope": "第 1 章与附录 D 的概念底座：workflow 与 agent 的区分、「简单且可组合的模式优先」这一设计取向，为本书解释 Claude Code 为何把循环做小、把控制权交给模型提供作者自陈的依据。",
+    "scope_en": "Conceptual ground for Chapter 1 and Appendix D: the workflow/agent distinction and the preference for simple, composable patterns first — the authors' own account of why to keep the loop small and hand control to the model."
+  },
+  "blog-multi-agent-research": {
+    "title": "How we built our multi-agent research system（Anthropic 工程博客，2025-06-13）",
+    "title_en": "How we built our multi-agent research system (Anthropic engineering blog, 2025-06-13)",
+    "authority": "Anthropic Engineering",
+    "kind": "blog",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
+    "pinned": {
+      "published": "2025-06-13"
+    },
+    "snapshot": "2026-10-25 读取（/engineering/ 路径 301 跳转到 /research/ 同名页，HTTP 200，datePublished=2025-06-13）",
+    "snapshot_en": "2026-10-25 read (the /engineering/ path 301-redirects to the same page under /research/, HTTP 200; datePublished=2025-06-13)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 博客内容版权所有；链接引用，不转载",
+    "license_en": "Copyright Anthropic; linked, never republished",
+    "scope": "第 9、10 章多智能体论证的官方一手材料：编排者—工作者分工、上下文隔离的收益与代价、并行调度与 token 成本放大、失败模式（分工模糊、状态不一致），用于校准本书对协调器模式利弊的判断，而非只凭代码结构反推。",
+    "scope_en": "First-party material for the multi-agent argument of Chapters 9 and 10: orchestrator–worker division of labour, the gains and costs of context isolation, parallel scheduling and token-cost amplification, failure modes (fuzzy division of work, inconsistent state). Used to calibrate the book's judgement rather than to rely on reverse engineering alone."
+  },
+  "blog-writing-tools-for-agents": {
+    "title": "Writing effective tools for AI agents（Anthropic 工程博客，2025-09-11）",
+    "title_en": "Writing effective tools for AI agents (Anthropic engineering blog, 2025-09-11)",
+    "authority": "Anthropic Engineering",
+    "kind": "blog",
+    "url": "https://www.anthropic.com/research/writing-tools-for-agents",
+    "pinned": {
+      "published": "2025-09-11"
+    },
+    "snapshot": "2026-10-25 读取（/engineering/ 路径 301 跳转到 /research/ 同名页，HTTP 200，datePublished=2025-09-11）",
+    "snapshot_en": "2026-10-25 read (the /engineering/ path 301-redirects to the same page under /research/, HTTP 200; datePublished=2025-09-11)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 博客内容版权所有；链接引用，不转载",
+    "license_en": "Copyright Anthropic; linked, never republished",
+    "scope": "第 3 章工具系统与第 12 章 MCP 工具暴露的设计准则：工具数量与选择准确率的张力、返回体瘦身、可组合性与评测驱动的迭代，用来解释 Claude Code 内置工具的粒度划分与 MCP 工具命名前缀的动机。",
+    "scope_en": "Design guidance for the tool system of Chapter 3 and MCP tool exposure in Chapter 12: the tension between tool count and selection accuracy, slimming result payloads, composability and evaluation-driven iteration. Explains the granularity of built-in tools and the motive behind MCP tool-name prefixes."
+  },
+  "blog-context-engineering": {
+    "title": "Effective context engineering for AI agents（Anthropic 工程博客，2025-09-29）",
+    "title_en": "Effective context engineering for AI agents (Anthropic engineering blog, 2025-09-29)",
+    "authority": "Anthropic Engineering",
+    "kind": "blog",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "pinned": {
+      "published": "2025-09-29"
+    },
+    "snapshot": "2026-10-25 读取（/engineering/ 路径 301 跳转到 /research/ 同名页，HTTP 200，datePublished=2025-09-29）",
+    "snapshot_en": "2026-10-25 read (the /engineering/ path 301-redirects to the same page under /research/, HTTP 200; datePublished=2025-09-29)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 博客内容版权所有；链接引用，不转载",
+    "license_en": "Copyright Anthropic; linked, never republished",
+    "scope": "第 6、7 章上下文与记忆的立论依据：上下文预算与「退场」策略、compaction 的定位、长期记忆外置到文件的理由；本书讨论「为什么把记忆写成 CLAUDE.md 而不是数据库」时以该文为官方立场参照。",
+    "scope_en": "The basis for context and memory in Chapters 6 and 7: context budgets and exit strategies, the place of compaction, the case for keeping long-term memory in files. Where the book asks why memory is CLAUDE.md rather than a database, this is the official position."
+  },
+  "docs-how-it-works": {
+    "title": "How Claude Code works",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/how-claude-code-works",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 How Claude Code works；并出现在官方 sitemap 与 llms.txt 索引中）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title How Claude Code works; also listed in the official sitemap and the llms.txt index)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 1、2 章与前言的官方口径基线：agentic loop、内置工具族、与项目交互方式的定义。凡本书给「对话循环」下术语，都先与此页措辞比对，避免自造概念与官方命名冲突。",
+    "scope_en": "Official wording baseline for the preface and Chapters 1 and 2: the agentic loop, the built-in tool families, interaction with a project. Every term the book uses for the conversation loop is compared with this page first, so our coinages do not clash with official naming."
+  },
+  "docs-best-practices": {
+    "title": "Best practices for Claude Code",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/best-practices",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200；原工程博客 anthropic.com/engineering/claude-code-best-practices 现已 301 重定向到本页，故以本页为准登记）",
+    "snapshot_en": "2026-10-25 read (HTTP 200; the former engineering post anthropic.com/engineering/claude-code-best-practices now 301-redirects here, so this page is the registered location)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "前言、第 1 章与第 15 章的「官方推荐用法」来源：环境配置、并行会话扩展、把复杂任务拆给子智能体的实践建议。本书凡引用「Anthropic 建议这样做」的表述，以此页为最新版本落点（旧博客地址已并入此处）。",
+    "scope_en": "The official recommended usage behind the preface, Chapter 1 and Chapter 15: environment setup, scaling with parallel sessions, splitting complex work into subagents. Every 'Anthropic recommends …' statement registers here as the current location, since the old blog post merged into this page."
+  },
+  "docs-interactive-mode": {
+    "title": "Interactive mode",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/interactive-mode",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Interactive mode）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Interactive mode)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 2 章与第 14 章的输入侧事实来源：快捷键（含 Shift+Tab 切换权限/Plan 模式）、输入模式、斜杠命令与中断/追加输入的时机，用来核对本书描述的「循环在人机接口处如何被打断与续接」。",
+    "scope_en": "The input side of Chapters 2 and 14: keyboard shortcuts (Shift+Tab switches permission and Plan modes), input modes, slash commands, and when interruption or appended input takes effect — how the loop breaks and resumes at the human interface."
+  },
+  "docs-cli-reference": {
+    "title": "CLI reference",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/cli-reference",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 CLI reference）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title CLI reference)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 15 章与附录 C 的命令/旗标清单来源：子命令、旗标名称与默认值。本书所有写到具体命令行参数处以此页核对拼写与是否存在，防止把内部未公开参数当 CLI 参数写进正文。",
+    "scope_en": "The command and flag inventory behind Chapter 15 and Appendix C: subcommands, flag names and defaults. Every command-line parameter the book mentions is checked here for spelling and existence, so undocumented internals are never written up as CLI flags."
+  },
+  "docs-tools-reference": {
+    "title": "Tools reference",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/tools-reference",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Tools reference；llms.txt 描述含 permission requirements 与 per-tool behavior）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Tools reference; the llms.txt description covers permission requirements and per-tool behavior)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 3 章与附录 B「工具完整清单」的权威对照表：内置工具名录、每个工具的权限要求与行为差异。本书附录 B 的条目数、工具命名、哪些工具需要询问都以本页为准。",
+    "scope_en": "Authoritative cross-check for Chapter 3 and the complete tool list in Appendix B: the roster of built-in tools, each one's permission requirement and behaviour. Appendix B's entry count, tool naming and which tools prompt all follow this page."
+  },
+  "docs-permissions": {
+    "title": "Configure permissions",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/permissions",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Configure permissions；llms.txt 描述为 fine-grained permission rules, modes, and managed policies）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Configure permissions; the llms.txt description reads fine-grained permission rules, modes, and managed policies)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 4 章权限管线的规则语言来源：allow/deny 规则语法、规则与模式的优先级、受管策略。本书描述权限判定顺序、工具名匹配与 Bash 规则细粒度时必须与此页语义一致。",
+    "scope_en": "The rule language of Chapter 4's permission pipeline: allow/deny rule syntax, precedence between rules and modes, managed policies. The book's decision order, tool-name matching and Bash rule granularity must match this page's semantics."
+  },
+  "docs-permission-modes": {
+    "title": "Choose a permission mode",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/permission-modes",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Choose a permission mode；注：/docs/en/plan-mode 实测 404，Plan 模式在官方文档中并入本页）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Choose a permission mode; note that /docs/en/plan-mode returned 404 in testing — Plan mode is folded into this page)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 14 章 Plan 模式与第 4 章模式机的主要官方定义：模式集合、切换途径（Shift+Tab / IDE / 模式选择器）、各模式的读写边界。本书「Plan 模式是一种权限模式而非独立执行引擎」这一论断的证据来源。",
+    "scope_en": "Main official definition behind Plan mode in Chapter 14 and the mode machine in Chapter 4: the mode set, the switching paths (Shift+Tab / IDE / mode selector) and each mode's read–write boundary. It is the evidence for the claim that Plan mode is a permission mode rather than a separate execution engine."
+  },
+  "docs-settings": {
+    "title": "Settings files and precedence",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/settings",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Settings files and precedence；llms.txt 含 scope 归属与多文件冲突时取值的描述）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Settings files and precedence; llms.txt covers scope ownership and which value wins when files conflict)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 5 章配置分层的权威依据：用户/项目/本地/受管各层文件位置、优先级合并规则、生效自检方法；附录 A 描述配置目录布局时同样以本页核对。",
+    "scope_en": "Authority for configuration layering in Chapter 5: where user/project/local/managed files live, how precedence merges, how to verify what took effect. Appendix A's description of the configuration directory layout is checked here as well."
+  },
+  "docs-env-vars": {
+    "title": "Environment variables",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/env-vars",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Environment variables）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Environment variables)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 4、5、11、13 章与附录 C「功能标志速查表」的外部开关清单来源：哪些行为可由环境变量开启/关闭、变量名与作用域。本书把内部 feature flag 与用户可用开关区分表述时以本页为界。",
+    "scope_en": "The list of external switches for Chapters 4, 5, 11 and 13 and the feature-flag quick reference in Appendix C: which behaviours environment variables can turn on or off, their names and their scope. The boundary where the book separates internal feature flags from user-facing switches."
+  },
+  "docs-memory": {
+    "title": "How Claude remembers your project (CLAUDE.md / auto memory)",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/memory",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 How Claude remembers your project；llms.txt 提及 CLAUDE.md 或 AGENTS.md 与 auto memory）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title How Claude remembers your project; llms.txt mentions CLAUDE.md or AGENTS.md and auto memory)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 6 章记忆系统的规格来源：记忆文件层级与加载条件、导入语法、AGENTS.md 兼容、auto memory 的写入位置与失效边界。本书关于「记忆何时进入上下文」的所有叙述以此页加 changelog 核对。",
+    "scope_en": "Specification of the memory system in Chapter 6: the memory-file hierarchy and load conditions, import syntax, AGENTS.md compatibility, where auto memory writes and where it stops applying. Everything about when memory enters the context is checked here plus against the changelog."
+  },
+  "docs-context-window": {
+    "title": "Explore the context window",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/context-window",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Explore the context window；llms.txt 描述为上下文窗口填充过程的交互模拟）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Explore the context window; llms.txt describes an interactive simulation of how the window fills)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 7 章上下文预算的量化口径：自动加载项、单次文件读取与工具结果的成本、压缩阈值与余量。本书给出的 token 预算示意与「什么被挤出去」的判定顺序需与本页一致。",
+    "scope_en": "The quantitative frame for Chapter 7's context budget: automatic inclusions, the cost of a single file read or tool result, compaction thresholds and headroom. The book's token illustrations and its 'what gets pushed out' ordering must agree with this page."
+  },
+  "docs-hooks": {
+    "title": "Hooks reference",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/hooks",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，页面标题 Hooks reference；另有 /docs/en/hooks-guide 教程页，本版登记未单列）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, page title Hooks reference; a tutorial page exists at /docs/en/hooks-guide and is not registered separately in this edition)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 8 章钩子系统的核心规格：事件名（PreToolUse/PostToolUse 等）、输入 JSON 字段、退出码与返回字段的控制语义、matcher 规则、超时与并发。本书生命周期扩展点的状态机与拦截返回值表以此页逐字段核对。",
+    "scope_en": "Core specification of the hook system in Chapter 8: event names (PreToolUse/PostToolUse and friends), input JSON fields, exit codes and the control semantics of returned fields, matcher rules, timeout and concurrency. The lifecycle state machine and the interception-return table are checked field by field here."
+  },
+  "docs-sub-agents": {
+    "title": "Create custom subagents",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/sub-agents",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Create custom subagents）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Create custom subagents)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 9 章子智能体的官方定义来源：agent 描述文件字段、工具与权限收窄、模型选择、上下文隔离与调用方式；本书区分「子智能体」与「Fork」两种模式的边界以此页与 changelog 交叉确认。",
+    "scope_en": "Official definition for Chapter 9's subagents: the agent description-file fields, narrowing of tools and permissions, model selection, context isolation and invocation. The boundary between 'subagent' and 'fork' is confirmed here and against the changelog."
+  },
+  "docs-agent-teams": {
+    "title": "Orchestrate teams of Claude Code sessions",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/agent-teams",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Orchestrate teams of Claude Code sessions）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Orchestrate teams of Claude Code sessions)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 10 章协调器/多会话编排的官方形态：共享任务、跨会话消息、集中管理能力的命名与边界。本书讨论协调器模式时用它说明 Claude Code 已产品化的那一层，与内部编排机制区分开。",
+    "scope_en": "The official form of multi-session orchestration in Chapter 10: shared tasks, cross-session messages, and the naming and limits of centrally managed capability. Used to separate what Claude Code has already productised from the internal orchestration machinery."
+  },
+  "docs-skills": {
+    "title": "Extend Claude with skills",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/skills",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Extend Claude with skills；llms.txt 描述含自定义命令与内置技能）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Extend Claude with skills; the llms.txt description includes custom commands and built-in skills)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 11 章技能系统来源：SKILL.md 结构、frontmatter 字段、渐进式披露与按需加载、技能与自定义命令的关系。本书关于技能如何进入上下文、如何被触发的描述以此页核对。",
+    "scope_en": "Chapter 11's skill system: SKILL.md structure, frontmatter fields, progressive disclosure and on-demand loading, the relation between skills and custom commands. The book's account of how skills enter the context and get triggered is checked here."
+  },
+  "docs-plugins": {
+    "title": "Plugins overview",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/plugins",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Plugins overview；/docs/en/plugins/overview 为同一页别名，亦 200）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Plugins overview; /docs/en/plugins/overview is an alias of the same page and also returns 200)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 11 章插件打包与市场机制的官方口径：插件可携带哪些组件（技能、hooks、MCP、命令）、何时该用插件而非独立技能或 MCP 服务器、安装与加载路径。",
+    "scope_en": "Official account of plugin packaging and the marketplace in Chapter 11: which components a plugin may carry (skills, hooks, MCP, commands), when a plugin beats a standalone skill or MCP server, and the install and load paths."
+  },
+  "docs-mcp": {
+    "title": "Connect Claude Code to tools via MCP",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/mcp",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Connect Claude Code to tools via MCP）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Connect Claude Code to tools via MCP)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 12 章 MCP 集成的产品侧规格：服务器作用域与配置文件位置、工具命名与权限询问、资源与 prompts 的支持程度、认证方式。本书据此论证 Claude Code 对规范的取舍实现。",
+    "scope_en": "Product-side specification of the MCP integration in Chapter 12: server scopes and where configuration lives, tool naming and permission prompts, how far resources and prompts are supported, authentication methods. The book's argument about what Claude Code kept and dropped from the spec rests on it."
+  },
+  "docs-prompt-caching": {
+    "title": "How Claude Code uses prompt caching",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/prompt-caching",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 How Claude Code uses prompt caching；llms.txt 描述含模型切换触发未缓存回合与 /compact 成本）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title How Claude Code uses prompt caching; llms.txt mentions uncached turns on model switch and the cost of /compact)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 13 章流式与性能的官方成本模型：缓存断点位置、前缀稳定性要求、压缩与模型切换如何打断缓存、由此带来的首 token 延迟与计费差异；本书延迟数字的解释框架。",
+    "scope_en": "The official cost model behind streaming and performance in Chapter 13: cache breakpoint placement, prefix-stability requirements, how compaction and model switches break the cache, and the resulting time-to-first-token and billing differences. The frame for the book's latency numbers."
+  },
+  "docs-headless": {
+    "title": "Run Claude Code programmatically (headless)",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/headless",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Run Claude Code programmatically；llms.txt 描述为经 Agent SDK 从 CLI/Python/TypeScript 运行）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Run Claude Code programmatically; llms.txt describes running it from the CLI/Python/TypeScript through the Agent SDK)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 15 章构建 harness 的对外契约：非交互运行、输出格式（含结构化流式输出）、权限在无人值守下的处理。本书把它当作「官方最小 harness」的例子，与内部循环实现做对照。",
+    "scope_en": "The public contract for building a harness in Chapter 15: non-interactive runs, output formats including structured streaming output, and how permissions are handled with nobody watching. Treated as the example of a minimal official harness, contrasted with the internal loop."
+  },
+  "docs-agent-sdk-overview": {
+    "title": "Agent SDK overview",
+    "authority": "Anthropic (code.claude.com/docs/en/agent-sdk)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/agent-sdk/overview",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Agent SDK overview）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Agent SDK overview)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "第 9、13、15 章的「把 Claude Code 当库用」视角：SDK 暴露的循环、工具、hooks、子智能体、流式与权限接口。本书据此判断哪些内部机制已上升为公共 API、哪些仍是实现细节，避免把 SDK 能力当成 CLI 私有能力来写。",
+    "scope_en": "The 'use Claude Code as a library' perspective for Chapters 9, 13 and 15: the loop, tools, hooks, subagents, streaming and permission interfaces the SDK exposes. It lets the book judge which internal mechanisms became public API and which are still implementation detail."
+  },
+  "docs-glossary": {
+    "title": "Glossary",
+    "authority": "Anthropic (code.claude.com/docs)",
+    "kind": "docs",
+    "url": "https://code.claude.com/docs/en/glossary",
+    "pinned": {
+      "docs-revision": "2026-10-25 在线版"
+    },
+    "snapshot": "2026-10-25 读取（HTTP 200，标题 Glossary；llms.txt 描述覆盖 agentic loop、compaction、CLAUDE.md、hooks、subagents、MCP 等术语）",
+    "snapshot_en": "2026-10-25 read (HTTP 200, title Glossary; the llms.txt description covers agentic loop, compaction, CLAUDE.md, hooks, subagents, MCP and more)",
+    "accessed": "2026-10-25",
+    "license": "Anthropic 文档版权（专有/条款见站点声明）；链接引用，不转载",
+    "license_en": "Anthropic documentation copyright (proprietary; terms per the site's own statement); linked, never republished",
+    "scope": "附录 D 术语表与全书术语一致性的对照源：官方对 agentic loop、compaction、subagent、harness 相关词的定义与用词习惯，本书自造译名时在此做映射与差异标注。",
+    "scope_en": "Cross-check for the glossary in Appendix D and term consistency throughout: official definitions and usage habits for agentic loop, compaction, subagent and harness-related words. Where the book coins its own translation, the mapping and the divergence are recorded here."
+  },
+  "ld-topic-1870593": {
+    "title": "【开源千星】《御舆：解码 Agent Harness——Claude Code 架构深度剖析》",
+    "title_en": "[Open source, 1,000+ stars] Yuyu: Decoding the Agent Harness",
+    "authority": "LINUX DO 社区（帖子 ID 1870593，板块：文档共建）",
+    "authority_en": "LINUX DO community (post 1870593, docs co-authoring board)",
+    "kind": "community",
+    "url": "https://linux.do/t/topic/1870593",
+    "pinned": {
+      "topic-id": "1870593",
+      "post-created": "2026-03-31/04-01"
+    },
+    "snapshot": "2026-10-25 尝试读取：站点 Cloudflare 反爬，直连与 Discourse JSON 接口均返回 403，正文未能抓取；主题标题、板块、发帖人与日期经搜索引擎索引多页结果交叉确认",
+    "snapshot_en": "2026-10-25 attempted read: the site sits behind Cloudflare anti-scraping, direct fetch and the Discourse JSON endpoint both returned 403 and the body could not be captured; topic title, board, author and date were cross-confirmed through search-engine indexes of several pages",
+    "accessed": "2026-10-25",
+    "license": "社区帖子版权归原发帖人；链接引用，不转载",
+    "license_en": "Copyright the original poster; linked, never republished",
+    "scope": "本书的社区首发与读者反馈索引（README.md:103 致谢 Linux.Do 的落点）。仅用于记录「本书在中文社区的首发时间与讨论语境」，属历史脉络，不作为任何技术事实的支撑来源。",
+    "scope_en": "The index of this book's community first publication and reader feedback, which is where the Linux.do acknowledgement in README.md lands. It records when the book appeared in the Chinese-language community and the discussion around it: historical context, and support for no technical claim.",
+    "normative": false
+  },
+  "ld-topic-1871393": {
+    "title": "[开源] 基于站内佬友 claude-code-book 项目构建的网页版 book",
+    "title_en": "[Open source] A web-edition book built on a forum member's claude-code-book project",
+    "authority": "LINUX DO 社区（帖子 ID 1871393，板块：开发调优）",
+    "authority_en": "LINUX DO community (post 1871393, development tuning board)",
+    "kind": "community",
+    "url": "https://linux.do/t/topic/1871393",
+    "pinned": {
+      "topic-id": "1871393",
+      "post-created": "2026-04-01"
+    },
+    "snapshot": "2026-10-25 尝试读取：直连返回 403（Cloudflare 反爬），正文未能抓取；标题、日期与被衍生项目名经搜索引擎索引确认",
+    "snapshot_en": "2026-10-25 attempted read: direct fetch returned 403 (Cloudflare anti-scraping) and the body could not be captured; title, date and the derived project's name were confirmed through search-engine indexes",
+    "accessed": "2026-10-25",
+    "license": "社区帖子版权归原发帖人；链接引用，不转载",
+    "license_en": "Copyright the original poster; linked, never republished",
+    "scope": "附录 A 之外的生态旁证：社区基于本书仓库衍生的在线阅读版，说明本书内容以仓库为唯一权威源、衍生站点不作为引用依据。仅作来源谱系记录，不支撑技术结论。",
+    "scope_en": "Ecosystem evidence beyond Appendix A: an online reading edition derived from this book's repository by a community member, which shows the repository is the single authoritative source and the derived site is not a citation target. Provenance record only; it supports no technical conclusion.",
+    "normative": false
+  },
+  "gh-cc-router": {
+    "title": "Claude Code Router",
+    "authority": "社区（musistudio/claude-code-router）",
+    "title_en": "Claude Code Router",
+    "authority_en": "community (musistudio/claude-code-router)",
+    "kind": "github",
+    "url": "https://github.com/musistudio/claude-code-router",
+    "pinned": {
+      "tag": "v3.1.3",
+      "commit": "3b0aebf3701406dc774f9fdd6c2160622376a626"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v3.1.3 指向该 commit，最近推送 2026-10-10，约 37.9k star，未归档）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v3.1.3 resolves to that commit; pushed 2026-10-10, ~37.9k stars, not archived)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 3、12 章的对照面：它在 Claude Code 前面插一层路由，把模型与工具端点换成任意提供方——线束里「发请求」那一环被拆出来重写，正好检验这层边界是否真的可换。",
+    "scope_en": "A cross-check for Chapters 3 and 12: it inserts a routing layer ahead of Claude Code and swaps model and tool endpoints for any provider, which tests whether that seam in the harness really is replaceable."
+  },
+  "gh-opencode": {
+    "title": "OpenCode",
+    "authority": "社区（anomalyco/opencode，原 sst/opencode）",
+    "title_en": "OpenCode",
+    "authority_en": "community (anomalyco/opencode, formerly sst/opencode)",
+    "kind": "github",
+    "url": "https://github.com/anomalyco/opencode",
+    "pinned": {
+      "tag": "v1.19.4",
+      "commit": "148842ef7cb1bc34192b3fff57d0f9721ab9c801"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v1.19.4；仓库已从 sst/opencode 迁至 anomalyco/opencode，旧 URL 仍 301；默认分支 dev 当日仍在推送，约 221.7k star）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v1.19.4; the repository moved from sst/opencode to anomalyco/opencode, the old URL still 301s; the default branch dev was still receiving commits that day, ~221.7k stars)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 1、15 章的平行样本：另一套从零搭的终端编码线束，同样有对话循环、工具协议、权限模式与会话恢复，读者可拿它逐条对照本书第 15 章「自己搭一层」的取舍。",
+    "scope_en": "A parallel specimen for Chapters 1 and 15: a second terminal coding harness built from scratch, with its own dialog loop, tool protocol, permission modes and session recovery, so the trade-offs Chapter 15 asks the reader to make can be checked against someone else's answers."
+  },
+  "gh-openhands": {
+    "title": "OpenHands",
+    "authority": "All Hands AI（OpenHands/OpenHands）",
+    "title_en": "OpenHands",
+    "authority_en": "All Hands AI (OpenHands/OpenHands)",
+    "kind": "github",
+    "url": "https://github.com/OpenHands/OpenHands",
+    "pinned": {
+      "tag": "v1.33.0",
+      "commit": "b968abef4779eb47f5843c975a60c7b4ccf49886"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v1.33.0，当日仍在推送，约 91.9k star）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v1.33.0, commits the same day, ~91.9k stars)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 7、15 章的另一种解法：它把智能体全过程写成事件流再据此回放与压缩，与本书「消息数组 + 四级压缩」的上下文路线互为对照。",
+    "scope_en": "A different answer for Chapters 7 and 15: the whole agent run is an event stream that can be replayed and condensed, which stands beside the book's message-array plus four-level compression route."
+  },
+  "gh-acp": {
+    "title": "Agent Client Protocol",
+    "authority": "Zed Industries（zed-industries/agent-client-protocol）",
+    "title_en": "Agent Client Protocol",
+    "authority_en": "Zed Industries (zed-industries/agent-client-protocol)",
+    "kind": "github",
+    "url": "https://github.com/zed-industries/agent-client-protocol",
+    "pinned": {
+      "tag": "schema-v1.26.0",
+      "commit": "e2d83349bc9e28a4059ea3acefa1c91c966f74e2"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release schema-v1.26.0，最近推送 2026-10-25）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release schema-v1.26.0, pushed 2026-10-25)",
+    "accessed": "2026-10-26",
+    "license": "Apache-2.0（SPDX: Apache-2.0）；链接引用，不转载",
+    "license_en": "Apache-2.0 (SPDX: Apache-2.0); linked, never republished",
+    "scope": "第 12 章的第二份协议：MCP 连接工具与数据，ACP 连接编辑器与智能体进程；两份规范并读，才看得出「标准化哪一层」是个选择而不是必然。",
+    "scope_en": "The second protocol for Chapter 12: MCP connects tools and data, ACP connects an editor to an agent process. Reading the two specs side by side shows that which layer gets standardised is a choice, not a law."
+  },
+  "gh-playwright-mcp": {
+    "title": "Playwright MCP",
+    "authority": "Microsoft（microsoft/playwright-mcp）",
+    "title_en": "Playwright MCP",
+    "authority_en": "Microsoft (microsoft/playwright-mcp)",
+    "kind": "github",
+    "url": "https://github.com/microsoft/playwright-mcp",
+    "pinned": {
+      "tag": "v0.0.83",
+      "commit": "f183dad4a52965583e3cc1d59b88cdc279e2e57d"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v0.0.83，最近推送 2026-10-22，约 38.6k star）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v0.0.83, pushed 2026-10-22, ~38.6k stars)",
+    "accessed": "2026-10-26",
+    "license": "Apache-2.0（SPDX: Apache-2.0）；链接引用，不转载",
+    "license_en": "Apache-2.0 (SPDX: Apache-2.0); linked, never republished",
+    "scope": "第 3、12 章的现成教材：一个把浏览器能力摊成工具 schema 的 MCP 服务器，工具粒度、返回结构与截图取舍都能直接对照本书讲的工具设计五要素。",
+    "scope_en": "Ready-made course material for Chapters 3 and 12: an MCP server that spreads browser capability into tool schemas, so tool granularity, result shape and the screenshot trade-off can be held against the book's five-part tool protocol."
+  },
+  "gh-cc-action": {
+    "title": "Claude Code Action",
+    "authority": "Anthropic（anthropics/claude-code-action）",
+    "title_en": "Claude Code Action",
+    "authority_en": "Anthropic (anthropics/claude-code-action)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/claude-code-action",
+    "pinned": {
+      "tag": "v1",
+      "commit": "925afb53776cf1a2b738c6bdbed37b4d4000ef13"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v1，最近推送 2026-10-24，官方仓库）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v1, pushed 2026-10-24, an official repository)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 8、15 章的无人值守样本：官方把线束搬进 GitHub Actions，权限、审批与 hooks 在没有人的终端里如何退化，这里是第一手实现。",
+    "scope_en": "The unattended case for Chapters 8 and 15: Anthropic's own way of running the harness inside GitHub Actions, which is the primary implementation of what permissions, approval and hooks degrade to when nobody is watching a terminal."
+  },
+  "gh-cc-templates": {
+    "title": "Claude Code Templates",
+    "authority": "社区（davila7/claude-code-templates）",
+    "title_en": "Claude Code Templates",
+    "authority_en": "community (davila7/claude-code-templates)",
+    "kind": "github",
+    "url": "https://github.com/davila7/claude-code-templates",
+    "pinned": {
+      "tag": "v1.29.7",
+      "commit": "ad49b11922ea15f936e96f49f782e59ed8594342"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v1.29.7，当日仍在推送，约 32.9k star）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v1.29.7, commits the same day, ~32.9k stars)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 8、11 章的社区样本库：成批的真实 agents、skills、hooks、MCP 配置与 CLAUDE.md，可用来检验本书给出的模式在别人手里是否长成一个样。",
+    "scope_en": "A community sample set for Chapters 8 and 11: real agents, skills, hooks, MCP wiring and CLAUDE.md files in bulk, enough to check whether the patterns the book names grow into the same shape in other hands."
+  },
+  "gh-mcp-servers": {
+    "title": "Model Context Protocol Servers",
+    "authority": "MCP 项目（modelcontextprotocol/servers）",
+    "title_en": "Model Context Protocol Servers",
+    "authority_en": "the MCP project (modelcontextprotocol/servers)",
+    "kind": "github",
+    "url": "https://github.com/modelcontextprotocol/servers",
+    "pinned": {
+      "tag": "v2.1.0",
+      "commit": "ef9808f71090d0db3eda99e2af2ba78f1086f4fb"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v2.1.0，最近推送 2026-10-25；LICENSE 为 MIT 转 Apache-2.0 的过渡声明）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v2.1.0, pushed 2026-10-25; the LICENSE carries the project's MIT-to-Apache-2.0 transition notice)",
+    "accessed": "2026-10-26",
+    "license": "MIT / Apache-2.0 双许可过渡（均为宽松许可）；链接引用，不转载",
+    "license_en": "MIT / Apache-2.0 transition (both permissive); linked, never republished",
+    "scope": "第 12 章的参考实现目录：官方维护的服务器清单与迁移说明，本书讲到 MCP 工具发现与资源约定时，以它为可点开的落点。",
+    "scope_en": "The reference-implementation catalogue for Chapter 12: the maintained list of official servers and its migration notes, which is where the book's account of MCP tool discovery and resource conventions lands."
+  },
+  "gh-dxt": {
+    "title": "Desktop Extensions",
+    "authority": "Anthropic（anthropics/dxt）",
+    "title_en": "Desktop Extensions",
+    "authority_en": "Anthropic (anthropics/dxt)",
+    "kind": "github",
+    "url": "https://github.com/anthropics/dxt",
+    "pinned": {
+      "tag": "v2.1.2",
+      "commit": "2a788100a60db19a6b1c018fb1cf84ae85de9537"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v2.1.2，最近推送 2026-05-26；LICENSE 为 MIT 转 Apache-2.0 的过渡声明）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v2.1.2, pushed 2026-05-26; the LICENSE carries the project's MIT-to-Apache-2.0 transition notice)",
+    "accessed": "2026-10-26",
+    "license": "MIT / Apache-2.0 双许可过渡（均为宽松许可）；链接引用，不转载",
+    "license_en": "MIT / Apache-2.0 transition (both permissive); linked, never republished",
+    "scope": "第 11 章的分发包对照：插件包该装什么、如何声明依赖与入口，这套规范与 Claude Code 自己的插件格式并列，能看出「能力封装单位」的两种边界。",
+    "scope_en": "A packaging comparison for Chapter 11: what belongs in an extension bundle and how its entry points and dependencies are declared. Set beside Claude Code's own plugin format, the two show where the boundary of a capability package can be drawn."
+  },
+  "gh-codex": {
+    "title": "Codex CLI",
+    "authority": "OpenAI（openai/codex）",
+    "title_en": "Codex CLI",
+    "authority_en": "OpenAI (openai/codex)",
+    "kind": "github",
+    "url": "https://github.com/openai/codex",
+    "pinned": {
+      "tag": "rust-v0.164.0",
+      "commit": "6aaac694803004a63c6f393d153c96d22521a6b9"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release rust-v0.164.0，最近推送 2026-10-23，约 131.0k star；仓库 docs/sandbox.md 把沙箱与审批细节指向 developers.openai.com）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release rust-v0.164.0, pushed 2026-10-23, ~131.0k stars; the repo's docs/sandbox.md points the sandbox-and-approvals detail at developers.openai.com)",
+    "accessed": "2026-10-26",
+    "license": "Apache-2.0（SPDX: Apache-2.0）；链接引用，不转载",
+    "license_en": "Apache-2.0 (SPDX: Apache-2.0); linked, never republished",
+    "scope": "第 4 章的对照面：另一家在本地跑编码智能体的公司，把沙箱与审批做成独立一层，Rust 实现；同一组「谁被允许动什么」的问题，它在配置与策略文件上的答案与本书所讲的权限流水线并不相同。",
+    "scope_en": "A cross-check for Chapter 4: another company running a coding agent locally, with sandboxing and approvals split into their own layer in Rust. Asked the same question of who may touch what, it answers with config and policy files shaped quite differently from the permission pipeline this book describes."
+  },
+  "gh-gemini-cli": {
+    "title": "Gemini CLI",
+    "authority": "Google（google-gemini/gemini-cli）",
+    "title_en": "Gemini CLI",
+    "authority_en": "Google (google-gemini/gemini-cli)",
+    "kind": "github",
+    "url": "https://github.com/google-gemini/gemini-cli",
+    "pinned": {
+      "tag": "v0.65.0",
+      "commit": "6006c14a4decfe4b891c6263ad6ad5992e404b5b"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v0.65.0，当日仍在推送，约 108.4k star；README 顶部声明免费档与 Google One 用户自 2026-06-18 起改由 Antigravity CLI 承接）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v0.65.0, pushed the same day, ~108.4k stars; the README's opening notice says unpaid-tier and Google One users moved to Antigravity CLI from 2026-06-18)",
+    "accessed": "2026-10-26",
+    "license": "Apache-2.0（SPDX: Apache-2.0）；链接引用，不转载",
+    "license_en": "Apache-2.0 (SPDX: Apache-2.0); linked, never republished",
+    "scope": "第 14 章的对照面：一个把「下一轮做什么」写进明面流程的开源线束；同时它也是产品位置会变例——仓库仍在活跃提交，官方入口却已迁到另一条命令行。",
+    "scope_en": "A cross-check for Chapter 14: an open harness that puts the question of what the next turn is for into its visible flow. It is also a case study in a shifting product position -- the repository still commits daily while the official entry point moved to a different CLI."
+  },
+  "gh-learn-cc": {
+    "title": "Learn Claude Code — Harness Engineering",
+    "authority": "社区（shareAI-lab/learn-claude-code）",
+    "title_en": "Learn Claude Code -- Harness Engineering",
+    "authority_en": "community (shareAI-lab/learn-claude-code)",
+    "kind": "github",
+    "url": "https://github.com/shareAI-lab/learn-claude-code",
+    "pinned": {
+      "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：无 release，钉 main 分支当时 HEAD，最近推送 2026-09-28，约 79.2k star；README 有英/中/日三语）",
+    "snapshot_en": "2026-10-26 read (GitHub API: no releases, so the pin is main's HEAD at that date; pushed 2026-09-28, ~79.2k stars; the README ships in English, Chinese and Japanese)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 1、15 章的同类教材：它把「智能体 = 模型 + 线束」当作开场论证，再一层层从零搭出对话循环、工具、权限与会话——与本书的拆法几乎同构，可作独立对照。",
+    "scope_en": "A kindred text for Chapters 1 and 15: it opens by arguing that an agent is a model plus a harness, then rebuilds the dialog loop, tools, permissions and sessions from nothing. Its decomposition is close enough to the book's to serve as an independent second read of the same layers."
+  },
+  "gh-superpowers": {
+    "title": "Superpowers",
+    "authority": "社区（obra/superpowers）",
+    "title_en": "Superpowers",
+    "authority_en": "community (obra/superpowers)",
+    "kind": "github",
+    "url": "https://github.com/obra/superpowers",
+    "pinned": {
+      "tag": "v7.0.1",
+      "commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v7.0.1，最近推送 2026-10-23，约 305.3k star）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v7.0.1, pushed 2026-10-23, ~305.3k stars)",
+    "accessed": "2026-10-26",
+    "license": "MIT（SPDX: MIT）；链接引用，不转载",
+    "license_en": "MIT (SPDX: MIT); linked, never republished",
+    "scope": "第 9、11 章的现成证据：一整套开发方法论被装成可组合的 skills、子智能体与入口指令，同一份包在十来个宿主上分发——能力封装单位能长多大，这是目前最有说服力的一个样本。",
+    "scope_en": "Existing evidence for Chapters 9 and 11: a whole development methodology packaged as composable skills, subagents and entry instructions, with the same bundle distributed across a dozen hosts -- the strongest sample yet of how large a unit of capability packaging can grow."
+  },
+  "gh-claude-mem": {
+    "title": "claude-mem",
+    "authority": "社区（thedotmack/claude-mem）",
+    "title_en": "claude-mem",
+    "authority_en": "community (thedotmack/claude-mem)",
+    "kind": "github",
+    "url": "https://github.com/thedotmack/claude-mem",
+    "pinned": {
+      "tag": "v15.2.1",
+      "commit": "35e24ba7f50f357b81bdafd823f89b41d65679fc"
+    },
+    "snapshot": "2026-10-26 读取（GitHub API：latest release v15.2.1，当日仍在推送，约 103.3k star；README 自述为插件形态的跨会话记忆，可切换多个宿主与记忆后端）",
+    "snapshot_en": "2026-10-26 read (GitHub API: latest release v15.2.1, pushed the same day, ~103.3k stars; its README describes a plugin-shaped cross-session memory with switchable hosts and memory backends)",
+    "accessed": "2026-10-26",
+    "license": "Apache-2.0（SPDX: Apache-2.0）；链接引用，不转载",
+    "license_en": "Apache-2.0 (SPDX: Apache-2.0); linked, never republished",
+    "scope": "第 6、7 章的压力测试：把「记住」做成线束外的一层，靠自己摘要或外部后端把旧内容压回上下文——正好与本书的四级压缩路线争同一块预算，是检验那套账算得对不对的活样本。",
+    "scope_en": "A stress test for Chapters 6 and 7: it moves remembering outside the harness and presses old content back into context through its own summaries or an external backend, competing with the book's four-level compression route for the very same budget."
+  }
+}

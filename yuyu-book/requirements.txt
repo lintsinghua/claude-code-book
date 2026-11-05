@@ -1,0 +1,6 @@
+Markdown>=3.7,<4
+Pygments>=2.18,<3
+playwright>=1.45,<2
+PyMuPDF>=1.24,<2
+fonttools>=4.50,<5      # subsetting the CJK running-head face
+Pillow>=10.4,<13

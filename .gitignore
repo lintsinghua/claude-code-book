@@ -2,3 +2,9 @@
 
 node_modules/
 __pycache__/
+
+# derived by yuyu-book/build.py; CI publishes dist as an artifact
+yuyu-book/dist/
+yuyu-book/.cache/
+yuyu-book/cover-art.png
+yuyu-book/.scratch/

@@ -25,7 +25,7 @@ def check(root=ROOT):
         fence = None
         visible = []
         mermaid = False
-        for number, line in enumerate(path.read_text().splitlines(), 1):
+        for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
             marker = re.match(r'^\s*(`{3,}|~{3,})(.*)$', line)
             if marker:
                 token, info = marker.groups()

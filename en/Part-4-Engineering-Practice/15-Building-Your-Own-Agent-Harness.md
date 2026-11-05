@@ -735,7 +735,7 @@ export class HookRunner {
 
 ### Breaking Circular Dependencies
 
-In a codebase with over sixty tools and hundreds of modules, circular dependencies are the number one architecture killer. Claude Code employs multiple strategies to break cycles:
+In a codebase with 55 tools and hundreds of modules, circular dependencies are the number one architecture killer. Claude Code employs multiple strategies to break cycles:
 
 **Lazy Require pattern.** Conditional modules are loaded at runtime through `require()`, combined with feature flags, so unused modules are never loaded. The pattern is: use a feature flag to determine whether to load, fetch the module via `require()` when enabled, and return null when disabled.
 

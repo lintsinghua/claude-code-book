@@ -349,7 +349,7 @@ Three levels of lazy loading and their applicable scenarios:
 
 Tool inputSchema/outputSchema achieves lazy initialization through `lazySchema`, avoiding Zod schema construction during module loading. Combined with getter access patterns, schemas are only constructed when first actually used.
 
-Zod schema construction costs are often underestimated. A moderately complex schema with nested objects, optional fields, and description text takes about 0.1-0.3ms to construct. If Claude Code's sixty-plus tools all build schemas at startup, total overhead is 6-18ms -- unacceptable for a CLI tool.
+Zod schema construction costs are often underestimated. A moderately complex schema with nested objects, optional fields, and description text takes about 0.1-0.3ms to construct. If Claude Code's 55 tools all build schemas at startup, total overhead is 5.5-16.5ms -- unacceptable for a CLI tool.
 
 `lazySchema`'s implementation leverages JavaScript's getter semantics: first access triggers the construction function, the constructed result is cached to an instance property, subsequent accesses read directly from cache without going through the getter. This is a "trigger once, permanently replace" pattern.
 
@@ -481,7 +481,7 @@ Note turns 5-6: A tool returned a huge file (63K cache creation tokens), causing
 
 ## 13.5 Caching Optimization Strategies
 
-### 13.5.1 Three Dimensions of Prompt Cache Sharing
+### 13.5.1 Five Dimensions of Prompt Cache Sharing
 
 Anthropic API's prompt caching is a key mechanism for reducing costs and latency. The cache key consists of five dimensions: system prompt, tools, model, messages prefix, and thinking config.
 
@@ -519,7 +519,7 @@ flowchart TD
     class WARN warnNode
 ```
 
-`CacheSafeParams` precisely encapsulates the first four dimensions: system prompt, user context, system context, tool use context, and fork context messages.
+`CacheSafeParams` precisely encapsulates the first four dimensions: the system prompt (with its user context and system context), the tool use context behind the tools dimension, the model, and the fork context messages that make up the messages prefix.
 
 The fifth dimension (thinking config) derives from `toolUseContext.options.thinkingConfig`, but has a subtle trap: if a fork sets `maxOutputTokens`, related logic clamps `budget_tokens` accordingly, causing thinking config changes and thus cache invalidation. Source comments explicitly warn about this: if a fork uses cacheSafeParams to share parent request's prompt cache, different budget_tokens will invalidate the cache because thinking config is part of the cache key.
 

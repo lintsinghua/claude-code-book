@@ -1,0 +1,82 @@
+{
+ "front": {
+  "zh": "上路前只记一件事：主循环转一圈，路就短一天。",
+  "en": "One thing to remember at the gate: every turn of the main loop is a day less of road."
+ },
+ "ch01": {
+  "zh": "马只出力气；Agent Harness 定它拉什么、走哪条。",
+  "en": "The horse supplies only strength; Agent Harness loads the cart and picks the road."
+ },
+ "ch02": {
+  "zh": "异步生成器是马蹄的节拍，背压是缰——肯停的马，才敢跑远路。",
+  "en": "A good mare keeps the beat of the Async Generator; backpressure keeps her off the cliff."
+ },
+ "ch03": {
+  "zh": "每枚腰牌先过 JSON Schema 验形制；幂等的那几枚，才许重打。",
+  "en": "Every tool is a tally: JSON Schema checks its shape, idempotent says you may strike it twice."
+ },
+ "ch04": {
+  "zh": "过关卡先查名册再盖章：白名单写清谁放行，权限管线决定盖几道印。",
+  "en": "At the pass they check the whitelist, then stamp: a tight permission pipeline beats a fast horse."
+ },
+ "ch05": {
+  "zh": "账房改一笔，全站换一副做派；最小权限是老料斗——一马一斗草。",
+  "en": "The old feed rule of least privilege: one horse, one measure, no nibbling at the stores."
+ },
+ "ch06": {
+  "zh": "路靠马蹄走，账靠纸记：记忆系统头一页写着 CLAUDE.md。",
+  "en": "Milestones are memory: the road is walked by horses, kept in the station ledger."
+ },
+ "ch07": {
+  "zh": "行李一高就自动压缩——轻装的马，从来比胖马跑得远。",
+  "en": "When the packs grow tall, auto-compact trims them; a light load outruns a fat horse."
+ },
+ "ch08": {
+  "zh": "钩子是驿站檐下的灯，各站自己点；灯多了，夜路就不是孤灯。",
+  "en": "Hooks are lanterns under each eave: light them all, and no night leg is walked alone."
+ },
+ "ch09": {
+  "zh": "子智能体是另雇的车，各付各的过路费；Fork 模式连缰绳都另配。",
+  "en": "A sub-agent pays its own toll; the fork pattern even lends it a second set of reins."
+ },
+ "ch10": {
+  "zh": "站多了，一辆车装不下所有行李；协调器不挥鞭，只分派谁走哪条道。",
+  "en": "A coordinator does not drive; it decides which cart takes which road, and when."
+ },
+ "ch11": {
+  "zh": "技能是马本就有的规矩，插件是租来的鞍具——租的先摸刃口。",
+  "en": "A skill is training the mare already has; a plugin is borrowed tack — check its edge first."
+ },
+ "ch12": {
+  "zh": "出了本驿地界就要讲通商之语：MCP 服务器是外市的秤，资源是秤上的货。",
+  "en": "Beyond our road, speak the market tongue: an MCP server is the foreign yard's scales."
+ },
+ "ch13": {
+  "zh": "写一封发一封，不等整队上车：流式靠勤快，缓存命中率靠认脸。",
+  "en": "Streaming sends each letter as it is written; a high hit rate means the gatekeeper knows your face."
+ },
+ "ch14": {
+  "zh": "动身前先在纸上走一遍路，叫规划模式：宁三问道，不一回头。",
+  "en": "Plan Mode walks the route on paper before the packs move: ask the road thrice, turn back never."
+ },
+ "ch15": {
+  "zh": "自家线束上路头一遭必是冷启动；出车前，Token 预算先把料斗装满。",
+  "en": "Your own harness starts cold and eats a token budget: fill the manger before the first gallop."
+ },
+ "apxa": {
+  "zh": "看图认路，跟着主循环走；图上每个墨点，都得你的脚去数。",
+  "en": "Read the map along the main loop: every mark was a mile walked in someone's shoes."
+ },
+ "apxb": {
+  "zh": "55 枚腰牌在此挂齐；刻着破坏性的那几枚，钉在最里侧的柱上。",
+  "en": "55 tallies hang here; the ones marked Destructive sit on the innermost post."
+ },
+ "apxc": {
+  "zh": "功能标志是暗卡：有的夜里开，有的等验传，有的干脆不开——先问清再上马。",
+  "en": "Every feature flag is a hidden gate: some open at night, some never — know before you ride."
+ },
+ "apxd": {
+  "zh": "总账在此：头一笔是智能体线束，末一笔由你自己添——查名即查路。",
+  "en": "The station ledger closes here, from Agent Harness to your own unwritten mile."
+ }
+}
